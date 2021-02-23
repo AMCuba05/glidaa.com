@@ -29,7 +29,7 @@ export default function Index() {
     console.log("Admin control", isAdminControlling);
     if (!isAdminControlling) {
       if (!email) return;
-
+      console.log("Hola")
       var payload = { id: email, cursorPosition: `${window.scrollX},${window.scrollY},${window.innerWidth},${window.innerHeight}`, phone: '+1' };
       try {
         let { data } = await API.graphql(graphqlOperation(updateUserActivity, { input: payload }));

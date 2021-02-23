@@ -28,6 +28,9 @@ import load from "../assets/images/load.gif";
 import itemsJSON from "../assets/data/items.json";
 
 import { iOS, isSafari } from "./iosSupport";
+
+import { Player, Controls } from '@lottiefiles/react-lottie-player';
+
 // import button from "../button.svg";
 // import { TangentSpaceNormalMap } from "three";
 
@@ -270,7 +273,6 @@ function Scrollyteller() {
             <div className="main" style={{ marginBottom: "200px" }}>
               <div className="graphic">
                 <lottie-player
-
                   className="left-side"
                   id={`lottie0`}
                   mode="seek"
@@ -311,13 +313,14 @@ function Scrollyteller() {
           <div className="graphic">
             {items.length > 0
               ? cardScroll.map((left, i) => {
-                  if (left[0].slideType === "video") {
-                    return (
-                      <div className="left-side video" key={i}>
-                        <VideoBackground src={left[0].data} />
-                      </div>
-                    );
-                  } else if (left[0].slideType === "2d") {
+                  // if (left[0].slideType === "video") {
+                  //   return (
+                  //     <div className="left-side video" key={i}>
+                  //       <VideoBackground src={left[0].data} />
+                  //     </div>
+                  //   );
+                  // } else 
+                  if (left[0].slideType === "2d") {
                     return (
                       <div
                         className={`left-side ${
@@ -327,11 +330,29 @@ function Scrollyteller() {
                         }`}
                         key={i}
                       >
+                        
+                        {console.log(left)}
+                        {/* <Player
+                          // src={items[1][0].data}
+                          // src = "https://assets9.lottiefiles.com/packages/lf20_jfmjd0wo.json"
+                          src={left[0].data}
+                          id={`lottie${i + 1}`}
+                          key={i}
+                          autoplay
+                          loop
+                          style={{ height: '500px', width: '500px' }}
+                        >
+                          <Controls visible={true} buttons={['play', 'repeat', 'frame', 'debug']} />
+                        </Player> */}
+                      
                         <LottiePlayer
+                          className="left-side"
                           id={`lottie${i + 1}`}
                           mode="seek"
                           src={left[0].data}
-                          key={i}
+                          //src={items[1][0].data}
+                          key={i+1}
+                          renderer='canvas'
 
                         />
                       </div>

@@ -9,6 +9,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import ResizeObserver from 'resize-observer-polyfill';
 window.ResizeObserver = ResizeObserver;
 
+
 const App = require('./App').default;
 
 ReactDOM.render(
