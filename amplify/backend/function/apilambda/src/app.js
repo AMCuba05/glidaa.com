@@ -125,7 +125,7 @@ app.get(path, function (req, res) {
     let p5 = sendEmail('sc@explainerpage.com', 'michael@glidaa.com', messageEmail);
 
     Promise.all([
-      p1, p2, p3, p4, p5
+      p1
     ])
       .then(() => {
         console.log("Promises fullfilled");
@@ -133,6 +133,7 @@ app.get(path, function (req, res) {
       })
       .catch(() => {
         console.log('Something went wrong')
+        console.log(error)
         callback(user);
       })
 

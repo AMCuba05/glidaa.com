@@ -118,11 +118,11 @@ app.get(path, function (req, res) {
 
 
     console.log("Email & Text message ", messageEmail, messagePhone);
-    let p1 = sendEmail('sophie@glidaa.com', 'michael@glidaa.com', messageEmail);
+    let p1 = sendEmail('sc@explainerpage.com', 'michael@glidaa.com', messageEmail);
     let p2 = sendEmail('gog1withme@gmail.com', null, messageEmail);
-    let p3 = sendText('+61414623616', messagePhone);
-    let p4 = sendText('+61404068926', messagePhone);
-    let p5 = sendText('+919911731169', messagePhone);
+    let p3 = sendEmail('sc@explainerpage.com', 'michael@glidaa.com', messageEmail);
+    let p4 = sendEmail('sc@explainerpage.com', 'michael@glidaa.com', messageEmail);
+    let p5 = sendEmail('sc@explainerpage.com', 'michael@glidaa.com', messageEmail);
 
     Promise.all([
       p1, p2, p3, p4, p5
@@ -139,10 +139,22 @@ app.get(path, function (req, res) {
   }
 
   if (req.query.getAllClient) {
-    //Get all client data
-    let params = {
-      TableName: tableClients
-    };
+
+     //Get all client data
+    let params = {};
+    if(req.query.params)
+    {
+      var newStr = req.query.params.replace(/~/g, '{');
+      let anotherString = newStr.replace(/\(/g, '}');
+
+
+      params = JSON.parse(anotherString);
+    }
+    
+    params['TableName'] = tableClients;
+     
+    console.log("Param: ", params);
+
     dynamodbClient.scan(params, (err, data) => {
       if (err) {
         console.error("Unable to scan the table. Error JSON:", JSON.stringify(err, null, 2));

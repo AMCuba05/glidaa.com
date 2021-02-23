@@ -17,6 +17,12 @@
     "storageUserVisitsArn": {
       "Type": "String",
       "Default": "storageUserVisitsArn"
+    },
+    "deploymentBucketName": {
+      "Type": "String"
+    },
+    "s3Key": {
+      "Type": "String"
     }
   },
   "Conditions": {
@@ -77,7 +83,7 @@
         "Timeout": "25",
         "Code": {
           "S3Bucket": "amplify-glidaaamplify-live-84208-deployment",
-          "S3Key": "amplify-builds/apilambda-46676348794c4455366f-build.zip"
+          "S3Key": "amplify-builds/apilambda-63365361457744544b43-build.zip"
         }
       }
     },
