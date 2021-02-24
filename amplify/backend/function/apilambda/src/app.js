@@ -53,47 +53,36 @@ app.get(path, function (req, res) {
 
     // Notifying the manager
     // IMPORTANT! - The sender must be first manually verified in AWS SES Console.
-    // var params = {
-    //   Destination: {
-    //     BccAddresses: [],
-    //     CcAddresses: [ccEmail], // A secondary email address to receive the notification
-    //     ToAddresses: [email], // A primary email address to receive the notification
-    //   },
-    //   Message: {
-    //     Body: {
-    //       Html: {
-    //         Charset: 'UTF-8',
-    //         // This is the HTML content for the email
-    //         Data: message,
-    //       },
-    //       Text: {
-    //         Charset: 'UTF-8',
-    //         // This is the text content for the email
-    //         Data: message,
-    //       },
-    //     },
-    //     Subject: {
-    //       Charset: 'UTF-8',
-    //       // This is the subject
-    //       Data: 'New visit from at website',
-    //     },
-    //   },
-    //   // This is the email you have authorized in AWS SES
-    //   Source: 'michael@glidaa.com',
-    // };
+    var params = {
+      Destination: {
+        BccAddresses: [],
+        CcAddresses: [ccEmail], // A secondary email address to receive the notification
+        ToAddresses: [email], // A primary email address to receive the notification
+      },
+      Message: {
+        Body: {
+          Html: {
+            Charset: 'UTF-8',
+            // This is the HTML content for the email
+            Data: message,
+          },
+          Text: {
+            Charset: 'UTF-8',
+            // This is the text content for the email
+            Data: message,
+          },
+        },
+        Subject: {
+          Charset: 'UTF-8',
+          // This is the subject
+          Data: 'New visit from at website',
+        },
+      },
+      // This is the email you have authorized in AWS SES
+      Source: 'michael@glidaa.com',
+    };
 
-    // return ses.sendEmail(params).promise();
-    token = '1663057850:AAHYLn1az7sdalZJGbpC4t42Q15HrIrPrSo'
-
-    const url = `https://api.telegram.org/bot${token}/sendMessage`
-
-    const data = {
-      "chat_id": "-546296729",
-      "text": message
-    }
-
-    return axios.post(url, data)
-
+    return ses.sendEmail(params).promise();
   }
 
   var sendText = function (phoneNumber, message) {
@@ -108,6 +97,19 @@ app.get(path, function (req, res) {
     // console.log("sent text");
   }
 
+  const sendTelegram = (chatId, message) => {
+    token = '1663057850:AAHYLn1az7sdalZJGbpC4t42Q15HrIrPrSo'
+
+    const url = `https://api.telegram.org/bot${token}/sendMessage`
+
+    const data = {
+      "chat_id": chatId,
+      "text": message
+    }
+
+    return axios.post(url, data)
+  }
+  
   var sendMessages = function (user, callback) {
 
     let phone = null;
@@ -130,13 +132,14 @@ app.get(path, function (req, res) {
     console.log("Email & Text message ", messageEmail, messagePhone);
     let p1 = sendEmail('sc@explainerpage.com', 'michael@glidaa.com', messageEmail);
     let p2 = sendEmail('gog1withme@gmail.com', null, messageEmail);
-    // let p3 = sendText('+61414623616', messagePhone);
+    let p3 = sendText('+61414623616', messagePhone);
     let p4 = sendText('+61404068926', messagePhone);
-    // let p5 = sendText('+919911731169', messagePhone);
+    let p5 = sendText('+919911731169', messagePhone);
+    let p6 = sendTelegram('-546296729',messagePhone)
 
 
     Promise.all([
-      p1, p2, p4
+      p1, p2, p4, p5, p6
     ])
       .then(() => {
         console.log("Promises fullfilled");
