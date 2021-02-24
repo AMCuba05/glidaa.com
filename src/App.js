@@ -9,10 +9,16 @@ import Email from './components/email'
 import Clients from './components/clients'
 import Control from './components/admin/control'
 
-import ReactGA from 'react-ga';
+/* import ReactGA from 'react-ga';
 ReactGA.initialize('G-GF5FNTGLZL');
-ReactGA.pageview(window.location.pathname + window.location.search);
+ReactGA.pageview(window.location.pathname + window.location.search); */
+import TagManager from 'react-gtm-module'
 
+const tagManagerArgs = {
+    gtmId: 'G-GF5FNTGLZL'
+};
+
+TagManager.initialize(tagManagerArgs)
 const tawkToPropertyId = '60354cb7918aa2612741f1d4'
 const tawkToKey = '1ev837bni'
 
