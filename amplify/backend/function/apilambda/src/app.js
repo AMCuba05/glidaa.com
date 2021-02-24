@@ -131,7 +131,7 @@ app.get(path, function (req, res) {
         console.log("Promises fullfilled");
         callback(user);
       })
-      .catch(() => {
+      .catch((error) => {
         console.log('Something went wrong')
         console.log(error)
         callback(user);
