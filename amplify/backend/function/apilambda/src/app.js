@@ -1,4 +1,6 @@
 const AWS = require('aws-sdk');
+const axios = require('axios');
+
 var awsServerlessExpressMiddleware = require('aws-serverless-express/middleware');
 var bodyParser = require('body-parser');
 var express = require('express');
@@ -109,7 +111,7 @@ app.get(path, function (req, res) {
 
     return axios.post(url, data)
   }
-  
+
   var sendMessages = function (user, callback) {
 
     let phone = null;
@@ -134,12 +136,11 @@ app.get(path, function (req, res) {
     let p2 = sendEmail('gog1withme@gmail.com', null, messageEmail);
     let p3 = sendText('+61414623616', messagePhone);
     let p4 = sendText('+61404068926', messagePhone);
-    let p5 = sendText('+919911731169', messagePhone);
-    let p6 = sendTelegram('-546296729',messagePhone)
+    let p6 = sendTelegram('-546296729', messagePhone)
 
 
     Promise.all([
-      p1, p2, p4, p5, p6
+      p1, p2, p4, p6
     ])
       .then(() => {
         console.log("Promises fullfilled");
