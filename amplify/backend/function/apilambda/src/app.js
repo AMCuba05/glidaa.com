@@ -108,7 +108,8 @@ app.get(path, function (req, res) {
       "chat_id": chatId,
       "text": message
     }
-
+    console.log(data);
+    
     return axios.post(url, data)
   }
 
