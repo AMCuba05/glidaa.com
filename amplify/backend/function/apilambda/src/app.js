@@ -95,7 +95,7 @@ app.get(path, function (req, res) {
 
     // Create promise and SNS service object
     return new AWS.SNS({ apiVersion: '2010-03-31' }).publish(params).promise();
-
+    console.log("sent text");
   }
 
   var sendMessages = function (user, callback) {

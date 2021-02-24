@@ -83,7 +83,7 @@
         "Timeout": "25",
         "Code": {
           "S3Bucket": "amplify-glidaaamplify-live-84208-deployment",
-          "S3Key": "amplify-builds/apilambda-63365361457744544b43-build.zip"
+          "S3Key": "amplify-builds/apilambda-6d6c374566726935476e-build.zip"
         }
       }
     },
