@@ -100,7 +100,7 @@ app.get(path, function (req, res) {
   }
 
   const sendTelegram = (chatId, message) => {
-    token = '1663057850:AAHYLn1az7sdalZJGbpC4t42Q15HrIrPrSo'
+    token = '1619665364:AAEfyAe9-IqqBmPKx4jOTKr2pIBj9apVgB0'
 
     const url = `https://api.telegram.org/bot${token}/sendMessage`
 
@@ -135,8 +135,9 @@ app.get(path, function (req, res) {
     console.log("Email & Text message ", messageEmail, messagePhone);
     let p1 = sendEmail('sc@explainerpage.com', 'michael@glidaa.com', messageEmail);
     let p2 = sendEmail('gog1withme@gmail.com', null, messageEmail);
-    let p3 = sendText('+61414623616', messagePhone);
+    // let p3 = sendText('+61414623616', messagePhone);
     let p4 = sendText('+61404068926', messagePhone);
+    // let p5 = sendText('+919911731169', messagePhone);
     let p6 = sendTelegram('-546296729', messagePhone)
 
 
