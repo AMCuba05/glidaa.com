@@ -79,14 +79,15 @@ const NewScrollyteller = () => {
             });
           });
           lottie.addEventListener("frame", function (e) {
-            const canvasdiv= lottie.shadowRoot.querySelectorAll(".main > .animation")
-            if(canvasdiv && canvasdiv.length>0) {
-                const canvasdivNodes = canvasdiv[0].childNodes
+              const canvasdiv= lottie.shadowRoot.querySelectorAll(".main > .animation")
+              if(canvasdiv && canvasdiv.length>0) {
+                  const canvasdivNodes = canvasdiv[0].childNodes
                 if(canvasdivNodes) {
                     const canvas = canvasdivNodes[2]
                     if(canvas){ 
-                        console.log(canvas.width)
+                        console.log(canvas)
                         canvas.width = canvas.width
+                        lottie.resize()
                     }
                 }
                 
