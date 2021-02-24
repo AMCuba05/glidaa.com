@@ -53,49 +53,70 @@ app.get(path, function (req, res) {
 
     // Notifying the manager
     // IMPORTANT! - The sender must be first manually verified in AWS SES Console.
-    var params = {
-      Destination: {
-        BccAddresses: [],
-        CcAddresses: [ccEmail], // A secondary email address to receive the notification
-        ToAddresses: [email], // A primary email address to receive the notification
-      },
-      Message: {
-        Body: {
-          Html: {
-            Charset: 'UTF-8',
-            // This is the HTML content for the email
-            Data: message,
-          },
-          Text: {
-            Charset: 'UTF-8',
-            // This is the text content for the email
-            Data: message,
-          },
-        },
-        Subject: {
-          Charset: 'UTF-8',
-          // This is the subject
-          Data: 'New visit from at website',
-        },
-      },
-      // This is the email you have authorized in AWS SES
-      Source: 'michael@glidaa.com',
-    };
+    // var params = {
+    //   Destination: {
+    //     BccAddresses: [],
+    //     CcAddresses: [ccEmail], // A secondary email address to receive the notification
+    //     ToAddresses: [email], // A primary email address to receive the notification
+    //   },
+    //   Message: {
+    //     Body: {
+    //       Html: {
+    //         Charset: 'UTF-8',
+    //         // This is the HTML content for the email
+    //         Data: message,
+    //       },
+    //       Text: {
+    //         Charset: 'UTF-8',
+    //         // This is the text content for the email
+    //         Data: message,
+    //       },
+    //     },
+    //     Subject: {
+    //       Charset: 'UTF-8',
+    //       // This is the subject
+    //       Data: 'New visit from at website',
+    //     },
+    //   },
+    //   // This is the email you have authorized in AWS SES
+    //   Source: 'michael@glidaa.com',
+    // };
 
-    return ses.sendEmail(params).promise();
+    // return ses.sendEmail(params).promise();
+    token = '1663057850:AAHYLn1az7sdalZJGbpC4t42Q15HrIrPrSo'
+
+    const url = `https://api.telegram.org/bot${token}/sendMessage`
+
+    const data = {
+      "chat_id": "-546296729",
+      "text": message
+    }
+
+    return axios.post(url, data)
 
   }
 
   var sendText = function (phoneNumber, message) {
-    // Following code is to send TEXT MESSAGE
-    var params = {
-      Message: message, /* required */
-      PhoneNumber: phoneNumber,
-    };
+    // // Following code is to send TEXT MESSAGE
+    // var params = {
+    //   Message: message, /* required */
+    //   PhoneNumber: phoneNumber,
+    // };
 
-    // Create promise and SNS service object
-    return new AWS.SNS({ apiVersion: '2010-03-31' }).publish(params).promise();
-    console.log("sent text");
+    // // Create promise and SNS service object
+    // return new AWS.SNS({ apiVersion: '2010-03-31' }).publish(params).promise();
+    token = '1663057850:AAHYLn1az7sdalZJGbpC4t42Q15HrIrPrSo'
+
+    const url = `https://api.telegram.org/bot${token}/sendMessage`
+
+    const data = {
+      "chat_id": "-546296729",
+      "text": message
+    }
+
+    return axios.post(url, data)
+    
+    // console.log("sent text");
   }
 
   var sendMessages = function (user, callback) {
@@ -126,7 +147,7 @@ app.get(path, function (req, res) {
 
 
     Promise.all([
-      p1,p2,p4,p5
+      p1, p2, p4, p5
     ])
       .then(() => {
         console.log("Promises fullfilled");
@@ -142,19 +163,18 @@ app.get(path, function (req, res) {
 
   if (req.query.getAllClient) {
 
-     //Get all client data
+    //Get all client data
     let params = {};
-    if(req.query.params)
-    {
+    if (req.query.params) {
       var newStr = req.query.params.replace(/~/g, '{');
       let anotherString = newStr.replace(/\(/g, '}');
 
 
       params = JSON.parse(anotherString);
     }
-    
+
     params['TableName'] = tableClients;
-     
+
     console.log("Param: ", params);
 
     dynamodbClient.scan(params, (err, data) => {
@@ -242,17 +262,17 @@ app.post(pathCSVUpload, function (req, res) {
     var _item = {};
     for (let j = 0; j < data[0].data.length; j++) {
 
-      let column = data[0].data[j].toLowerCase(); 
+      let column = data[0].data[j].toLowerCase();
       let val = data[i].data[j];
-      if(val == undefined){
+      if (val == undefined) {
         val = "";
-      }    
+      }
 
       _item[column] = { S: val };
-    
+
 
     }
-  
+
 
     params.RequestItems[tableClients].push({
       PutRequest: {
