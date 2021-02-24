@@ -8,6 +8,7 @@ import Admin from './components/admin'
 import Email from './components/email'
 import Clients from './components/clients'
 import Control from './components/admin/control'
+import Dashboard from './components/admin/dashboard'
 
 /* import ReactGA from 'react-ga';
 ReactGA.initialize('G-GF5FNTGLZL');
@@ -32,6 +33,7 @@ export default function App() {
       <Switch>
         <Route exact path="/" component={Main} />
         <Route path="/user/:email" component={Main} />
+        <Route path="/admin/dashboard" component={Dashboard} />
         <Route path="/admin/control/:email" component={Control} />
         <Route path="/admin" component={Admin} />
         <Route path="/email" component={Email} />
