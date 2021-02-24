@@ -260,8 +260,7 @@ export default function Index() {
                           <Card.Body>
                             <Card.Title>
                             <ProgressBar variant="warning" animated now={20} label={20} />
-                              Progress: 100/500
-                            
+                              Progress: 100/500                            
                             </Card.Title>
                             <Card.Text>
                             <Button variant="warning" size="sm">Pause</Button>&nbsp;&nbsp; <Button size="sm" variant="danger">Stop</Button>
