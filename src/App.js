@@ -2,6 +2,7 @@ import React from 'react';
 import './styles.css';
 import 'intersection-observer';
 import { Switch, Route } from 'react-router-dom';
+import tawkTo from "tawkto-react";
 import Main from './components/mainPage';
 import Admin from './components/admin'
 import Email from './components/email'
@@ -11,6 +12,11 @@ import Control from './components/admin/control'
 import ReactGA from 'react-ga';
 ReactGA.initialize('G-GF5FNTGLZL');
 ReactGA.pageview(window.location.pathname + window.location.search);
+
+const tawkToPropertyId = '60354cb7918aa2612741f1d4'
+const tawkToKey = '1ev837bni'
+
+tawkTo(tawkToPropertyId, tawkToKey)
 
 export default function App() {
 
