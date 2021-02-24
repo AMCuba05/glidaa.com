@@ -13,7 +13,10 @@
     },
     "categories": {
       "function": {
-        "apilambda": {}
+        "apilambda": {
+          "deploymentBucketName": "amplify-glidaaamplify-live-84208-deployment",
+          "s3Key": "amplify-builds/apilambda-716d3471425677553869-build.zip"
+        }
       },
       "hosting": {
         "amplifyhosting": {

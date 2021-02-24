@@ -136,3 +136,54 @@ export const deleteClientQuery = /* GraphQL */ `
     }
   }
 `;
+export const createEmailJob = /* GraphQL */ `
+  mutation CreateEmailJob(
+    $input: CreateEmailJobInput!
+    $condition: ModelEmailJobConditionInput
+  ) {
+    createEmailJob(input: $input, condition: $condition) {
+      id
+      name
+      queryId
+      templateId
+      limit
+      emails
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateEmailJob = /* GraphQL */ `
+  mutation UpdateEmailJob(
+    $input: UpdateEmailJobInput!
+    $condition: ModelEmailJobConditionInput
+  ) {
+    updateEmailJob(input: $input, condition: $condition) {
+      id
+      name
+      queryId
+      templateId
+      limit
+      emails
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteEmailJob = /* GraphQL */ `
+  mutation DeleteEmailJob(
+    $input: DeleteEmailJobInput!
+    $condition: ModelEmailJobConditionInput
+  ) {
+    deleteEmailJob(input: $input, condition: $condition) {
+      id
+      name
+      queryId
+      templateId
+      limit
+      emails
+      createdAt
+      updatedAt
+    }
+  }
+`;

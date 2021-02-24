@@ -11,8 +11,13 @@ import ProgressBar from "react-bootstrap/ProgressBar";
 import ListGroup from "react-bootstrap/ListGroup";
 import Badge from "react-bootstrap/Badge";
 import Amplify, { API, graphqlOperation, Storage } from "aws-amplify";
-import { listClientQuerys } from "../../../graphql/queries";
-import { listEmailTemplates } from "../../../graphql/queries";
+import {
+  listClientQuerys,
+  listEmailJobs,
+  listEmailTemplates,
+} from "../../../graphql/queries";
+import { updateEmailJob, createEmailJob } from "../../../graphql/mutations";
+
 import {
   onUpdateEmailTemplate,
   onUpdateClientQuery,
@@ -35,6 +40,7 @@ export default function Index() {
 
   const [loading, setLoading] = useState("Loading user detail ......");
   const [name, setName] = useState();
+  const [emailJobs, setJobs] = useState([]);
   const [emailTemplates, setEmailTempaltes] = useState([]);
   const [selectedQuery, setSelectedQuery] = useState({});
   const [selectedLimit, setSelectedLimit] = useState({});
@@ -60,7 +66,7 @@ export default function Index() {
     setLoading(null);
   };
 
-  const attachQueryListeners = (lstQueries)=>{
+  const attachQueryListeners = (lstQueries) => {
     API.graphql(graphqlOperation(onUpdateClientQuery)).subscribe({
       next: (data) => {
         let query = data.value.data.onUpdateClientQuery;
@@ -70,10 +76,19 @@ export default function Index() {
         setSelectedQuery(query);
       },
     });
-  }
 
-  const attachEmailTemplateListeners = (emailTemplates) =>{
-    
+    API.graphql(graphqlOperation(onCreateClientQuery)).subscribe({
+      next: (data) => {
+        let query = data.value.data.onCreateClientQuery;
+        let allQueries = lstQueries;
+        allQueries.push(query);
+        setQueries(allQueries);
+        setSelectedQuery(query);
+      },
+    });
+  };
+
+  const attachEmailTemplateListeners = (emailTemplates) => {
     API.graphql(graphqlOperation(onUpdateEmailTemplate)).subscribe({
       next: (data) => {
         let template = data.value.data.onUpdateEmailTemplate;
@@ -86,35 +101,53 @@ export default function Index() {
       },
     });
 
-  }
+    API.graphql(graphqlOperation(onCreateEmailTemplate)).subscribe({
+      next: (data) => {
+        let template = data.value.data.onCreateEmailTemplate;
+        let newEmailTemalates = emailTemplates;
+        newEmailTemalates.push(template);
+        setEmailTempaltes(newEmailTemalates);
+        setSelectedTempalte(template);
+      },
+    });
+  };
 
-  const loadQueries = async () =>{
+  const loadQueries = async () => {
     try {
       let res = await API.graphql(graphqlOperation(listClientQuerys));
       setQueries(res.data.listClientQuerys?.items);
       attachQueryListeners(res.data.listClientQuerys?.items);
-      
     } catch {}
-  }
+  };
 
-  const loadTempaltes = async () =>{
+  const loadTempaltes = async () => {
     try {
       let res = await API.graphql(graphqlOperation(listEmailTemplates));
-      setEmailTempaltes(res.data.listEmailTemplates?.items);  
-     
-        attachEmailTemplateListeners(res.data.listEmailTemplates?.items);
-         
+      setEmailTempaltes(res.data.listEmailTemplates?.items);
+
+      attachEmailTemplateListeners(res.data.listEmailTemplates?.items);
     } catch {}
-  }
+  };
+
+  const loadJobs = async () => {
+    setStillLoading();
+    try {
+      let res = await API.graphql(graphqlOperation(listEmailJobs));
+      setJobs(res.data.listEmailJobs?.items);
+      setLoadingComplete();
+    } catch {
+      setLoadingComplete();
+    }
+  };
 
   useEffect(() => {
     const req = async () => {
-     loadQueries();
-     loadTempaltes();    
+      loadJobs();
+      loadQueries();
+      loadTempaltes();
     };
 
     req();
-
   }, []);
 
   const formSend = async () => {};
@@ -135,10 +168,41 @@ export default function Index() {
 
   const handleSaveClick = async () => {};
 
-  const submitHandler = async (event) => {
+  const createHandler = async (event) => {
     event.preventDefault();
+    if (
+      name &&
+      selectedQuery.id &&
+      selectedTempalte.id &&
+      selectedLimit.limit
+    ) {
+      console.log(
+        name,
+        selectedQuery.id,
+        selectedTempalte.id,
+        selectedLimit.limit
+      );
 
-    console.log(name);
+      let payload = {
+        name: name,
+        queryId: selectedQuery.id,
+        templateId: selectedTempalte.id,
+        limit: JSON.stringify({
+          limit: selectedLimit.limit,
+          price: selectedLimit.price,
+        }),
+        emails: null,
+      };
+
+      let res = await API.graphql(
+        graphqlOperation(createEmailJob, { input: payload })
+      );
+      let job = res.data.createEmailJob;
+
+      let newJobs = [...emailJobs];
+      newJobs.push(job);
+      setJobs(newJobs);
+    }
   };
 
   const handleNewTab = (url) => {
@@ -165,9 +229,9 @@ export default function Index() {
             <Row>
               <Col lg="9">
                 <h6>
-                  Total: <Badge variant="primary">3</Badge>, Running:{" "}
-                  <Badge variant="success">2</Badge>, Pause:{" "}
-                  <Badge variant="warning">1</Badge>
+                  Total: <Badge variant="primary">{emailJobs?.length}</Badge>,
+                  Running: <Badge variant="success">0</Badge>, Pause:{" "}
+                  <Badge variant="warning">0</Badge>
                 </h6>
               </Col>
               <Col lg="3">
@@ -179,52 +243,42 @@ export default function Index() {
               </Col>
             </Row>
             <div className="job-container">
-              <ListGroup>
-                <ListGroup.Item>
-                  <Card bg={"success"} key={1} text={"white"} className="mb-2">
-                    <Card.Header>Header</Card.Header>
-                    <Card.Body>
-                      <Card.Title> Card Title </Card.Title>
-                      <Card.Text>
-                        Some quick example text to build on the card title and
-                        make up the bulk of the card's content.
-                      </Card.Text>
-                    </Card.Body>
-                  </Card>
-                </ListGroup.Item>
-
-                <ListGroup.Item>
-                  <Card bg={"primary"} key={1} text={"white"} className="mb-2">
-                    <Card.Header>Header</Card.Header>
-                    <Card.Body>
-                      <Card.Title> Card Title </Card.Title>
-                      <Card.Text>
-                        Some quick example text to build on the card title and
-                        make up the bulk of the card's content.
-                      </Card.Text>
-                    </Card.Body>
-                  </Card>
-                </ListGroup.Item>
-
-                <ListGroup.Item>
-                  <Card bg={"warning"} key={1} text={"white"} className="mb-2">
-                    <Card.Header>Header</Card.Header>
-                    <Card.Body>
-                      <Card.Title> Card Title </Card.Title>
-                      <Card.Text>
-                        Some quick example text to build on the card title and
-                        make up the bulk of the card's content.
-                      </Card.Text>
-                    </Card.Body>
-                  </Card>
-                </ListGroup.Item>
-              </ListGroup>
+              {loading && <h6>Loading ....</h6>}
+              {(!loading && emailJobs?.length<1) && <h6>No job found!</h6>}
+              {emailJobs && (
+                <ListGroup>
+                  {emailJobs?.map((x) => {
+                    return (
+                      <ListGroup.Item key={x.id}>
+                        <Card
+                          bg={"success"}
+                          key={x.id}
+                          text={"white"}
+                          className="mb-2"
+                        >
+                          <Card.Header>{x.name}</Card.Header>
+                          <Card.Body>
+                            <Card.Title>
+                            <ProgressBar variant="warning" animated now={20} label={20} />
+                              Progress: 100/500
+                            
+                            </Card.Title>
+                            <Card.Text>
+                            <Button variant="warning" size="sm">Pause</Button>&nbsp;&nbsp; <Button size="sm" variant="danger">Stop</Button>
+                            </Card.Text>
+                          </Card.Body>
+                        </Card>
+                      </ListGroup.Item>
+                    );
+                  })}
+                </ListGroup>
+              )}
             </div>
           </Col>
           <Col xs="12" lg="7">
             <br></br>
             <h6>New job</h6>
-            <Form onSubmit={submitHandler}>
+            <Form onSubmit={createHandler}>
               <Card>
                 <Card.Body className="">
                   <Form.Group controlId="name">
@@ -234,7 +288,6 @@ export default function Index() {
                       onChange={(event) => {
                         setName(event.target.value);
                       }}
-                      value={name}
                     />
                   </Form.Group>
 
@@ -305,15 +358,12 @@ export default function Index() {
                         </Button>
                       </Dropdown>
                     </Col>
-                     </Row>
-                     <br></br>
-                     <Row>
-                     <Col xs={4}>
+                  </Row>
+                  <br></br>
+                  <Row>
+                    <Col xs={4}>
                       <Dropdown value={selectedLimit.limit}>
-                        <Dropdown.Toggle
-                          variant="warning"
-                          id="dropdown-basic"
-                        >
+                        <Dropdown.Toggle variant="warning" id="dropdown-basic">
                           {selectedLimit?.limit
                             ? selectedLimit?.limit + " / hour"
                             : "Limit per hour"}
@@ -335,8 +385,7 @@ export default function Index() {
                         </Dropdown.Menu>
                       </Dropdown>
                     </Col>
-                
-                     </Row>
+                  </Row>
                 </Card.Body>
               </Card>
               <br></br>

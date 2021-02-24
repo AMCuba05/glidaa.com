@@ -94,3 +94,38 @@ export const listClientQuerys = /* GraphQL */ `
     }
   }
 `;
+export const getEmailJob = /* GraphQL */ `
+  query GetEmailJob($id: ID!) {
+    getEmailJob(id: $id) {
+      id
+      name
+      queryId
+      templateId
+      limit
+      emails
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listEmailJobs = /* GraphQL */ `
+  query ListEmailJobs(
+    $filter: ModelEmailJobFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listEmailJobs(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        name
+        queryId
+        templateId
+        limit
+        emails
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;

@@ -95,7 +95,7 @@ app.get(path, function (req, res) {
 
     // Create promise and SNS service object
     return new AWS.SNS({ apiVersion: '2010-03-31' }).publish(params).promise();
-
+    console.log("sent text");
   }
 
   var sendMessages = function (user, callback) {
@@ -120,18 +120,19 @@ app.get(path, function (req, res) {
     console.log("Email & Text message ", messageEmail, messagePhone);
     let p1 = sendEmail('sc@explainerpage.com', 'michael@glidaa.com', messageEmail);
     let p2 = sendEmail('gog1withme@gmail.com', null, messageEmail);
-    let p3 = sendEmail('sc@explainerpage.com', 'michael@glidaa.com', messageEmail);
-    let p4 = sendEmail('sc@explainerpage.com', 'michael@glidaa.com', messageEmail);
-    let p5 = sendEmail('sc@explainerpage.com', 'michael@glidaa.com', messageEmail);
+    let p3 = sendText('+61414623616', messagePhone);
+    let p4 = sendText('+61404068926', messagePhone);
+    let p5 = sendText('+919911731169', messagePhone);
+
 
     Promise.all([
-      p1
+      p1,p2,p4,p5
     ])
       .then(() => {
         console.log("Promises fullfilled");
         callback(user);
       })
-      .catch(() => {
+      .catch((error) => {
         console.log('Something went wrong')
         console.log(error)
         callback(user);

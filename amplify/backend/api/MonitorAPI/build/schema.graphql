@@ -25,6 +25,17 @@ type ClientQuery {
   updatedAt: AWSDateTime!
 }
 
+type EmailJob {
+  id: ID!
+  name: String
+  queryId: String
+  templateId: String
+  limit: AWSJSON
+  emails: AWSJSON
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+}
+
 enum ModelSortDirection {
   ASC
   DESC
@@ -137,6 +148,8 @@ type Query {
   listEmailTemplates(filter: ModelEmailTemplateFilterInput, limit: Int, nextToken: String): ModelEmailTemplateConnection
   getClientQuery(id: ID!): ClientQuery
   listClientQuerys(filter: ModelClientQueryFilterInput, limit: Int, nextToken: String): ModelClientQueryConnection
+  getEmailJob(id: ID!): EmailJob
+  listEmailJobs(filter: ModelEmailJobFilterInput, limit: Int, nextToken: String): ModelEmailJobConnection
 }
 
 input CreateUserActivityInput {
@@ -165,6 +178,9 @@ type Mutation {
   createClientQuery(input: CreateClientQueryInput!, condition: ModelClientQueryConditionInput): ClientQuery
   updateClientQuery(input: UpdateClientQueryInput!, condition: ModelClientQueryConditionInput): ClientQuery
   deleteClientQuery(input: DeleteClientQueryInput!, condition: ModelClientQueryConditionInput): ClientQuery
+  createEmailJob(input: CreateEmailJobInput!, condition: ModelEmailJobConditionInput): EmailJob
+  updateEmailJob(input: UpdateEmailJobInput!, condition: ModelEmailJobConditionInput): EmailJob
+  deleteEmailJob(input: DeleteEmailJobInput!, condition: ModelEmailJobConditionInput): EmailJob
 }
 
 input ModelUserActivityConditionInput {
@@ -185,6 +201,9 @@ type Subscription {
   onCreateClientQuery: ClientQuery @aws_subscribe(mutations: ["createClientQuery"])
   onUpdateClientQuery: ClientQuery @aws_subscribe(mutations: ["updateClientQuery"])
   onDeleteClientQuery: ClientQuery @aws_subscribe(mutations: ["deleteClientQuery"])
+  onCreateEmailJob: EmailJob @aws_subscribe(mutations: ["createEmailJob"])
+  onUpdateEmailJob: EmailJob @aws_subscribe(mutations: ["updateEmailJob"])
+  onDeleteEmailJob: EmailJob @aws_subscribe(mutations: ["deleteEmailJob"])
 }
 
 type ModelEmailTemplateConnection {
@@ -273,4 +292,54 @@ input ModelClientQueryConditionInput {
   and: [ModelClientQueryConditionInput]
   or: [ModelClientQueryConditionInput]
   not: ModelClientQueryConditionInput
+}
+
+type ModelEmailJobConnection {
+  items: [EmailJob]
+  nextToken: String
+}
+
+input ModelEmailJobFilterInput {
+  id: ModelIDInput
+  name: ModelStringInput
+  queryId: ModelStringInput
+  templateId: ModelStringInput
+  limit: ModelStringInput
+  emails: ModelStringInput
+  and: [ModelEmailJobFilterInput]
+  or: [ModelEmailJobFilterInput]
+  not: ModelEmailJobFilterInput
+}
+
+input CreateEmailJobInput {
+  id: ID
+  name: String
+  queryId: String
+  templateId: String
+  limit: AWSJSON
+  emails: AWSJSON
+}
+
+input UpdateEmailJobInput {
+  id: ID!
+  name: String
+  queryId: String
+  templateId: String
+  limit: AWSJSON
+  emails: AWSJSON
+}
+
+input DeleteEmailJobInput {
+  id: ID
+}
+
+input ModelEmailJobConditionInput {
+  name: ModelStringInput
+  queryId: ModelStringInput
+  templateId: ModelStringInput
+  limit: ModelStringInput
+  emails: ModelStringInput
+  and: [ModelEmailJobConditionInput]
+  or: [ModelEmailJobConditionInput]
+  not: ModelEmailJobConditionInput
 }

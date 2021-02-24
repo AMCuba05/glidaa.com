@@ -82,8 +82,12 @@
         "Layers": [],
         "Timeout": "25",
         "Code": {
-          "S3Bucket": "amplify-glidaaamplify-live-84208-deployment",
-          "S3Key": "amplify-builds/apilambda-6d6c374566726935476e-build.zip"
+          "S3Bucket": {
+            "Ref": "deploymentBucketName"
+          },
+          "S3Key": {
+            "Ref": "s3Key"
+          }
         }
       }
     },

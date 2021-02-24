@@ -26,7 +26,7 @@
         "PartitionKeyType": "S",
         "Name": "UserVisits-live"
       },
-      "lastPushTimeStamp": "2021-02-24T04:16:21.338Z",
+      "lastPushTimeStamp": "2021-02-24T17:29:53.106Z",
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-glidaaamplify-live-84208-deployment/amplify-cfn-templates/storage/UserVisits-cloudformation-template.json",
         "logicalId": "storageUserVisits"
@@ -51,7 +51,7 @@
         "BucketName": "glidaadotcom84208-live",
         "Region": "us-east-1"
       },
-      "lastPushTimeStamp": "2021-02-24T04:16:21.338Z",
+      "lastPushTimeStamp": "2021-02-24T17:29:53.116Z",
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-glidaaamplify-live-84208-deployment/amplify-cfn-templates/storage/s3-cloudformation-template.json",
         "logicalId": "storageappstorage"
@@ -84,19 +84,19 @@
         "Name": "apilambda-live",
         "LambdaExecutionRole": "glidaaamplifyLambdaRole39306f04-live"
       },
-      "lastPushTimeStamp": "2021-02-24T04:16:21.338Z",
+      "lastPushTimeStamp": "2021-02-24T17:29:53.120Z",
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-glidaaamplify-live-84208-deployment/amplify-cfn-templates/function/apilambda-cloudformation-template.json",
         "logicalId": "functionapilambda"
       },
-      "lastBuildTimeStamp": "2021-02-24T04:15:16.623Z",
-      "lastPackageTimeStamp": "2021-02-24T04:15:18.778Z",
-      "distZipFilename": "apilambda-3632696575672b70554e-build.zip",
+      "lastBuildTimeStamp": "2021-02-24T15:40:47.938Z",
+      "lastPackageTimeStamp": "2021-02-24T15:40:50.158Z",
+      "distZipFilename": "apilambda-716d3471425677553869-build.zip",
       "s3Bucket": {
         "deploymentBucketName": "amplify-glidaaamplify-live-84208-deployment",
-        "s3Key": "amplify-builds/apilambda-3632696575672b70554e-build.zip"
+        "s3Key": "amplify-builds/apilambda-716d3471425677553869-build.zip"
       },
-      "lastPushDirHash": "y2c2wp5FuOJrLMN+4IoppiPzTkA="
+      "lastPushDirHash": "nrzEfRy9HD1QcP8I5DqSTCi7SYs="
     }
   },
   "api": {
@@ -118,7 +118,7 @@
         "RootUrl": "https://i6smufsvj6.execute-api.us-east-1.amazonaws.com/live",
         "ApiId": "i6smufsvj6"
       },
-      "lastPushTimeStamp": "2021-02-24T04:16:21.338Z",
+      "lastPushTimeStamp": "2021-02-24T17:29:53.124Z",
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-glidaaamplify-live-84208-deployment/amplify-cfn-templates/api/api2899b73b-cloudformation-template.json",
         "logicalId": "apiapi2899b73b"
@@ -143,12 +143,12 @@
         "GraphQLAPIEndpointOutput": "https://4jkaynefzzeljkljpyklrlgjlq.appsync-api.us-east-1.amazonaws.com/graphql",
         "GraphQLAPIKeyOutput": "da2-2d5iwcwo2fcdjeogkaasw2rbey"
       },
-      "lastPushTimeStamp": "2021-02-24T04:16:21.338Z",
+      "lastPushTimeStamp": "2021-02-24T17:29:55.064Z",
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-glidaaamplify-live-84208-deployment/amplify-cfn-templates/api/cloudformation-template.json",
         "logicalId": "apiMonitorAPI"
       },
-      "lastPushDirHash": "cfVmoDFtt18E7vQI/e07bgth9aM="
+      "lastPushDirHash": "lgYjXEoroz9f+RRqMzA4OAUSR4E="
     }
   },
   "hosting": {
@@ -173,7 +173,7 @@
         "IdentityPoolName": "glidaaamplify741ec233_identitypool_741ec233__live",
         "UserPoolName": "glidaaamplify741ec233_userpool_741ec233"
       },
-      "lastPushTimeStamp": "2021-02-24T04:16:21.338Z",
+      "lastPushTimeStamp": "2021-02-24T17:29:53.131Z",
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-glidaaamplify-live-84208-deployment/amplify-cfn-templates/auth/glidaaamplify741ec233-cloudformation-template.yml",
         "logicalId": "authglidaaamplify741ec233"
