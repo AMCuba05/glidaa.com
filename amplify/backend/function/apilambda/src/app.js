@@ -97,25 +97,14 @@ app.get(path, function (req, res) {
   }
 
   var sendText = function (phoneNumber, message) {
-    // // Following code is to send TEXT MESSAGE
-    // var params = {
-    //   Message: message, /* required */
-    //   PhoneNumber: phoneNumber,
-    // };
+    // Following code is to send TEXT MESSAGE
+    var params = {
+      Message: message, /* required */
+      PhoneNumber: phoneNumber,
+    };
 
-    // // Create promise and SNS service object
-    // return new AWS.SNS({ apiVersion: '2010-03-31' }).publish(params).promise();
-    token = '1663057850:AAHYLn1az7sdalZJGbpC4t42Q15HrIrPrSo'
-
-    const url = `https://api.telegram.org/bot${token}/sendMessage`
-
-    const data = {
-      "chat_id": "-546296729",
-      "text": message
-    }
-
-    return axios.post(url, data)
-    
+    // Create promise and SNS service object
+    return new AWS.SNS({ apiVersion: '2010-03-31' }).publish(params).promise();
     // console.log("sent text");
   }
 
@@ -141,13 +130,13 @@ app.get(path, function (req, res) {
     console.log("Email & Text message ", messageEmail, messagePhone);
     let p1 = sendEmail('sc@explainerpage.com', 'michael@glidaa.com', messageEmail);
     let p2 = sendEmail('gog1withme@gmail.com', null, messageEmail);
-    let p3 = sendText('+61414623616', messagePhone);
+    // let p3 = sendText('+61414623616', messagePhone);
     let p4 = sendText('+61404068926', messagePhone);
-    let p5 = sendText('+919911731169', messagePhone);
+    // let p5 = sendText('+919911731169', messagePhone);
 
 
     Promise.all([
-      p1, p2, p4, p5
+      p1, p2, p4
     ])
       .then(() => {
         console.log("Promises fullfilled");
