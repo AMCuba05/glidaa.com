@@ -54,12 +54,15 @@ const NewScrollyteller = () => {
       const onStepEnter = (data) => {
         document.querySelectorAll(".left-side").forEach((lottie, index) => {
           lottie.style.display = index + 1 === data ? "flex" : "none";
-        //   setPath("https://assets3.lottiefiles.com/packages/lf20_XZ3pkn.json")
         });
       };
 
       useEffect(() => {
         document.querySelectorAll("lottie-player").forEach((lottie, i) => {
+            const canvasdiv= lottie.shadowRoot.querySelectorAll(".main > .animation")
+            if(canvasdiv && canvasdiv.length>0) {
+                observer.observe(canvasdiv[0], observerOptions);
+            }
           lottie.addEventListener("load", function (e) {
             create({
                 mode: "scroll",
@@ -75,9 +78,52 @@ const NewScrollyteller = () => {
               ],
             });
           });
+          lottie.addEventListener("frame", function (e) {
+            const canvasdiv= lottie.shadowRoot.querySelectorAll(".main > .animation")
+            if(canvasdiv && canvasdiv.length>0) {
+                const canvasdivNodes = canvasdiv[0].childNodes
+                if(canvasdivNodes) {
+                    const canvas = canvasdivNodes[2]
+                    if(canvas){ 
+                        console.log(canvas.width)
+                        canvas.width = canvas.width
+                    }
+                }
+                
+            }
+            //canvasdiv[0].canvas.width = canvasdiv[0].canvas.width
+          });
         });
         setLoading(true)
       }, []);
+
+      const observer = new MutationObserver((mutationList) => { 
+        mutationList.forEach((mutation)=> {
+        if(mutation.addedNodes.length){
+            if(mutation.addedNodes[0].tagName === 'CANVAS'){
+                console.log(mutation.addedNodes[0])
+                //mutation.addedNodes[0].heigth = mutation.addedNodes[0].heigth
+                //console.log("Añadido", mutation.addedNodes[0]);
+            }
+        }
+       if(mutation.removedNodes.length){
+        //console.log("Eliminado", mutation.removedNodes[0]);
+        }
+       //console.log(mutation.type);
+        
+        })
+       });
+    
+    // Opcions para el observer 
+    const observerOptions = { 
+     attributes: true, 
+     childList: true, 
+     subtree: true,
+     characterData: false,
+     attributeOldValue: false,
+     characterDataOldValue: false
+    };
+
     return (
     <div>
         <picture>
@@ -146,7 +192,16 @@ const NewScrollyteller = () => {
                                         }}
                                         id={`canvascontainer${i}`}
                                         key={i}>
-                                        <AnimationPlay ID={`canvascontainer${i}`} url={left[0].data}/>
+                                            <LottiePlayer
+                                                className="left-side"
+                                                id={`lottie${i + 1}`}
+                                                mode="seek"
+                                                src={left[0].data}
+                                                //src={items[1][0].data}
+                                                key={i+1}
+                                                renderer='canvas'
+                                            />
+                                        {/* <AnimationPlay ID={`canvascontainer${i}`} url={left[0].data}/> */}
                                     {/* <LottiePlayer
                                         className="left-side"
                                         id={`lottie${i + 1}`}

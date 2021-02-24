@@ -204,7 +204,7 @@ function Scrollyteller() {
   }, []);
 
   const onStepEnter = (data) => {
-    // console.log("------------------");
+    console.log("------------------");
     document.querySelectorAll(".left-side").forEach((lottie, index) => {
       lottie.style.display = index + 1 == data ? "block" : "none";
     });
@@ -313,14 +313,15 @@ function Scrollyteller() {
           <div className="graphic">
             {items.length > 0
               ? cardScroll.map((left, i) => {
-                  // if (left[0].slideType === "video") {
-                  //   return (
-                  //     <div className="left-side video" key={i}>
-                  //       <VideoBackground src={left[0].data} />
-                  //     </div>
-                  //   );
-                  // } else 
+                  if (left[0].slideType === "video") {
+                    return (
+                      <div className="left-side video" key={i}>
+                        <VideoBackground src={left[0].data} />
+                      </div>
+                    );
+                  } else 
                   if (left[0].slideType === "2d") {
+                    console.log("d2")
                     return (
                       <div
                         className={`left-side ${
@@ -331,7 +332,6 @@ function Scrollyteller() {
                         key={i}
                       >
                         
-                        {console.log(left)}
                         {/* <Player
                           // src={items[1][0].data}
                           // src = "https://assets9.lottiefiles.com/packages/lf20_jfmjd0wo.json"
@@ -353,7 +353,6 @@ function Scrollyteller() {
                           //src={items[1][0].data}
                           key={i+1}
                           renderer='canvas'
-
                         />
                       </div>
                     );

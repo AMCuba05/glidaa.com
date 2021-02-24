@@ -91,8 +91,8 @@ const observerOptions = {
           <lottie-player
           id={ID}
             autoplay
-            loop
-            mode="normal"
+            //loop
+            mode="seek"
             src={url}
             renderer="canvas"
             >

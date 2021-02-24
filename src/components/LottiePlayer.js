@@ -20,6 +20,10 @@ const LottiePlayer = React.memo((props) => {
     </Player> */}
       <lottie-player 
       {...props}
+      rendererSettings ={{
+        clearCanvas: false
+      }
+      }
       ></lottie-player>
     </>
   );

@@ -24,7 +24,7 @@ img {
     -ms-animation: fadeIn ease 3s !important;
   }
   .left-side{
-    display: none;
+    display: block;
   }
   @keyframes fadeIn {
     0% {
