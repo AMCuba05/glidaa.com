@@ -118,6 +118,7 @@ export const onCreateEmailJob = /* GraphQL */ `
       templateId
       limit
       emails
+      status
       createdAt
       updatedAt
     }
@@ -132,6 +133,7 @@ export const onUpdateEmailJob = /* GraphQL */ `
       templateId
       limit
       emails
+      status
       createdAt
       updatedAt
     }
@@ -146,6 +148,7 @@ export const onDeleteEmailJob = /* GraphQL */ `
       templateId
       limit
       emails
+      status
       createdAt
       updatedAt
     }

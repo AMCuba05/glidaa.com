@@ -24,7 +24,8 @@ type EmailJob @model {
   name: String
   queryId: String
   templateId: String
-  limit: AWSJSON
+  limit: String
   emails: AWSJSON
+  status: String
 }
 

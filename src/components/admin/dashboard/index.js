@@ -43,14 +43,8 @@ export default function Index() {
   const [emailJobs, setJobs] = useState([]);
   const [emailTemplates, setEmailTempaltes] = useState([]);
   const [selectedQuery, setSelectedQuery] = useState({});
-  const [selectedLimit, setSelectedLimit] = useState({});
+  const [limit, setLimit] = useState({});
   const [lstQueries, setQueries] = useState([]);
-  const [jobLimits, setJobLimits] = useState([
-    { limit: 60, price: 30 },
-    { limit: 120, price: 60 },
-    ,
-    { limit: 180, price: 100 },
-  ]);
 
   const [selectedTempalte, setSelectedTempalte] = useState({});
 
@@ -150,10 +144,6 @@ export default function Index() {
     req();
   }, []);
 
-  const formSend = async () => {};
-
-  formSend();
-
   const handleQueryChange = async (item) => {
     setSelectedQuery(item);
   };
@@ -162,36 +152,47 @@ export default function Index() {
     setSelectedTempalte(item);
   };
 
-  const handleLimitChange = async (item) => {
-    setSelectedLimit(item);
+  const formSend = async (params = null) => {
+    let url = `https://i6smufsvj6.execute-api.us-east-1.amazonaws.com/live/visit?getAllClient=${true}`;
+
+    if (params) {
+      var newStr = params.replace(/{/g, "~");
+      let anotherString = newStr.replace(/}/g, "(");
+      url += `&params=${anotherString}`;
+    }
+    try {
+      let res = await fetch(url);
+
+      let data = await res.json();
+      let userData;
+      if (data.body) {
+        let dataBody = JSON.parse(data.body);
+
+        return dataBody;
+      }
+    } catch {
+      return null;
+    }
   };
 
   const handleSaveClick = async () => {};
 
   const createHandler = async (event) => {
     event.preventDefault();
-    if (
-      name &&
-      selectedQuery.id &&
-      selectedTempalte.id &&
-      selectedLimit.limit
-    ) {
-      console.log(
-        name,
-        selectedQuery.id,
-        selectedTempalte.id,
-        selectedLimit.limit
-      );
+    if (name && selectedQuery.id && selectedTempalte.id && limit) {
+      console.log(name, selectedQuery.id, selectedTempalte.id, limit);
+
+      let clients = await formSend(selectedQuery.query);
+      let emails = clients.map((x) => { return {email: x.email, isProcessed: false} });
+
+      console.log(emails);
 
       let payload = {
         name: name,
         queryId: selectedQuery.id,
         templateId: selectedTempalte.id,
-        limit: JSON.stringify({
-          limit: selectedLimit.limit,
-          price: selectedLimit.price,
-        }),
-        emails: null,
+        limit: limit,
+        emails: JSON.stringify(emails),
       };
 
       let res = await API.graphql(
@@ -225,26 +226,26 @@ export default function Index() {
           </Col>
         </Row>
         <Row>
-          <Col xs lg="5">
+          <Col xs lg="7">
             <Row>
-              <Col lg="9">
+              <Col lg="12">
                 <h6>
                   Total: <Badge variant="primary">{emailJobs?.length}</Badge>,
                   Running: <Badge variant="success">0</Badge>, Pause:{" "}
                   <Badge variant="warning">0</Badge>
                 </h6>
               </Col>
-              <Col lg="3">
+              {/* <Col lg="3">
                 <h6>
                   <Button variant="primary" size="sm" block>
                     Create{" "}
                   </Button>
                 </h6>
-              </Col>
+              </Col> */}
             </Row>
             <div className="job-container">
               {loading && <h6>Loading ....</h6>}
-              {(!loading && emailJobs?.length<1) && <h6>No job found!</h6>}
+              {!loading && emailJobs?.length < 1 && <h6>No job found!</h6>}
               {emailJobs && (
                 <ListGroup>
                   {emailJobs?.map((x) => {
@@ -256,14 +257,30 @@ export default function Index() {
                           text={"white"}
                           className="mb-2"
                         >
-                          <Card.Header>{x.name}</Card.Header>
+                          <Card.Header>
+                            {x.name}{" "}
+                            <Badge variant="primary">
+                              Limit: {x.limit} / hour
+                            </Badge>
+                          </Card.Header>
                           <Card.Body>
                             <Card.Title>
-                            <ProgressBar variant="warning" animated now={20} label={20} />
-                              Progress: 100/500                            
+                              <ProgressBar
+                                variant="warning"
+                                animated
+                                now={20}
+                                label={20}
+                              />
+                              Progress: {JSON.parse(x.emails)?.filter(x=>x.isProcessed).length}/{JSON.parse(x.emails)?.length}
                             </Card.Title>
                             <Card.Text>
-                            <Button variant="warning" size="sm">Pause</Button>&nbsp;&nbsp; <Button size="sm" variant="danger">Stop</Button>
+                              <Button variant="warning" size="sm">
+                                Pause
+                              </Button>
+                              &nbsp;&nbsp;{" "}
+                              <Button size="sm" variant="danger">
+                                Stop
+                              </Button>
                             </Card.Text>
                           </Card.Body>
                         </Card>
@@ -274,8 +291,7 @@ export default function Index() {
               )}
             </div>
           </Col>
-          <Col xs="12" lg="7">
-            <br></br>
+          <Col xs="12" lg="5">            
             <h6>New job</h6>
             <Form onSubmit={createHandler}>
               <Card>
@@ -291,7 +307,7 @@ export default function Index() {
                   </Form.Group>
 
                   <Row>
-                    <Col xs={4} md="auto">
+                    <Col xs={12} md="auto">
                       <Dropdown value={selectedTempalte.id}>
                         <Dropdown.Toggle
                           variant="secondary"
@@ -324,7 +340,7 @@ export default function Index() {
                         </Button>
                       </Dropdown>
                     </Col>
-                    <Col xs={4} md="auto">
+                    <Col xs={12} md="auto">
                       <Dropdown value={selectedQuery.id}>
                         <Dropdown.Toggle
                           variant="secondary"
@@ -360,29 +376,16 @@ export default function Index() {
                   </Row>
                   <br></br>
                   <Row>
-                    <Col xs={4}>
-                      <Dropdown value={selectedLimit.limit}>
-                        <Dropdown.Toggle variant="warning" id="dropdown-basic">
-                          {selectedLimit?.limit
-                            ? selectedLimit?.limit + " / hour"
-                            : "Limit per hour"}
-                        </Dropdown.Toggle>
-
-                        <Dropdown.Menu>
-                          {jobLimits &&
-                            jobLimits.map((item) => {
-                              return (
-                                <Dropdown.Item
-                                  onClick={() => handleLimitChange(item)}
-                                  value={item.limit}
-                                  key={item.limit}
-                                >
-                                  Limit: {item.limit}, Price: {item.price}
-                                </Dropdown.Item>
-                              );
-                            })}
-                        </Dropdown.Menu>
-                      </Dropdown>
+                    <Col xs={6} md="auto">
+                      <Form.Group controlId="limit">
+                        <Form.Label>Limit/hour</Form.Label>
+                        <Form.Control
+                          type="number"
+                          onChange={(event) => {
+                            setLimit(event.target.value);
+                          }}
+                        />
+                      </Form.Group>
                     </Col>
                   </Row>
                 </Card.Body>
@@ -393,7 +396,7 @@ export default function Index() {
                 <Col xs={8} lg="8"></Col>
                 <Col xs={4} lg="4">
                   <Button variant="primary" type="submit" size="sm" block>
-                    Save
+                    Create
                   </Button>
                 </Col>
               </Row>

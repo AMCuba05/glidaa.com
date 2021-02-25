@@ -30,8 +30,9 @@ type EmailJob {
   name: String
   queryId: String
   templateId: String
-  limit: AWSJSON
+  limit: String
   emails: AWSJSON
+  status: String
   createdAt: AWSDateTime!
   updatedAt: AWSDateTime!
 }
@@ -306,6 +307,7 @@ input ModelEmailJobFilterInput {
   templateId: ModelStringInput
   limit: ModelStringInput
   emails: ModelStringInput
+  status: ModelStringInput
   and: [ModelEmailJobFilterInput]
   or: [ModelEmailJobFilterInput]
   not: ModelEmailJobFilterInput
@@ -316,8 +318,9 @@ input CreateEmailJobInput {
   name: String
   queryId: String
   templateId: String
-  limit: AWSJSON
+  limit: String
   emails: AWSJSON
+  status: String
 }
 
 input UpdateEmailJobInput {
@@ -325,8 +328,9 @@ input UpdateEmailJobInput {
   name: String
   queryId: String
   templateId: String
-  limit: AWSJSON
+  limit: String
   emails: AWSJSON
+  status: String
 }
 
 input DeleteEmailJobInput {
@@ -339,6 +343,7 @@ input ModelEmailJobConditionInput {
   templateId: ModelStringInput
   limit: ModelStringInput
   emails: ModelStringInput
+  status: ModelStringInput
   and: [ModelEmailJobConditionInput]
   or: [ModelEmailJobConditionInput]
   not: ModelEmailJobConditionInput

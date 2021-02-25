@@ -103,6 +103,7 @@ export const getEmailJob = /* GraphQL */ `
       templateId
       limit
       emails
+      status
       createdAt
       updatedAt
     }
@@ -122,6 +123,7 @@ export const listEmailJobs = /* GraphQL */ `
         templateId
         limit
         emails
+        status
         createdAt
         updatedAt
       }
