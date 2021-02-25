@@ -107,14 +107,10 @@ export default function Index() {
     });
   };
 
-  const attachEmailJobsListeners = (emailJobs) => {
+  const attachEmailJobsListeners = () => {
     API.graphql(graphqlOperation(onUpdateEmailJob)).subscribe({
       next: (data) => {
-        let job = data.value.data.onUpdateEmailJob;
-        let newJob = emailJobs.filter((x) => x.id != job.id);
-        let newJobs = [...emailJobs];
-        newJobs.push(job);
-        setJobs(job);
+        loadJobs(false);
       },
     });
   };
@@ -135,12 +131,16 @@ export default function Index() {
     } catch {}
   };
 
-  const loadJobs = async () => {
-    setStillLoading();
+  const loadJobs = async (addlistener = true) => {
+    if (addlistener) {
+      setStillLoading();
+    }
     try {
       let res = await API.graphql(graphqlOperation(listEmailJobs));
       setJobs(res.data.listEmailJobs?.items);
-      attachEmailJobsListeners(res.data.listEmailJobs?.items);
+      if (addlistener) {
+        attachEmailJobsListeners(res.data.listEmailJobs?.items);
+      }
       setLoadingComplete();
     } catch {
       setLoadingComplete();
@@ -193,14 +193,13 @@ export default function Index() {
   const createHandler = async (event) => {
     event.preventDefault();
     if (name && selectedQuery.id && selectedTempalte.id && limit) {
+      hideToast();
       console.log(name, selectedQuery.id, selectedTempalte.id, limit);
 
       let clients = await formSend(selectedQuery.query);
       let emails = clients.map((x) => {
         return { email: x.email, isProcessed: false };
       });
-
-      console.log(emails);
 
       let payload = {
         name: name,
@@ -217,8 +216,9 @@ export default function Index() {
       let job = res.data.createEmailJob;
 
       let newJobs = [...emailJobs];
-      newJobs.push(job);
+      newJobs.unshift(job);
       setJobs(newJobs);
+      showToast();
     }
   };
 
@@ -247,8 +247,18 @@ export default function Index() {
               <Col lg="12">
                 <h6>
                   Total: <Badge variant="primary">{emailJobs?.length}</Badge>,
-                  Running: <Badge variant="success">0</Badge>, Pause:{" "}
-                  <Badge variant="warning">0</Badge>
+                  Running:{" "}
+                  <Badge variant="success">
+                    {
+                      emailJobs?.filter(
+                        (x) => x.status == "active" || x.status == "processing"
+                      ).length
+                    }
+                  </Badge>
+                  , Pause:{" "}
+                  <Badge variant="warning">
+                    {emailJobs?.filter((x) => x.status == "pause").length}
+                  </Badge>
                 </h6>
               </Col>
               {/* <Col lg="3">
@@ -286,8 +296,12 @@ export default function Index() {
                               <ProgressBar
                                 variant="warning"
                                 animated
-                                now={20}
-                                label={20}
+                                now={
+                                  JSON.parse(x.emails)?.filter(
+                                    (x) => x.isProcessed
+                                  ).length
+                                }
+                                max={JSON.parse(x.emails)?.length}
                               />
                               Progress:{" "}
                               {
@@ -451,7 +465,7 @@ export default function Index() {
           <strong className="mr-auto">Success</strong>
           <small>Just now</small>
         </Toast.Header>
-        <Toast.Body>Template saved successfully!</Toast.Body>
+        <Toast.Body>Job saved successfully!</Toast.Body>
       </Toast>
     </div>
   );
