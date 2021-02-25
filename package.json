@@ -35,7 +35,7 @@
     "react-scripts": "^3.4.3",
     "react-scrollama": "^2.2.15",
     "react-three-fiber": "^5.1.7",
-    "react-waypoint": "^9.0.2",
+    "react-waypoint": "^9.0.3",
     "redux": "^4.0.5",
     "resize-observer-polyfill": "^1.5.1",
     "scrollama": "^2.2.1",
