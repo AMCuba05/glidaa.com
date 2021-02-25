@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { render } from 'react-dom';
 import Gallery from 'react-grid-gallery';
 
@@ -20,13 +20,13 @@ import porfolio07 from "../assets/images/porfolio07.png";
 import porfolio08 from "../assets/images/porfolio08.png";
 import "../Gallery.css";
 
-
 const IMAGES =
   [{
     src: porfolio01,
     thumbnail: image1,
     thumbnailWidth: 170,
     thumbnailHeight: 130,
+    alt: "Abbott Diagnostics",
     // isSelected: true,
      caption: "Abbott Diagnostics"
   },
@@ -36,36 +36,42 @@ const IMAGES =
     thumbnailWidth: 170,
     thumbnailHeight: 130,
     // tags: [{ value: "Ocean", title: "Ocean" }, { value: "People", title: "People" }],
+    alt: "NSW Government Transport Department",
     caption: "NSW Government Transport Department"
   }, {
     src: porfolio03,
     thumbnail: image3,
     thumbnailWidth: 170,
     thumbnailHeight: 130,
+    alt: "Skycoin",
     caption: "Skycoin"
   }, {
     src: porfolio04,
     thumbnail: image4,
     thumbnailWidth: 170,
     thumbnailHeight: 130,
+    alt: "Reuters",
     caption: "Reuters"
   }, {
     src: porfolio05,
     thumbnail: image5,
     thumbnailWidth: 170,
     thumbnailHeight: 130,
+    alt: "News Ltd",
     caption: "News Ltd"
   }, {
     src: porfolio06,
     thumbnail: image6,
     thumbnailWidth: 170,
     thumbnailHeight: 130,
+    alt: "Governemnet Insurance Regulator",
     caption: "Governemnet Insurance Regulator"
   }, {
     src: porfolio07,
     thumbnail: image7,
     thumbnailWidth: 170,
     thumbnailHeight: 130,
+    alt: "Pharmacy Guild of Australia",
     caption: "Pharmacy Guild of Australia"
   },
   {
@@ -73,14 +79,39 @@ const IMAGES =
     thumbnail: image8,
     thumbnailWidth: 170,
     thumbnailHeight: 130,
+    alt: "Woolworths Supermarkets",
     caption: "Woolworths Supermarkets"
   }]
 
-const MyGallery = ({ isOpen, lightboxWillClose }) => {
-
-
+const MyGallery = ({ isOpen, lightboxWillClose, isLoad, ID }) => {
+  useEffect(() => {
+    if(isLoad) {
+      document.querySelectorAll(`#${ID}`).forEach((portfolio, i) => {
+        portfolio.style.display = "none";
+      })
+    }
+  }, [isLoad])
   return (
-    <Gallery backdropClosesModal={true} enableImageSelection={false} images={IMAGES} isOpen={isOpen} lightboxWillClose={lightboxWillClose} />
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      <div
+        style={{
+          display: "block",
+          minHeight: "1px",
+          width: "100%",
+          border: "1px solid #ddd",
+          overflow: "auto"
+        }}
+        id="gallery"
+      >
+        <Gallery backdropClosesModal={true} enableImageSelection={false} images={IMAGES} isOpen={isOpen} lightboxWillClose={lightboxWillClose} />
+      </div>
+    </div>
   )
 };
 

@@ -27,6 +27,7 @@ const NewScrollyteller = () => {
     const [isOpen, setIsGalleryOpen] = useState(false);
     const [isOverlay, setOverlay] = useState(true);
     const [isLoading, setLoading] = useState(false);
+    const [leftSideDiv, setLeftSideDiv] = useState(null)
     
     const isSafarioIos = className(`left-side ${
         isSafari() || iOS()
@@ -41,6 +42,7 @@ const NewScrollyteller = () => {
 
     const handleGalleryClick = useCallback(
         (val) => {
+            console.log("val:",val)
           if (val !== 7) return;
           setIsGalleryOpen(true);
         },
@@ -50,13 +52,20 @@ const NewScrollyteller = () => {
       const handleOnclose = (event) => {
         setIsGalleryOpen(false);
       };
-
-      const onStepEnter = (data) => {
-        document.querySelectorAll(".left-side").forEach((lottie, index) => {
-          lottie.style.display = index + 1 === data ? "flex" : "none";
-        });
-      };
-
+    let indexDiv = -1;
+    const onStepEnter = (data) => {
+        const newpoint = indexDiv===data -1?false:true;
+        if(newpoint && indexDiv>=0 && leftSideDiv.length>indexDiv) leftSideDiv[indexDiv].style.display = "none"
+        if(newpoint && data -1>=0 && leftSideDiv.length>data -1) leftSideDiv[data-1].style.display = "flex";
+        indexDiv = data -1
+    };
+        const onstepLeave = (data) => {
+        //     const newpoint = indexDiv===data -1?false:true;
+        //     console.log("leave",data,newpoint?"new point":"not new pint",leftSideDiv)
+        //     indexDiv = data -1
+        // if(newpoint && indexDiv>=0 && leftSideDiv.length>indexDiv) leftSideDiv[indexDiv].style.display = "none"
+      }
+      
       useEffect(() => {
         document.querySelectorAll("lottie-player").forEach((lottie, i) => {
             const canvasdiv= lottie.shadowRoot.querySelectorAll(".main > .animation")
@@ -77,6 +86,9 @@ const NewScrollyteller = () => {
                 },
               ],
             });
+            const father = lottie.parentElement
+            if(father.id.includes("canvascontainer")) father.style.display = "none"
+            console.log("father",i,father.id.includes("canvascontainer")?"yes":"not")
           });
           lottie.addEventListener("frame", function (e) {
               const canvasdiv= lottie.shadowRoot.querySelectorAll(".main > .animation")
@@ -84,8 +96,7 @@ const NewScrollyteller = () => {
                   const canvasdivNodes = canvasdiv[0].childNodes
                 if(canvasdivNodes) {
                     const canvas = canvasdivNodes[2]
-                    if(canvas){ 
-                        console.log(canvas)
+                    if(canvas){
                         canvas.width = canvas.width
                         lottie.resize()
                     }
@@ -95,12 +106,16 @@ const NewScrollyteller = () => {
             //canvasdiv[0].canvas.width = canvasdiv[0].canvas.width
           });
         });
+        setLeftSideDiv(document.querySelectorAll(".left-side"));
+        console.log("leftSideDiv:",leftSideDiv)
         setLoading(true)
       }, []);
+      
 
       const observer = new MutationObserver((mutationList) => { 
         mutationList.forEach((mutation)=> {
         if(mutation.addedNodes.length){
+            console.log(mutation.addedNodes)
             if(mutation.addedNodes[0].tagName === 'CANVAS'){
                 console.log(mutation.addedNodes[0])
                 //mutation.addedNodes[0].heigth = mutation.addedNodes[0].heigth
@@ -111,7 +126,6 @@ const NewScrollyteller = () => {
         //console.log("Eliminado", mutation.removedNodes[0]);
         }
        //console.log(mutation.type);
-        
         })
        });
     
@@ -124,7 +138,7 @@ const NewScrollyteller = () => {
      attributeOldValue: false,
      characterDataOldValue: false
     };
-
+    
     return (
     <div>
         <picture>
@@ -169,19 +183,23 @@ const NewScrollyteller = () => {
 
             <div className="main">
                 <div className="graphic">
-                    
-                    
-
                     {items.length > 0
                     ? cardScroll.map((left, i) => {
                         switch (left[0].slideType) {
                             case 'video':
                                 return (
-                                    <div className="left-side video" key={i}>
+                                    <div 
+                                        className="left-side video"
+                                        key={i}
+                                        style={{
+                                            display: "none"
+                                        }}
+                                    >
                                         <VideoBackground src={left[0].data}/>
                                     </div>
                                 );
                             case '2d':
+                                console.log(left[0].data)
                                 return (
                                     <div 
                                         className="left-side"
@@ -220,22 +238,37 @@ const NewScrollyteller = () => {
                             case '3d':
                                 if (left[0].data === 'dark') {
                                     return (
-                                        <div className="left-side video" key={i}>
-                                            <WaterAnimation />
+                                        <div 
+                                            className="left-side video"
+                                            key={i}
+                                            style={{
+                                                display: "none"
+                                            }}
+                                        >
+                                                <WaterAnimation />
                                         </div>
                                     );
                                     }
                                 break
-                            case 'portafolio':
+                            case 'porfolio':
                                 return (
-                                    <div className="left-side video" key={i}>
-                                        {isOpen && (
+                                    <div
+                                        className="left-side video"
+                                        id={`portafolio${i}`}
+                                        key={i}
+                                        // style={{
+                                        //     display: "none"
+                                        // }}
+                                    >
+                                        {/* {isOpen && ( */}
                                             <MyGallery
                                                 isOpen={isOpen}
                                                 lightboxWillClose={handleOnclose}
+                                                ID={`portafolio${i}`}
+                                                isLoad={isLoading}
                                             />
-                                        )}
-                                        {!isOpen && <MyGallery />}
+                                        {/* )} */}
+                                        {/* {!isOpen && <MyGallery />} */}
                                     </div>
                                     );
                                 break
@@ -254,14 +287,11 @@ const NewScrollyteller = () => {
                     {cardScroll.length > 0
                     ? cardScroll.map((narr, i) => {
                         return (
-                            <Waypoint
-                                onEnter={isLoading?() => { onStepEnter(i + 1)}:null}
-                                key={i + 1}
-                            >
                             <div
-                                onClick={() => handleGalleryClick(i)}
+                                //onClick={() => handleGalleryClick(i)}
                                 className="step step__div"
                                 id={`step${i + 1}`}
+                                key={i + 1}
                             >
                             {narr ? (
                                 narr.map((card, j) => (
@@ -271,11 +301,18 @@ const NewScrollyteller = () => {
                                         key={`${i}-${j}`}
                                         style={{ height: "100vh" }}
                                     >
+                                        
+                                        <Waypoint
+                                            fireOnRapidScroll = {true} 
+                                            onEnter={(leftSideDiv && isLoading)?() => { onStepEnter(i + 1)}:null}
+                                            onLeave={(leftSideDiv && isLoading)?() => { onstepLeave(i + 1)}:null}
+                                        >
                                         <Card>
                                             <Card.Body>
                                                 <Card.Text>{card.description}</Card.Text>
                                             </Card.Body>
                                         </Card>
+                                        </Waypoint>
                                     </div>
                                 ))
                                 ) : (
@@ -292,28 +329,31 @@ const NewScrollyteller = () => {
                                 </div>
                                     )}
                             </div>
-                            </Waypoint>
+                            
                         );
                         })
                     : narration.map((narr) => (
-                            <Waypoint
-                                onEnter={isLoading?() => { onStepEnter(narr.key)}:null}
-                                key={narr.key}
-                            >
-                                <div
-                                    className="step"
-                                    id={`step${narr.key}`}
-                                    style={{ marginBottom: "100px" }}
+                        <div
+                            className="step"
+                            id={`step${narr.key}`}
+                            style={{ marginBottom: "100px" }}
+                            key={narr.key}
+                        >
+                            <div className="desc" id={"desc" + narr.key}>
+                                <Waypoint
+                                    fireOnRapidScroll ={true}
+                                    onEnter={(leftSideDiv && isLoading)?() => { onStepEnter(narr.key)}:null}
+                                    onLeave={(leftSideDiv && isLoading)?() => { onstepLeave(narr.key)}:null}
                                 >
-                                <div className="desc" id={"desc" + narr.key}>
                                     <Card>
                                         <Card.Body>
                                             <Card.Text>{narr.description}</Card.Text>
                                         </Card.Body>
                                     </Card>
-                                </div>
-                                </div>
-                            </Waypoint>
+                                </Waypoint>
+                            </div>
+                        </div>
+                            
                         ))}
                 </div>
             </div>
