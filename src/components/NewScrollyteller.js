@@ -14,12 +14,14 @@ import WaterAnimation from "./WaterAnimation";
 import MyGallery from "./Gallery";
 import Chart from "./Chart";
 import AnimationPlay from './AnimationPlay'
+import lottieweb from 'lottie-web'
 
 import itemsJSON from "../assets/data/items.json";
 import background from "../assets/images/background.png";
 import background2 from "../assets/images/background2.png";
 import VideoBackground from "./VideoBackground";
 import '../assets/styles/components/newScrollyteller.css'
+import animation from '../assets/data/animation.json'
 
 const NewScrollyteller = () => {
     const narration = require("../assets/data/narration.json");
@@ -53,11 +55,23 @@ const NewScrollyteller = () => {
         setIsGalleryOpen(false);
       };
     let indexDiv = -1;
+    const onMainStepEnter = () => {
+        const contenedores = document.querySelectorAll(".left-side")
+        contenedores.forEach((lottie,i)=>{
+            if(i==0){
+                lottie.style.display = "flex"
+                console.log(lottie)
+            }else{
+                lottie.style.display = "none"
+            }
+        })
+    }
     const onStepEnter = (data) => {
         const newpoint = indexDiv===data -1?false:true;
         if(newpoint && indexDiv>=0 && leftSideDiv.length>indexDiv) leftSideDiv[indexDiv].style.display = "none"
         if(newpoint && data -1>=0 && leftSideDiv.length>data -1) leftSideDiv[data-1].style.display = "flex";
         indexDiv = data -1
+        console.log("enter",data+1)
     };
         const onstepLeave = (data) => {
         //     const newpoint = indexDiv===data -1?false:true;
@@ -72,6 +86,7 @@ const NewScrollyteller = () => {
             if(canvasdiv && canvasdiv.length>0) {
                 observer.observe(canvasdiv[0], observerOptions);
             }
+            // if(i===1) lottie.load(animation)
           lottie.addEventListener("load", function (e) {
             create({
                 mode: "scroll",
@@ -88,7 +103,6 @@ const NewScrollyteller = () => {
             });
             const father = lottie.parentElement
             if(father.id.includes("canvascontainer")) father.style.display = "none"
-            console.log("father",i,father.id.includes("canvascontainer")?"yes":"not")
           });
           lottie.addEventListener("frame", function (e) {
               const canvasdiv= lottie.shadowRoot.querySelectorAll(".main > .animation")
@@ -164,7 +178,11 @@ const NewScrollyteller = () => {
                         ></lottie-player>
                     </div>
                     <div className="scroller">
-                        <Waypoint>
+                        <Waypoint
+                            fireOnRapidScroll = {true} 
+                            onEnter={(leftSideDiv && isLoading)?() => { onMainStepEnter()}:null}
+                            
+                        >
                             <div className="step step__div" id={`step0`}>
                                 <div className="desc" id={`desc0`} key={`0`}>
                                     <Card>
@@ -215,7 +233,7 @@ const NewScrollyteller = () => {
                                                 className="left-side"
                                                 id={`lottie${i + 1}`}
                                                 mode="seek"
-                                                src={left[0].data}
+                                                src={left[0].data === "https://assets3.lottiefiles.com/packages/lf20_gfl00zkx.json"?animation:left[0].data}
                                                 //src={items[1][0].data}
                                                 key={i+1}
                                                 renderer='canvas'
@@ -305,7 +323,6 @@ const NewScrollyteller = () => {
                                         <Waypoint
                                             fireOnRapidScroll = {true} 
                                             onEnter={(leftSideDiv && isLoading)?() => { onStepEnter(i + 1)}:null}
-                                            onLeave={(leftSideDiv && isLoading)?() => { onstepLeave(i + 1)}:null}
                                         >
                                         <Card>
                                             <Card.Body>
@@ -343,7 +360,6 @@ const NewScrollyteller = () => {
                                 <Waypoint
                                     fireOnRapidScroll ={true}
                                     onEnter={(leftSideDiv && isLoading)?() => { onStepEnter(narr.key)}:null}
-                                    onLeave={(leftSideDiv && isLoading)?() => { onstepLeave(narr.key)}:null}
                                 >
                                     <Card>
                                         <Card.Body>

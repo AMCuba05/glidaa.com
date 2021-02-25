@@ -1,4 +1,4 @@
-import React, { useRef, useMemo, Suspense } from "react";
+import React, { useRef, useMemo, Suspense, useState, useEffect } from "react";
 import { Canvas, useFrame } from "react-three-fiber";
 import { Helmet } from "react-helmet";
 import { useLoader, extend, useThree } from "react-three-fiber";
@@ -154,6 +154,11 @@ window.addEventListener('mousemove', (e) => {
 })
 
 export default function ParticlesAnimation() {
+  const [isHelmetLoad, setisHelmetLoad] = useState(false)
+  useEffect(() => {
+    console.log("Loaded Helmet")
+    setisHelmetLoad(true)
+  }, [])
   return (
     <>
       <Helmet>
@@ -183,8 +188,7 @@ export default function ParticlesAnimation() {
             camera={{ position: [0, 0, 1000], far: 10000 }}
           >
            
-
-            <Map />
+            {isHelmetLoad?<Map />:null}
             <Scene />
             <Dolly />
           </Canvas>
