@@ -157,6 +157,24 @@
         }
       }
     },
+    "functionEmailJobsScheduler": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-glidaaamplify-live-84208-deployment/amplify-cfn-templates/function/EmailJobsScheduler-cloudformation-template.json",
+        "Parameters": {
+          "CloudWatchRule": "rate(1 minute)",
+          "deploymentBucketName": "amplify-glidaaamplify-live-84208-deployment",
+          "s3Key": "amplify-builds/EmailJobsScheduler-79677657566f71504b66-build.zip",
+          "apiMonitorAPIGraphQLAPIIdOutput": {
+            "Fn::GetAtt": [
+              "apiMonitorAPI",
+              "Outputs.GraphQLAPIIdOutput"
+            ]
+          },
+          "env": "live"
+        }
+      }
+    },
     "apiapi2899b73b": {
       "Type": "AWS::CloudFormation::Stack",
       "Properties": {

@@ -16,6 +16,10 @@
         "apilambda": {
           "deploymentBucketName": "amplify-glidaaamplify-live-84208-deployment",
           "s3Key": "amplify-builds/apilambda-394f496b44712b573534-build.zip"
+        },
+        "EmailJobsScheduler": {
+          "deploymentBucketName": "amplify-glidaaamplify-live-84208-deployment",
+          "s3Key": "amplify-builds/EmailJobsScheduler-79677657566f71504b66-build.zip"
         }
       },
       "hosting": {

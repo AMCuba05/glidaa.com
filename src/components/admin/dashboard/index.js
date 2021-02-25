@@ -23,6 +23,7 @@ import {
   onUpdateClientQuery,
   onCreateClientQuery,
   onCreateEmailTemplate,
+  onUpdateEmailJob,
 } from "../../../graphql/subscriptions";
 import { useHistory } from "react-router-dom";
 
@@ -106,6 +107,17 @@ export default function Index() {
     });
   };
 
+  const attachEmailJobsListeners = (emailJobs) => {
+    API.graphql(graphqlOperation(onUpdateEmailJob)).subscribe({
+      next: (data) => {
+        let job = data.value.data.onUpdateEmailJob;
+        let newJob = emailJobs.filter((x) => x.id != job.id);
+        let newJobs = [...emailJobs];
+        newJobs.push(job);
+        setJobs(job);
+      },
+    });
+  };
   const loadQueries = async () => {
     try {
       let res = await API.graphql(graphqlOperation(listClientQuerys));
@@ -128,6 +140,7 @@ export default function Index() {
     try {
       let res = await API.graphql(graphqlOperation(listEmailJobs));
       setJobs(res.data.listEmailJobs?.items);
+      attachEmailJobsListeners(res.data.listEmailJobs?.items);
       setLoadingComplete();
     } catch {
       setLoadingComplete();
@@ -183,7 +196,9 @@ export default function Index() {
       console.log(name, selectedQuery.id, selectedTempalte.id, limit);
 
       let clients = await formSend(selectedQuery.query);
-      let emails = clients.map((x) => { return {email: x.email, isProcessed: false} });
+      let emails = clients.map((x) => {
+        return { email: x.email, isProcessed: false };
+      });
 
       console.log(emails);
 
@@ -193,6 +208,7 @@ export default function Index() {
         templateId: selectedTempalte.id,
         limit: limit,
         emails: JSON.stringify(emails),
+        status: "active",
       };
 
       let res = await API.graphql(
@@ -262,6 +278,8 @@ export default function Index() {
                             <Badge variant="primary">
                               Limit: {x.limit} / hour
                             </Badge>
+                            &nbsp;
+                            <Badge variant="warning">Status {x.status}</Badge>
                           </Card.Header>
                           <Card.Body>
                             <Card.Title>
@@ -271,7 +289,13 @@ export default function Index() {
                                 now={20}
                                 label={20}
                               />
-                              Progress: {JSON.parse(x.emails)?.filter(x=>x.isProcessed).length}/{JSON.parse(x.emails)?.length}
+                              Progress:{" "}
+                              {
+                                JSON.parse(x.emails)?.filter(
+                                  (x) => x.isProcessed
+                                ).length
+                              }
+                              /{JSON.parse(x.emails)?.length}
                             </Card.Title>
                             <Card.Text>
                               <Button variant="warning" size="sm">
@@ -291,7 +315,7 @@ export default function Index() {
               )}
             </div>
           </Col>
-          <Col xs="12" lg="5">            
+          <Col xs="12" lg="5">
             <h6>New job</h6>
             <Form onSubmit={createHandler}>
               <Card>
