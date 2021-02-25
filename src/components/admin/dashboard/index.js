@@ -16,7 +16,7 @@ import {
   listEmailJobs,
   listEmailTemplates,
 } from "../../../graphql/queries";
-import { updateEmailJob, createEmailJob } from "../../../graphql/mutations";
+import { updateEmailJob, createEmailJob, deleteEmailJob } from "../../../graphql/mutations";
 
 import {
   onUpdateEmailTemplate,
@@ -190,6 +190,43 @@ export default function Index() {
 
   const handleSaveClick = async () => {};
 
+  const changeStatus = async (item, status) =>{
+    hideToast();
+
+    let payload = {
+      id: item.id,     
+      status: status
+    };
+
+    let res = await API.graphql(
+      graphqlOperation(updateEmailJob, { input: payload })
+    );
+    let job = res.data.updateEmailJob;
+
+    let newJobs = [...emailJobs];
+    newJobs.find(x=>x.id).status = status;
+    setJobs(newJobs);
+    showToast();
+  }
+
+  const deleteJob = async (item) =>{
+    hideToast();
+
+    let payload = {
+      id: item.id
+    };
+
+    let res = await API.graphql(
+      graphqlOperation(deleteEmailJob, { input: payload })
+    );
+    let job = res.data.deleteEmailJob;
+
+    let newJobs = [...emailJobs];
+    newJobs = newJobs.filter(x=>x.id != job.id);
+    setJobs(newJobs);
+    showToast();
+  }
+
   const createHandler = async (event) => {
     event.preventDefault();
     if (name && selectedQuery.id && selectedTempalte.id && limit) {
@@ -312,11 +349,26 @@ export default function Index() {
                               /{JSON.parse(x.emails)?.length}
                             </Card.Title>
                             <Card.Text>
-                              <Button variant="warning" size="sm">
-                                Pause
-                              </Button>
+                              {x.status == "active" ||
+                              x.status == "processing" ? (
+                                <Button
+                                  onClick={()=> changeStatus(x, "pause")}
+                                  variant="warning"
+                                  size="sm"
+                                >
+                                  Pause
+                                </Button>
+                              ) : (
+                                <Button
+                                  onClick={()=> changeStatus(x, "active")}
+                                  variant="warning"
+                                  size="sm"
+                                >
+                                  Play
+                                </Button>
+                              )}
                               &nbsp;&nbsp;{" "}
-                              <Button size="sm" variant="danger">
+                              <Button  onClick={()=> deleteJob(x)} size="sm" variant="danger">
                                 Stop
                               </Button>
                             </Card.Text>
