@@ -332,7 +332,7 @@ export default function Index() {
                             <Card.Title>
                               <ProgressBar
                                 variant="warning"
-                                animated
+                                animated={x.status!='pause'}
                                 now={
                                   JSON.parse(x.emails)?.filter(
                                     (x) => x.isProcessed
