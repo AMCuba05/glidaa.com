@@ -161,8 +161,6 @@ export default function Index() {
     req();
   }, []);
 
-
-
   const handleQueryChange = async (item) => {
     setSelectedQuery(item);
   };
@@ -320,9 +318,15 @@ export default function Index() {
                   {emailJobs?.map((x) => {
                     return (
                       <ListGroup.Item key={x.id}>
-                        
                         <Card
-                          bg={"success"}
+                          bg={
+                            (JSON.parse(x.emails)?.filter((x) => x.isProcessed)
+                              .length == JSON.parse(x.emails)?.length)
+                              ? "success"
+                              : (x.status == "pause")
+                              ? "secondary"
+                              : "info"
+                          }
                           key={x.id}
                           text={"white"}
                           className="mb-2"
@@ -333,15 +337,19 @@ export default function Index() {
                               Limit: {x.limit} / hour
                             </Badge>
                             &nbsp;
-                            <Badge variant="warning">Status {x.status}</Badge>
+                            <Badge variant="warning">Status {(JSON.parse(x.emails)?.filter((x) => x.isProcessed)
+                              .length == JSON.parse(x.emails)?.length)? 'Completed': x.status}</Badge>
                           </Card.Header>
                           <Card.Body>
                             <Card.Title>
                               <ProgressBar
                                 variant="warning"
-                                animated={x.status != "pause" && JSON.parse(x.emails)?.filter(
-                                  (x) => x.isProcessed
-                                ).length != JSON.parse(x.emails)?.length}
+                                animated={
+                                  x.status != "pause" &&
+                                  JSON.parse(x.emails)?.filter(
+                                    (x) => x.isProcessed
+                                  ).length != JSON.parse(x.emails)?.length
+                                }
                                 now={
                                   JSON.parse(x.emails)?.filter(
                                     (x) => x.isProcessed
@@ -382,7 +390,7 @@ export default function Index() {
                                 size="sm"
                                 variant="danger"
                               >
-                               Stop
+                                Stop
                               </Button>
                             </Card.Text>
                           </Card.Body>
