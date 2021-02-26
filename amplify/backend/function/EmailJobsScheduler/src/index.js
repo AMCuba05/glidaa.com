@@ -1,5 +1,7 @@
 const AWS = require("aws-sdk");
 const axios = require("axios");
+const sgMail = require('@sendgrid/mail')
+sgMail.setApiKey("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")
 AWS.config.update({ region: process.env.TABLE_REGION });
 
 const dynamodbClient = new AWS.DynamoDB.DocumentClient();
@@ -25,6 +27,7 @@ exports.handler = async (event) => {
 
       item.emails = JSON.stringify(emails);
       item.status = "processing";
+      await sendEmail(emailToProcess.email);
       await updateMutation(item);
       }else{
         break;
@@ -117,4 +120,28 @@ async function updateMutation({ id, emails, status }) {
     data: req.body,
     headers: req.headers,
   });
+}
+
+
+async function sendEmail(email){
+
+const msg = {
+  to: email, // Change to your recipient
+  from: 'sc@explainerpage.com', // Change to your verified sender
+  subject: 'SendGrid test',
+  text: 'and easy to do anywhere, even with Node.js',
+  html: '<strong>and easy to do anywhere, even with Node.js</strong>',
+}
+
+console.log("email message: ", msg);
+
+
+  try {
+    await sgMail.send(msg);
+    console.log("Email sent");
+    return true;
+  } catch (err) {
+    console.log("Email send error: ", err);
+    return null;
+  }
 }
