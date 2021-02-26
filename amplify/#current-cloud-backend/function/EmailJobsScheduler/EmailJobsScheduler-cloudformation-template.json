@@ -102,6 +102,32 @@
             },
             "API_MONITORAPI_GRAPHQLAPIIDOUTPUT": {
               "Ref": "apiMonitorAPIGraphQLAPIIdOutput"
+            },
+            "API_MONITORAPI_EMAILTEMPLATETABLE_NAME": {
+              "Fn::ImportValue": {
+                "Fn::Sub": "${apiMonitorAPIGraphQLAPIIdOutput}:GetAtt:EmailTemplateTable:Name"
+              }
+            },
+            "API_MONITORAPI_EMAILTEMPLATETABLE_ARN": {
+              "Fn::Join": [
+                "",
+                [
+                  "arn:aws:dynamodb:",
+                  {
+                    "Ref": "AWS::Region"
+                  },
+                  ":",
+                  {
+                    "Ref": "AWS::AccountId"
+                  },
+                  ":table/",
+                  {
+                    "Fn::ImportValue": {
+                      "Fn::Sub": "${apiMonitorAPIGraphQLAPIIdOutput}:GetAtt:EmailTemplateTable:Name"
+                    }
+                  }
+                ]
+              ]
             }
           }
         },
@@ -252,6 +278,68 @@
         "PolicyDocument": {
           "Version": "2012-10-17",
           "Statement": [
+            {
+              "Effect": "Allow",
+              "Action": [
+                "dynamodb:Put*",
+                "dynamodb:Create*",
+                "dynamodb:BatchWriteItem",
+                "dynamodb:Get*",
+                "dynamodb:BatchGetItem",
+                "dynamodb:List*",
+                "dynamodb:Describe*",
+                "dynamodb:Scan",
+                "dynamodb:Query",
+                "dynamodb:Update*",
+                "dynamodb:RestoreTable*",
+                "dynamodb:Delete*"
+              ],
+              "Resource": [
+                {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:aws:dynamodb:",
+                      {
+                        "Ref": "AWS::Region"
+                      },
+                      ":",
+                      {
+                        "Ref": "AWS::AccountId"
+                      },
+                      ":table/",
+                      {
+                        "Fn::ImportValue": {
+                          "Fn::Sub": "${apiMonitorAPIGraphQLAPIIdOutput}:GetAtt:EmailTemplateTable:Name"
+                        }
+                      }
+                    ]
+                  ]
+                },
+                {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:aws:dynamodb:",
+                      {
+                        "Ref": "AWS::Region"
+                      },
+                      ":",
+                      {
+                        "Ref": "AWS::AccountId"
+                      },
+                      ":table/",
+                      {
+                        "Fn::ImportValue": {
+                          "Fn::Sub": "${apiMonitorAPIGraphQLAPIIdOutput}:GetAtt:EmailTemplateTable:Name"
+                        }
+                      },
+                      "/index/*"
+                    ]
+                  ]
+                }
+              ]
+            },
             {
               "Effect": "Allow",
               "Action": [

@@ -16,7 +16,11 @@ import {
   listEmailJobs,
   listEmailTemplates,
 } from "../../../graphql/queries";
-import { updateEmailJob, createEmailJob, deleteEmailJob } from "../../../graphql/mutations";
+import {
+  updateEmailJob,
+  createEmailJob,
+  deleteEmailJob,
+} from "../../../graphql/mutations";
 
 import {
   onUpdateEmailTemplate,
@@ -157,6 +161,8 @@ export default function Index() {
     req();
   }, []);
 
+
+
   const handleQueryChange = async (item) => {
     setSelectedQuery(item);
   };
@@ -190,12 +196,12 @@ export default function Index() {
 
   const handleSaveClick = async () => {};
 
-  const changeStatus = async (item, status) =>{
+  const changeStatus = async (item, status) => {
     hideToast();
 
     let payload = {
-      id: item.id,     
-      status: status
+      id: item.id,
+      status: status,
     };
 
     let res = await API.graphql(
@@ -204,16 +210,16 @@ export default function Index() {
     let job = res.data.updateEmailJob;
 
     let newJobs = [...emailJobs];
-    newJobs.find(x=>x.id).status = status;
+    newJobs.find((x) => x.id).status = status;
     setJobs(newJobs);
     showToast();
-  }
+  };
 
-  const deleteJob = async (item) =>{
+  const deleteJob = async (item) => {
     hideToast();
 
     let payload = {
-      id: item.id
+      id: item.id,
     };
 
     let res = await API.graphql(
@@ -222,10 +228,10 @@ export default function Index() {
     let job = res.data.deleteEmailJob;
 
     let newJobs = [...emailJobs];
-    newJobs = newJobs.filter(x=>x.id != job.id);
+    newJobs = newJobs.filter((x) => x.id != job.id);
     setJobs(newJobs);
     showToast();
-  }
+  };
 
   const createHandler = async (event) => {
     event.preventDefault();
@@ -314,6 +320,7 @@ export default function Index() {
                   {emailJobs?.map((x) => {
                     return (
                       <ListGroup.Item key={x.id}>
+                        
                         <Card
                           bg={"success"}
                           key={x.id}
@@ -332,7 +339,9 @@ export default function Index() {
                             <Card.Title>
                               <ProgressBar
                                 variant="warning"
-                                animated={x.status!='pause'}
+                                animated={x.status != "pause" && JSON.parse(x.emails)?.filter(
+                                  (x) => x.isProcessed
+                                ).length != JSON.parse(x.emails)?.length}
                                 now={
                                   JSON.parse(x.emails)?.filter(
                                     (x) => x.isProcessed
@@ -352,7 +361,7 @@ export default function Index() {
                               {x.status == "active" ||
                               x.status == "processing" ? (
                                 <Button
-                                  onClick={()=> changeStatus(x, "pause")}
+                                  onClick={() => changeStatus(x, "pause")}
                                   variant="warning"
                                   size="sm"
                                 >
@@ -360,7 +369,7 @@ export default function Index() {
                                 </Button>
                               ) : (
                                 <Button
-                                  onClick={()=> changeStatus(x, "active")}
+                                  onClick={() => changeStatus(x, "active")}
                                   variant="warning"
                                   size="sm"
                                 >
@@ -368,8 +377,12 @@ export default function Index() {
                                 </Button>
                               )}
                               &nbsp;&nbsp;{" "}
-                              <Button  onClick={()=> deleteJob(x)} size="sm" variant="danger">
-                                Stop
+                              <Button
+                                onClick={() => deleteJob(x)}
+                                size="sm"
+                                variant="danger"
+                              >
+                               Stop
                               </Button>
                             </Card.Text>
                           </Card.Body>

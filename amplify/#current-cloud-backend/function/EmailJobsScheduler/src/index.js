@@ -1,11 +1,23 @@
-const AWS = require("aws-sdk");
+/* Amplify Params - DO NOT EDIT
+	API_MONITORAPI_EMAILJOBTABLE_ARN
+	API_MONITORAPI_EMAILJOBTABLE_NAME
+	API_MONITORAPI_EMAILTEMPLATETABLE_ARN
+	API_MONITORAPI_EMAILTEMPLATETABLE_NAME
+	API_MONITORAPI_GRAPHQLAPIIDOUTPUT
+	ENV
+	REGION
+Amplify Params - DO NOT EDIT */ const AWS = require("aws-sdk");
 const axios = require("axios");
+const sgMail = require("@sendgrid/mail");
+sgMail.setApiKey(
+  "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"
+);
 AWS.config.update({ region: process.env.TABLE_REGION });
 
 const dynamodbClient = new AWS.DynamoDB.DocumentClient();
 
 exports.handler = async (event) => {
-  const items = await getItems();
+  const items = await getJobs();
 
   console.log("ddb data: ", items);
 
@@ -17,16 +29,16 @@ exports.handler = async (event) => {
 
     for (let i = 0; i < numberOfEmailsToProcess; i++) {
       let emailToProcess = emails.find((x) => x.isProcessed == false);
-      if(emailToProcess)
-      {
-      emailToProcess.isProcessed = true;
-      emails = emails.filter((x) => x.email != emailToProcess.email);
-      emails.push(emailToProcess);
+      if (emailToProcess) {
+        emailToProcess.isProcessed = true;
+        emails = emails.filter((x) => x.email != emailToProcess.email);
+        emails.push(emailToProcess);
 
-      item.emails = JSON.stringify(emails);
-      item.status = "processing";
-      await updateMutation(item);
-      }else{
+        item.emails = JSON.stringify(emails);
+        item.status = "processing";
+        await sendEmail(emailToProcess.email, item.templateId);
+        await updateMutation(item);
+      } else {
         break;
       }
     }
@@ -51,21 +63,42 @@ async function updateitem(item) {
   }
 }
 
-async function getItems() {
+async function getJobs() {
   try {
     const params = {
       TableName: process.env.API_MONITORAPI_EMAILJOBTABLE_NAME,
-      FilterExpression: "#status = :job_status_processing or #status = :job_status_active", 
+      FilterExpression:
+        "#status = :job_status_processing or #status = :job_status_active",
       ExpressionAttributeNames: {
         "#status": "status",
-      },    
-      ExpressionAttributeValues: { ":job_status_processing": "processing",":job_status_active": "active" },
+      },
+      ExpressionAttributeValues: {
+        ":job_status_processing": "processing",
+        ":job_status_active": "active",
+      },
     };
 
     const data = await dynamodbClient.scan(params).promise();
     return data.Items;
   } catch (err) {
     console.log("DDB Error: ", err);
+  }
+}
+
+async function getTemplate(id) {
+  let params = {
+    TableName: process.env.API_MONITORAPI_EMAILTEMPLATETABLE_NAME,
+    Key: {
+      id: id,
+    },
+  };
+  try {
+    console.log("template param: ", params);
+    const data = await dynamodbClient.get(params).promise();
+    console.log("DDB template: ", data);
+    return data.Item;
+  } catch (err) {
+    console.log("DDB template error: ", err);
   }
 }
 
@@ -102,7 +135,7 @@ async function updateMutation({ id, emails, status }) {
       input: {
         id: id,
         emails: emails,
-        status: status
+        status: status,
       },
     },
   });
@@ -117,4 +150,27 @@ async function updateMutation({ id, emails, status }) {
     data: req.body,
     headers: req.headers,
   });
+}
+
+async function sendEmail(email, templateId) {
+
+ let template = await getTemplate(templateId);
+  const msg = {
+    to: email, // Change to your recipient
+    from: "sc@explainerpage.com", // Change to your verified sender
+    subject: template.subject,
+    text: template.textBody,
+    html: template.htmlBody,
+  };
+
+  console.log("email message: ", msg);
+
+  try {
+    await sgMail.send(msg);
+    console.log("Email sent");
+    return true;
+  } catch (err) {
+    console.log("Email send error: ", err);
+    return null;
+  }
 }

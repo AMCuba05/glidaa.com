@@ -2,6 +2,12 @@
   "lambdaLayers": [],
   "permissions": {
     "storage": {
+      "EmailTemplate:@model(appsync)": [
+        "create",
+        "read",
+        "update",
+        "delete"
+      ],
       "EmailJob:@model(appsync)": [
         "create",
         "read",

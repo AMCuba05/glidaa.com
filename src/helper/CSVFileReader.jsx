@@ -38,7 +38,7 @@ export default function CSVFileReader() {
             return;
           
           }
-          let keys = Object.keys(dataBody[0]);
+          let keys = getMaxKeyItemKeys(dataBody);
           setServerTableKeys(keys);
 
           let text = '';
@@ -106,7 +106,7 @@ export default function CSVFileReader() {
 
     if (content.statusCode == 200) {
       try {
-        let keys = Object.values(Object.values(fileData[0].data)).map(val => val.toLowerCase());
+        let keys =  Object.values(Object.values(fileData[0].data)).map(val => val.toLowerCase());
 
         setServerTableKeys(keys);
       } catch { }
@@ -114,6 +114,27 @@ export default function CSVFileReader() {
       setshowProgress(false);
     }
   }
+
+  const getMaxKeyItemKeys = (array) => {
+    if(array && array.length>0)
+    {
+      let keyCount = 0;
+      let itemToReturn = null;
+  
+      array.forEach(item => {
+        let totalKeys = Object.keys(item).length;
+        if (keyCount < totalKeys) {
+          keyCount = totalKeys;
+          itemToReturn = item;
+        }
+      });
+  debugger;
+      return Object.keys(itemToReturn);
+    }else{
+    return [];
+    }
+  
+    }
 
   const handleOnError = (err, file, inputElem, reason) => {
     setshowProgress(false);
@@ -229,7 +250,7 @@ export default function CSVFileReader() {
           <thead>
             <tr>
               <th>#</th>
-              {fileData && (fileData[0]?.data).map(key => {
+              {fileData &&  (fileData[0]?.data).map(key => {
                 return <th key={key} className={!serverTableKeys?.includes(key.toLowerCase()) ? 'red-bg' : 'green-bg'}>{!serverTableKeys?.includes(key.toLowerCase()) && <span className="remove-icon"></span>}{key}</th>
               })}
 

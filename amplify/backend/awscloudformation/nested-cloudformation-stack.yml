@@ -164,7 +164,7 @@
         "Parameters": {
           "CloudWatchRule": "rate(1 minute)",
           "deploymentBucketName": "amplify-glidaaamplify-live-84208-deployment",
-          "s3Key": "amplify-builds/EmailJobsScheduler-74465079614c78644656-build.zip",
+          "s3Key": "amplify-builds/EmailJobsScheduler-72365554472b4459486f-build.zip",
           "apiMonitorAPIGraphQLAPIIdOutput": {
             "Fn::GetAtt": [
               "apiMonitorAPI",
