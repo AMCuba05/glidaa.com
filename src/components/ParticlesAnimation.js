@@ -18,7 +18,7 @@ const Brain = (props) => {
   
   const mat = new THREE.ShaderMaterial({  })
   // return null;
-  return <primitive object={gltf.scene} material={mat} position={[0, 0, -1200]} scale={[120,120,120]}/>;
+  return <primitive object={gltf.scene} material={mat} position={[0, -550, -1800]} scale={[900,900,900]} rotation={[0, 90, 0]}/>;
 };
 
 const Scene = () => {

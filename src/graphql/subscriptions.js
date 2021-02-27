@@ -109,3 +109,49 @@ export const onDeleteClientQuery = /* GraphQL */ `
     }
   }
 `;
+export const onCreateEmailJob = /* GraphQL */ `
+  subscription OnCreateEmailJob {
+    onCreateEmailJob {
+      id
+      name
+      queryId
+      templateId
+      limit
+      emails
+      status
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateEmailJob = /* GraphQL */ `
+  subscription OnUpdateEmailJob {
+    onUpdateEmailJob {
+      id
+      name
+      queryId
+      templateId
+      limit
+      emails
+      status
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteEmailJob = /* GraphQL */ `
+  subscription OnDeleteEmailJob {
+    onDeleteEmailJob {
+      id
+      name
+      queryId
+      templateId
+      limit
+      emails
+      status
+      createdAt
+      updatedAt
+    }
+  }
+`;
+
