@@ -386,7 +386,7 @@ export default function Index() {
                                   variant="warning"
                                   size="sm"
                                 >
-                                  Play
+                                  Resume
                                 </Button>
                               )}
                               &nbsp;&nbsp;{" "}
@@ -512,7 +512,7 @@ export default function Index() {
                 <Col xs={8} lg="8"></Col>
                 <Col xs={4} lg="4">
                   <Button variant="primary" type="submit" size="sm" block>
-                    Create
+                    Create & Send
                   </Button>
                 </Col>
               </Row>
