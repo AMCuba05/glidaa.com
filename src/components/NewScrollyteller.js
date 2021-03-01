@@ -55,7 +55,7 @@ const NewScrollyteller = () => {
   const onMainStepEnter = () => {
     const contenedores = document.querySelectorAll(".left-side");
     contenedores.forEach((lottie, i) => {
-      if (i == 0) {
+      if (i == -1) {
         lottie.style.display = "flex";
         console.log(lottie);
       } else {
@@ -185,7 +185,9 @@ const NewScrollyteller = () => {
         {items.length > 0 ? (
           <>
             <D3Header texts={items[0].map((e) => e.description)} />
-            <div className="main mainmargin">
+            <div className="main mainmargin"
+              
+            >
               <div className="graphic">
                 <lottie-player
                   id={`lottie0`}
@@ -330,10 +332,12 @@ const NewScrollyteller = () => {
               ? cardScroll.map((narr, i) => {
                   return (
                     <div
-                      className={`step step__div ${
-                        i === 7
-                          & "hiddenclass"
-                      }`}
+                      className={
+                        className(
+                          "step step__div",
+                          {hiddenclass:i===7}
+                        )
+                      }
                       id={`step${i + 1}`}
                       key={i + 1}
                     >
@@ -414,19 +418,6 @@ const NewScrollyteller = () => {
               </Card.Body>
             </Card>
           ))}
-        />
-      </div>
-      <div>
-        <Chart
-          texts={items[2].map((e) => {
-            return (
-              <Card >
-                <Card.Body>
-                  <Card.Text>{e.description}</Card.Text>
-                </Card.Body>
-              </Card>
-            );
-          })}
         />
       </div>
       <div style={{ position: "relative" }}>

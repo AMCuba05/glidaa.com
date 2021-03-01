@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react'
 import lottieweb from 'lottie-web'
-import JsonData from '../assets/data/animation.json'
 /* Shapes */
 const AnimationPlay = React.memo((props) =>{
     const {ID, url} = props 

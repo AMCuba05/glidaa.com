@@ -1,6 +1,5 @@
 import React, { Component, useEffect, useState } from "react";
 import Lottie from "react-lottie";
- import animationD from '../assets/data/animation.json';
 
 const ControlledLottie = props=> {
     const {url, ID} = props
