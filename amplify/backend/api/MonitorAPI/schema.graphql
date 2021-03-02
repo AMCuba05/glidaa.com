@@ -18,3 +18,14 @@ type ClientQuery @model {
   name: String
   query: String
 }
+
+type EmailJob @model {
+  id: ID!
+  name: String
+  queryId: String
+  templateId: String
+  limit: String
+  emails: AWSJSON
+  status: String
+}
+

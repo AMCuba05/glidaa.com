@@ -10,6 +10,7 @@ import ProgressBar from "react-bootstrap/ProgressBar";
 import ListGroup from "react-bootstrap/ListGroup";
 import Badge from "react-bootstrap/Badge";
 import Amplify, { API, graphqlOperation } from "aws-amplify";
+
 import {
   listClientQuerys,
   listEmailJobs,
@@ -331,14 +332,13 @@ export default function Index() {
                               Limit: {x.limit} / hour
                             </Badge>
                             &nbsp;
-                            <Badge variant="warning">
-                              Status{" "}
-                              {JSON.parse(x.emails)?.filter(
-                                (x) => x.isProcessed
-                              ).length === JSON.parse(x.emails)?.length
-                                ? "Completed"
-                                : x.status}
-                            </Badge>
+                            <Badge variant="warning">Status {(JSON.parse(x.emails)?.filter((x) => x.isProcessed)
+                              .length == JSON.parse(x.emails)?.length)? 'Completed': x.status}</Badge>
+                             <hr></hr>
+
+                             <div className="color-black"><b>Template:</b> <span>{emailTemplates?.find(y=>x.templateId==y.id)?.name}</span>,&nbsp;&nbsp; <b>List:</b> <span>{lstQueries?.find(y=>x.queryId==y.id)?.name}</span></div>
+    
+    
                           </Card.Header>
                           <Card.Body>
                             <Card.Title>
@@ -381,7 +381,7 @@ export default function Index() {
                                   variant="warning"
                                   size="sm"
                                 >
-                                  Play
+                                  Resume
                                 </Button>
                               )}
                               &nbsp;&nbsp;{" "}
@@ -507,7 +507,7 @@ export default function Index() {
                 <Col xs={8} lg="8"></Col>
                 <Col xs={4} lg="4">
                   <Button variant="primary" type="submit" size="sm" block>
-                    Create
+                    Create & Send
                   </Button>
                 </Col>
               </Row>
