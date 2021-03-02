@@ -328,7 +328,7 @@ const Scrollyteller = () => {
                 </Card.Body>
               </Card>
             </div>
-            <a href="https://calendly.com/sccastleman/60min" target="_blank" rel="noopener noreferrer">
+            <a href="https://calendly.com/sccastleman/" target="_blank" rel="noopener noreferrer">
               <div className="bookTimeBtn">
                 <span style={{ color: "white", padding: "10px" }}>
                   {items.length > 0 ? items[12][0].description : "loading..."}
