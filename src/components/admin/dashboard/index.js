@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import Card from "react-bootstrap/Card";
-import DropdownButton from "react-bootstrap/DropdownButton";
 import Dropdown from "react-bootstrap/Dropdown";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
@@ -10,7 +9,7 @@ import Button from "react-bootstrap/Button";
 import ProgressBar from "react-bootstrap/ProgressBar";
 import ListGroup from "react-bootstrap/ListGroup";
 import Badge from "react-bootstrap/Badge";
-import Amplify, { API, graphqlOperation, Storage } from "aws-amplify";
+import Amplify, { API, graphqlOperation } from "aws-amplify";
 import {
   listClientQuerys,
   listEmailJobs,
@@ -29,7 +28,6 @@ import {
   onCreateEmailTemplate,
   onUpdateEmailJob,
 } from "../../../graphql/subscriptions";
-import { useHistory } from "react-router-dom";
 
 import Toast from "react-bootstrap/Toast";
 import awsExports from "../../../aws-exports";
@@ -41,8 +39,6 @@ Amplify.configure({
 });
 
 export default function Index() {
-  const history = useHistory();
-
   const [loading, setLoading] = useState("Loading user detail ......");
   const [name, setName] = useState();
   const [emailJobs, setJobs] = useState([]);
@@ -53,8 +49,8 @@ export default function Index() {
 
   const [selectedTempalte, setSelectedTempalte] = useState({});
 
-  const [showProgress, setshowProgress] = useState(false);
   const [showToaster, setshowToaster] = useState(false);
+  const showProgress = false
   const showToast = () => setshowToaster(true);
   const hideToast = () => setshowToaster(false);
 
@@ -69,7 +65,7 @@ export default function Index() {
     API.graphql(graphqlOperation(onUpdateClientQuery)).subscribe({
       next: (data) => {
         let query = data.value.data.onUpdateClientQuery;
-        let allQueries = lstQueries.filter((x) => x.id != query.id);
+        let allQueries = lstQueries.filter((x) => x.id !== query.id);
         allQueries.push(query);
         setQueries(allQueries);
         setSelectedQuery(query);
@@ -92,7 +88,7 @@ export default function Index() {
       next: (data) => {
         let template = data.value.data.onUpdateEmailTemplate;
         let newEmailTemalates = emailTemplates.filter(
-          (x) => x.id != template.id
+          (x) => x.id !== template.id
         );
         newEmailTemalates.push(template);
         setEmailTempaltes(newEmailTemalates);
@@ -181,7 +177,6 @@ export default function Index() {
       let res = await fetch(url);
 
       let data = await res.json();
-      let userData;
       if (data.body) {
         let dataBody = JSON.parse(data.body);
 
@@ -192,7 +187,6 @@ export default function Index() {
     }
   };
 
-  const handleSaveClick = async () => {};
 
   const changeStatus = async (item, status) => {
     hideToast();
@@ -226,7 +220,7 @@ export default function Index() {
     let job = res.data.deleteEmailJob;
 
     let newJobs = [...emailJobs];
-    newJobs = newJobs.filter((x) => x.id != job.id);
+    newJobs = newJobs.filter((x) => x.id !== job.id);
     setJobs(newJobs);
     showToast();
   };
@@ -292,13 +286,13 @@ export default function Index() {
                   <Badge variant="success">
                     {
                       emailJobs?.filter(
-                        (x) => x.status == "active" || x.status == "processing"
+                        (x) => x.status === "active" || x.status === "processing"
                       ).length
                     }
                   </Badge>
                   , Pause:{" "}
                   <Badge variant="warning">
-                    {emailJobs?.filter((x) => x.status == "pause").length}
+                    {emailJobs?.filter((x) => x.status === "pause").length}
                   </Badge>
                 </h6>
               </Col>
@@ -320,10 +314,10 @@ export default function Index() {
                       <ListGroup.Item key={x.id}>
                         <Card
                           bg={
-                            (JSON.parse(x.emails)?.filter((x) => x.isProcessed)
-                              .length == JSON.parse(x.emails)?.length)
+                            JSON.parse(x.emails)?.filter((x) => x.isProcessed)
+                              .length === JSON.parse(x.emails)?.length
                               ? "success"
-                              : (x.status == "pause")
+                              : x.status === "pause"
                               ? "secondary"
                               : "info"
                           }
@@ -337,18 +331,24 @@ export default function Index() {
                               Limit: {x.limit} / hour
                             </Badge>
                             &nbsp;
-                            <Badge variant="warning">Status {(JSON.parse(x.emails)?.filter((x) => x.isProcessed)
-                              .length == JSON.parse(x.emails)?.length)? 'Completed': x.status}</Badge>
+                            <Badge variant="warning">
+                              Status{" "}
+                              {JSON.parse(x.emails)?.filter(
+                                (x) => x.isProcessed
+                              ).length === JSON.parse(x.emails)?.length
+                                ? "Completed"
+                                : x.status}
+                            </Badge>
                           </Card.Header>
                           <Card.Body>
                             <Card.Title>
                               <ProgressBar
                                 variant="warning"
                                 animated={
-                                  x.status != "pause" &&
+                                  x.status !== "pause" &&
                                   JSON.parse(x.emails)?.filter(
                                     (x) => x.isProcessed
-                                  ).length != JSON.parse(x.emails)?.length
+                                  ).length !== JSON.parse(x.emails)?.length
                                 }
                                 now={
                                   JSON.parse(x.emails)?.filter(
@@ -366,8 +366,8 @@ export default function Index() {
                               /{JSON.parse(x.emails)?.length}
                             </Card.Title>
                             <Card.Text>
-                              {x.status == "active" ||
-                              x.status == "processing" ? (
+                              {x.status === "active" ||
+                              x.status === "processing" ? (
                                 <Button
                                   onClick={() => changeStatus(x, "pause")}
                                   variant="warning"

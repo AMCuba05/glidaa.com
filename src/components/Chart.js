@@ -5,7 +5,6 @@ import nyc from "../assets/data/chart-data/nyc.js";
 import sf from "../assets/data/chart-data/sf.js";
 import am from "../assets/data/chart-data/am.js";
 import BarChart from "./BarChart.js";
-import { Geometry } from "three";
 
 const styles = {
   axisRed: {

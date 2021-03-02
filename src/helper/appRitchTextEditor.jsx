@@ -1,4 +1,4 @@
-import React, {Component, PropTypes} from 'react';
+import React, {Component} from 'react';
 import RichTextEditor from 'react-rte';
 
  class AppRitchTextEditor extends Component {

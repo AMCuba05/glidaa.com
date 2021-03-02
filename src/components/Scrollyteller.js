@@ -1,187 +1,58 @@
-/** @jsx jsx */
-import { useEffect, useState, useCallback } from "react";
-import { jsx } from "@emotion/core";
-import { Card } from "react-bootstrap";
-import { Scrollama, Step } from "react-scrollama";
-import { narrativeStyle } from "../helper/constants";
-
-//mport scrollama from "scrollama";
-
+import React, { useEffect, useState } from "react";
 import { Waypoint } from "react-waypoint";
+import { Card } from "react-bootstrap";
 
+import className from "classnames";
+import { iOS, isSafari } from "./iosSupport";
 import { create } from "@lottiefiles/lottie-interactivity";
 
-import VideoBackground from "./VideoBackground";
-
-import MyGallery from "./Gallery";
-import FlockAnimation from "./FlockAnimation";
-import WaterAnimation from "./WaterAnimation";
-
-import Chart from "./Chart";
 import D3Header from "./D3Header";
 import LottiePlayer from "./LottiePlayer";
-
-import background from "../assets/images/background.png";
-import background2 from "../assets/images/background2.png";
-import load from "../assets/images/load.gif";
+import WaterAnimation from "./WaterAnimation";
+import MyGallery from "./Gallery";
+import Chart from "./Chart";
 
 import itemsJSON from "../assets/data/items.json";
+import background from "../assets/images/background.png";
+import background2 from "../assets/images/background2.png";
+import VideoBackground from "./VideoBackground";
+import "../assets/styles/components/Scrollyteller.css";
 
-import { iOS, isSafari } from "./iosSupport";
-
-import { Player, Controls } from '@lottiefiles/react-lottie-player';
-
-// import button from "../button.svg";
-// import { TangentSpaceNormalMap } from "three";
-
-//** values ​​handled in percentages, example 25 = 25% ***********/
-const fadeIn = 15; // the lottie appears completely when this percentage is reached
-const fadeOut = 85; // the lottie starts to disappear when this percentage is reached
-
-/****************** */
-
-// console.log(myScrollyTellerInstance);
-
-const narration = require("../assets/data/narration.json");
-
-function Scrollyteller() {
-  // const [data, setData] = useState("1");
-  // const [progress, setProgress] = useState(0);
-  // const progress = useRef(0)
-
+const Scrollyteller = () => {
+  const narration = require("../assets/data/narration.json");
   const [isOpen, setIsGalleryOpen] = useState(false);
-  const [isOverlay, setOverlay] = useState(true);
+  const [isLoading, setLoading] = useState(false);
+  const [leftSideDiv, setLeftSideDiv] = useState(null);
+  const items = itemsJSON;
 
-  const [items, setItems] = useState(itemsJSON);
-  console.log(items);
-  function reloadScrollBars() {
-    document.documentElement.style.overflow = "auto"; // firefox, chrome
-    document.body.scroll = "yes"; // ie only
-    window.scrollTo({ top: 0 });
-  }
-
-  function unloadScrollBars() {
-    document.documentElement.style.overflow = "hidden"; // firefox, chrome
-    document.body.scroll = "no"; // ie only
-    window.scrollTo({ top: 0 });
-  }
-
-  const setLoading = (val) => {
-    setOverlay(val);
-    if (!val) {
-      reloadScrollBars();
-    } else {
-      unloadScrollBars();
-    }
-  };
+  const isSafarioIos = className(
+    `left-side ${isSafari() || iOS() ? "scrollyTeller-lottie-height" : ""}`
+  );
 
   let cardScroll = items ? [...items].splice(3, items.length - 1) : null;
   cardScroll = cardScroll ? cardScroll.splice(0, cardScroll.length - 1) : null;
 
-  let lotties = items ? [...items].filter((e) => e[0].frames != "") : null;
-  // console.log(lotties);
-  // useEffect(() => {
-  //   // setLoading(true);
-  //   // Tabletop.init({
-  //   //   key:
-  //   //     "https://docs.google.com/spreadsheets/d/1RfjhL5U0DvF1P6FtedRA4JuODHe0d1s8XbGgNKHmfdM/edit#gid=0",
-  //   //   simpleSheet: false,
-  //   // })
-  //   //   .then((items) => {
-  //   //     let auxItems = [];
-  //   //     let value = "1";
+  let lotties = items ? [...items].filter((e) => e[0].frames !== "") : null;
 
-  //   //     for (let i = 0; i < items["Sheet2"].elements.length; i++) {
-  //   //       let auxArray = items["Sheet2"].elements.filter(
-  //   //         (e) => e.slide === value
-  //   //       );
-
-  //   //       i += auxArray.length;
-  //   //       i--;
-
-  //   //       value = items["Sheet2"].elements[i + 1]?.slide;
-
-  //   //       auxItems.push(auxArray);
-  //   //     }
-
-  //   //     setItems(auxItems);
-  //   //     console.log(JSON.stringify(auxItems));
-  //   //     setTimeout(() => {
-  //   //       setLoading(false);
-  //   //     }, 30);
-  //   //   })
-  //   //   .catch((err) => {
-  //   //     setLoading(false);
-  //   //     console.warn(err)
-  //   //   });
-  // }, []);
-
-  // useEffect(() => {
-  //   // instantiate the scrollama
-  //   const scroller = scrollama();
-
-  //   // setup the instance, pass callback functions
-  //   scroller
-  //     .setup({
-  //       step: ".step",
-  //     })
-  //     .onStepEnter((response) => {
-  //       // { element, index, direction }
-  //       if (response.index === 1) {
-  //         response.element.style.background = "none";
-  //       } else if (response.index === 2) {
-  //         response.element.style.background = "none";
-  //       } else {
-  //         response.element.style.background = "none";
-  //       }
-  //     })
-  //     .onStepExit((response) => {
-  //       if (response.index === 1) {
-  //         response.element.style.background = "none";
-  //       } else if (response.index === 2) {
-  //         response.element.style.background = "none";
-  //       } else {
-  //         response.element.style.background = "none";
-  //       }
-  //     });
-
-  //   // setup resize event
-  //   window.addEventListener("resize", scroller.resize);
-
-  //   return () => window.removeEventListener("resize", scroller.resize);
-  // }, []);
-
-  // useEffect(() => {
-  //   const actSlide = document.querySelector(`.left-side:nth-child(${data})`);
-
-  //   if (actSlide) {
-  //     const auxFadeIn = fadeIn / 100;
-  //     const auxFadeOut = fadeOut / 100;
-  //     actSlide.style.opacity = "1";
-
-  //     // if (!actSlide.classList.contains("video")) {
-  //     //   if (items.length > 1) {
-  //     //     if (progress <= auxFadeIn) {
-  //     //       actSlide.style.opacity = `${progress * (1 / auxFadeIn)}`;
-  //     //     } else if (progress > auxFadeIn && progress < auxFadeOut) {
-  //     //       actSlide.style.opacity = "1";
-  //     //     } else {
-  //     //       actSlide.style.opacity = `${
-  //     //         (1 - progress) * (1 / (1 - auxFadeOut))
-  //     //       }`;
-  //     //     }
-  //     //   }
-  //     // } else {
-  //     //   if (progress <= 5 / 100) {
-  //     //     actSlide.style.opacity = "0";
-  //     //   } else if (progress > 5 / 100 && progress < auxFadeOut) {
-  //     //     actSlide.style.opacity = "1";
-  //     //   } else {
-  //     //     actSlide.style.opacity = "0";
-  //     //   }
-  //     // }
-  //   }
-  // }, [data]);
+  const handleOnclose = (event) => {
+    setIsGalleryOpen(false);
+  };
+  let indexDiv = -1;
+  const onMainStepEnter = () => {
+    const contenedores = document.querySelectorAll(".left-side");
+    indexDiv = -1;
+    contenedores.forEach((lottie, i) => {
+      lottie.style.display = "none";
+    });
+  };
+  const onStepEnter = (data) => {
+    const newpoint = indexDiv === data - 1 ? false : true;
+    if (newpoint && indexDiv >= 0 && leftSideDiv.length > indexDiv)
+      leftSideDiv[indexDiv].style.display = "none";
+    if (newpoint && data - 1 >= 0 && leftSideDiv.length > data - 1)
+      leftSideDiv[data - 1].style.display = "flex";
+    indexDiv = data - 1;
+  };
 
   useEffect(() => {
     document.querySelectorAll("lottie-player").forEach((lottie, i) => {
@@ -193,192 +64,162 @@ function Scrollyteller() {
           container: `#step${lottie.id.split("lottie")[1]}`,
           actions: [
             {
-              visibility: [0.1, 0.8],
+              visibility: [0, 0.8],
               type: "seek",
               frames: [0, lotties[i][0].frames],
             },
           ],
         });
+        const father = lottie.parentElement;
+        if (father.id.includes("canvascontainer")) {
+          if (father.style.display === "block") father.style.display = "none";
+        }
+      });
+      lottie.addEventListener("frame", function (e) {
+        const canvasdiv = lottie.shadowRoot.querySelectorAll(
+          ".main > .animation"
+        );
+        if (canvasdiv && canvasdiv.length > 0) {
+          const canvasdivNodes = canvasdiv[0].childNodes;
+          if (canvasdivNodes) {
+            const canvas = canvasdivNodes[2];
+            if (canvas) {
+              const w = canvas.width
+              canvas.width = w;
+              lottie.resize();
+            }
+          }
+        }
       });
     });
+    setLeftSideDiv(document.querySelectorAll(".left-side"));
+    setLoading(true);
   }, []);
-
-  const onStepEnter = (data) => {
-    console.log("------------------");
-    document.querySelectorAll(".left-side").forEach((lottie, index) => {
-      lottie.style.display = index + 1 == data ? "block" : "none";
-    });
-
-    // document.querySelector('.content').style.display = data >= 8 ? 'block' : 'none';
-    // setData(data);
-    // setProgress(0);
-    // progress.current = 0;
-  };
-
-  // const onStepExit = ({ element }) => {
-  //   // console.log(element)
-  //   setProgress(0);
-  //   // progress.current = 0;
-  //   // element.style.backgroundColor = "#fff";
-  // };
-
-  // const onStepProgress = ({ element, progress }) => {
-  //   // console.log(element)
-  //   // console.log(progress)
-  //   // progress.current = ActProgress;
-  //   setProgress(progress);
-  //   // this.setState({ progress });
-  // };
-
-  const handleGalleryClick = useCallback(
-    (val) => {
-      if (val != 7) return;
-      setIsGalleryOpen(true);
-    },
-    [isOpen]
-  );
-
-  const handleOnclose = (event) => {
-    setIsGalleryOpen(false);
-  };
 
   return (
     <div>
-      {/* {isOverlay && <div className="overlay">
-        <img src={background} alt="background" style={{ position: 'fixed', 'top': "0", left: '0', "width": "100vw", height: "100vh", zIndex: '9999999' }}></img>
-        <div className="progressBar-container"> <div  alt="loading" className="loading"></div>
-        </div>
-      </div>} */}
       <picture>
         <source srcSet={background2} media="(max-width: 650px)"></source>
         <source srcSet={background2}></source>
         <img
+          className="newScrollyteller__img__background"
           src={background}
           alt="background"
-          style={{
-            position: "fixed",
-            top: "0",
-            left: "0",
-            width: "100vw",
-            height: "100vh",
-            zIndex: "-1",
-          }}
         ></img>
       </picture>
-      <div css={narrativeStyle}>
+      <div>
         {items.length > 0 ? (
-          <div>
+          <>
             <D3Header texts={items[0].map((e) => e.description)} />
-
-            <div className="main" style={{ marginBottom: "200px" }}>
+            <div className="main mainmargin">
               <div className="graphic">
                 <lottie-player
-                  className="left-side"
                   id={`lottie0`}
                   mode="seek"
                   src={items[1][0].data}
                   key={0}
-                  renderer='canvas'
+                  renderer="canvas"
                 ></lottie-player>
               </div>
               <div className="scroller">
-                {
-                  <Waypoint>
-                    <div
-                      className="step"
-                      id={`step0`}
-                      style={{
-                        marginBottom: "120px",
-                        display: "flex",
-                        justifyContent: "center",
-                        flexDirection: "column",
-                      }}
-                    >
-                      <div className="desc" id={`desc0`} key={`0`}>
-                        <Card>
-                          <Card.Body>
-                            <Card.Text>{items[1][0].description}</Card.Text>
-                          </Card.Body>
-                        </Card>
-                      </div>
+                <Waypoint
+                  fireOnRapidScroll={true}
+                  onEnter={
+                    leftSideDiv && isLoading
+                      ? () => {
+                          onMainStepEnter();
+                        }
+                      : null
+                  }
+                >
+                  <div className="step step__div" id={`step0`}>
+                    <div className="desc" id={`desc0`} key={`0`}>
+                      <Card>
+                        <Card.Body>
+                          <Card.Text>{items[1][0].description}</Card.Text>
+                        </Card.Body>
+                      </Card>
                     </div>
-                  </Waypoint>
-                }
+                  </div>
+                </Waypoint>
               </div>
             </div>
-          </div>
+          </>
         ) : null}
 
         <div className="main">
           <div className="graphic">
             {items.length > 0
               ? cardScroll.map((left, i) => {
-                  if (left[0].slideType === "video") {
-                    return (
-                      <div className="left-side video" key={i}>
-                        <VideoBackground src={left[0].data} />
-                      </div>
-                    );
-                  } else 
-                  if (left[0].slideType === "2d") {
-                    console.log("d2")
-                    return (
-                      <div
-                        className={`left-side ${
-                          isSafari() || iOS()
-                            ? "scrollyTeller-lottie-height"
-                            : ""
-                        }`}
-                        key={i}
-                      >
-                        
-                        {/* <Player
-                          // src={items[1][0].data}
-                          // src = "https://assets9.lottiefiles.com/packages/lf20_jfmjd0wo.json"
-                          src={left[0].data}
-                          id={`lottie${i + 1}`}
-                          key={i}
-                          autoplay
-                          loop
-                          style={{ height: '500px', width: '500px' }}
-                        >
-                          <Controls visible={true} buttons={['play', 'repeat', 'frame', 'debug']} />
-                        </Player> */}
-                      
-                        <LottiePlayer
-                          className="left-side"
-                          id={`lottie${i + 1}`}
-                          mode="seek"
-                          src={left[0].data}
-                          //src={items[1][0].data}
-                          key={i+1}
-                          renderer='canvas'
-                        />
-                      </div>
-                    );
-                  } else if (left[0].slideType === "3d") {
-                    if (left[0].data === "dark") {
+                  switch (left[0].slideType) {
+                    case "video":
                       return (
-                        <div className="left-side video" key={i}>
-                          <WaterAnimation />
+                        <div
+                          className="left-side video"
+                          key={i}
+                          style={{
+                            display: "none",
+                          }}
+                        >
+                          <VideoBackground src={left[0].data} />
                         </div>
                       );
-                    }
-                  } else if (left[0].slideType === "porfolio") {
-                    return (
-                      <div className="left-side video" key={i}>
-                        {isOpen && (
+                    case "2d":
+                      return (
+                        <div
+                          className={isSafarioIos}
+                          style={{
+                            display: "block",
+                            width: "100%",
+                            height: "100%",
+                            transformOrigin: "0px 0px 0px",
+                          }}
+                          id={`canvascontainer${i}`}
+                          key={i}
+                        >
+                          <LottiePlayer
+                            className="left-side"
+                            id={`lottie${i + 1}`}
+                            mode="seek"
+                            src={left[0].data}
+                            key={i + 1}
+                            renderer="canvas"
+                          />
+                        </div>
+                      );
+                    case "3d":
+                      if (left[0].data === "dark") {
+                        return (
+                          <div
+                            className="left-side video"
+                            key={i}
+                            style={{
+                              display: "none",
+                            }}
+                          >
+                            <WaterAnimation />
+                          </div>
+                        );
+                      }else return null
+                    case "porfolio":
+                      return (
+                        <div
+                          className="left-side video"
+                          id={`portafolio${i}`}
+                          key={i}
+                        >
                           <MyGallery
                             isOpen={isOpen}
                             lightboxWillClose={handleOnclose}
+                            ID={`portafolio${i}`}
+                            isLoad={isLoading}
                           />
-                        )}
-                        {!isOpen && <MyGallery />}
-                      </div>
-                    );
-                  }
+                        </div>
+                      );
 
-                  return null;
+                    default:
+                      return null;
+                  }
                 })
               : null}
           </div>
@@ -387,133 +228,107 @@ function Scrollyteller() {
             {cardScroll.length > 0
               ? cardScroll.map((narr, i) => {
                   return (
-                    <Waypoint
-                      onEnter={() => {
-                        onStepEnter(i + 1);
-                      }}
+                    <div
+                      className={className("step step__div", {
+                        hiddenclass: i === 7,
+                      })}
+                      id={`step${i + 1}`}
                       key={i + 1}
                     >
-                      <div
-                        onClick={() => handleGalleryClick(i)}
-                        className="step"
-                        id={`step${i + 1}`}
-                        style={{
-                          marginBottom: "120px",
-                          display: "flex",
-                          justifyContent: "center",
-                          flexDirection: "column",
-                        }}
-                      >
-                        {narr ? (
-                          narr.map((card, j) => (
-                            <div
-                              className="desc"
-                              id={`desc${i + 1}-${j + 1}`}
-                              key={`${i}-${j}`}
-                              style={{ height: "100vh" }}
+                      {narr ? (
+                        narr.map((card, j) => (
+                          <div
+                            className="desc"
+                            id={`desc${i + 1}-${j + 1}`}
+                            key={`${i}-${j}`}
+                            style={{ height: "100vh" }}
+                          >
+                            <Waypoint
+                              fireOnRapidScroll={true}
+                              onEnter={
+                                leftSideDiv && isLoading
+                                  ? () => {
+                                      onStepEnter(i + 1);
+                                    }
+                                  : null
+                              }
                             >
                               <Card>
                                 <Card.Body>
                                   <Card.Text>{card.description}</Card.Text>
                                 </Card.Body>
                               </Card>
-                            </div>
-                          ))
-                        ) : (
-                          <div
-                            className="desc"
-                            id={`desc${i + 1}`}
-                            key={`${i}`}
-                          >
-                            <Card>
-                              <Card.Body>
-                                <Card.Text>Loading</Card.Text>
-                              </Card.Body>
-                            </Card>
+                            </Waypoint>
                           </div>
-                        )}
-                      </div>
-                    </Waypoint>
+                        ))
+                      ) : (
+                        <div className="desc" id={`desc${i + 1}`} key={`${i}`}>
+                          <Card>
+                            <Card.Body>
+                              <Card.Text>Loading</Card.Text>
+                            </Card.Body>
+                          </Card>
+                        </div>
+                      )}
+                    </div>
                   );
                 })
               : narration.map((narr) => (
-                  <Waypoint
-                    onEnter={() => {
-                      onStepEnter(narr.key);
-                    }}
+                  <div
+                    className="step"
+                    id={`step${narr.key}`}
+                    style={{ marginBottom: "100px" }}
                     key={narr.key}
                   >
-                    <div
-                      className="step"
-                      id={`step${narr.key}`}
-                      style={{ marginBottom: "100px" }}
-                    >
-                      <div className="desc" id={"desc" + narr.key}>
+                    <div className="desc" id={"desc" + narr.key}>
+                      <Waypoint
+                        fireOnRapidScroll={true}
+                        onEnter={
+                          leftSideDiv && isLoading
+                            ? () => {
+                                onStepEnter(narr.key);
+                              }
+                            : null
+                        }
+                      >
                         <Card>
                           <Card.Body>
                             <Card.Text>{narr.description}</Card.Text>
                           </Card.Body>
                         </Card>
-                      </div>
+                      </Waypoint>
                     </div>
-                  </Waypoint>
+                  </div>
                 ))}
           </div>
         </div>
       </div>
       <div>
         <Chart
-          texts={items[2].map((e) => {
-            return (
-              <Card css={narrativeStyle}>
-                <Card.Body>
-                  <Card.Text>{e.description}</Card.Text>
-                </Card.Body>
-              </Card>
-            );
-          })}
+          texts={items[2].map((e) => (
+            <Card>
+              <Card.Body>
+                <Card.Text>{e.description}</Card.Text>
+              </Card.Body>
+            </Card>
+          ))}
         />
       </div>
       <div style={{ position: "relative" }}>
         <WaterAnimation />
-        <div
-          style={{
-            position: "relative",
-            top: "40",
-            display: "grid",
-            placeItems: "center",
-            width: "100%",
-            height: "100%",
-          }}
-        >
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-            }}
-          >
-            {
-              <div
-                style={{
-                  boxShadow: "2px 2px 10px white",
-                }}
-              >
-                <Card style={{ top: "40" }}>
-                  <Card.Body>
-                    <Card.Text>
-                      To make the next step please book a time in our calendar
-                      for a discovery session.
-                    </Card.Text>
-                  </Card.Body>
-                </Card>
-              </div>
-            }
-
-            <a
-              href="https://calendly.com/sccastleman/60min"
-              target="_blank"
-            >
+        <div className="div__waterAnimation">
+          <div className="div__waterAnimation___flex">
+            <div style={{ boxShadow: "2px 2px 10px white" }}>
+              <Card style={{ top: "40" }}>
+                <Card.Body>
+                  <Card.Text>
+                    To make the next step please book a time in our calendar for
+                    a discovery session.
+                  </Card.Text>
+                </Card.Body>
+              </Card>
+            </div>
+            <a href="https://calendly.com/sccastleman/60min" target="_blank" rel="noopener noreferrer">
               <div className="bookTimeBtn">
                 <span style={{ color: "white", padding: "10px" }}>
                   {items.length > 0 ? items[12][0].description : "loading..."}
@@ -525,6 +340,6 @@ function Scrollyteller() {
       </div>
     </div>
   );
-}
+};
 
 export default Scrollyteller;

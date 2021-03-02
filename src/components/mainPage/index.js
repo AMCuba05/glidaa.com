@@ -76,7 +76,7 @@ export default function Index() {
         let x = xy[0];
         let y = xy[1];
         let target = xy[4];
-        if (userActivityDetails?.id == 'admin.admin' && target == email) {
+        if (userActivityDetails?.id === 'admin.admin' && target === email) {
           setScrollControl(true);
           let options = { top: y, left: x, behavior: 'smooth' }; // left and top are coordinates
           window.scrollTo(options);

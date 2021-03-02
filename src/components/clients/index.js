@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import Card from 'react-bootstrap/Card'
-import DropdownButton from 'react-bootstrap/DropdownButton'
 import Dropdown from 'react-bootstrap/Dropdown'
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
@@ -9,9 +8,7 @@ import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 import Table from 'react-bootstrap/Table'
 import ProgressBar from 'react-bootstrap/ProgressBar'
-import AppRitchTextEditor from '../../helper/appRitchTextEditor';
-import Amplify, { API, graphqlOperation, Storage } from 'aws-amplify'
-import { onUpdateClientQuery } from '../../graphql/subscriptions'
+import Amplify, { API, graphqlOperation } from 'aws-amplify'
 import { updateClientQuery, createClientQuery } from '../../graphql/mutations'
 import Toast from 'react-bootstrap/Toast'
 import { listClientQuerys } from '../../graphql/queries'
@@ -24,7 +21,7 @@ Amplify.configure({
 });
 
 
-export default function Clients({ }) {
+export default function Clients() {
 
 
   const [clients, setClients] = useState(null);
@@ -54,7 +51,6 @@ export default function Clients({ }) {
       let res = await fetch(url);
 
       res.json().then((data) => {
-        let userData;
         if (data.body) {
           let dataBody = JSON.parse(data.body);
           setClients(dataBody);
@@ -125,7 +121,7 @@ export default function Clients({ }) {
 
   const handleSaveClick = async () => {
 
-    if(!name || name==''){
+    if(!name || name===''){
       return;
     }
     setshowProgress(true);
@@ -154,7 +150,7 @@ export default function Clients({ }) {
       try {
         let res = await API.graphql(graphqlOperation(updateClientQuery, { input: payload }));
         let query = res.data.updateClientQuery;
-        let allQueries = lstQueries.filter(x => x.id != query.id);
+        let allQueries = lstQueries.filter(x => x.id !== query.id);
         allQueries.push(query);
         setQueries(allQueries);
         setSelectedQuery(query);
@@ -177,7 +173,7 @@ export default function Clients({ }) {
     event.preventDefault();
 
     console.log(name, query);
-    if (query && query != '') {
+    if (query && query !== '') {
       formSend(query);
     } else {
       formSend();

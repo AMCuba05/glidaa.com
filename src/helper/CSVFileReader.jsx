@@ -30,7 +30,6 @@ export default function CSVFileReader() {
       let res = await fetch(`https://i6smufsvj6.execute-api.us-east-1.amazonaws.com/live/visit?getAllClient=${true}`);
 
       res.json().then((data) => {
-        let userData;
         if (data.body) {
           let dataBody = JSON.parse(data.body); 
           if (dataBody.length<1) {
@@ -50,7 +49,7 @@ export default function CSVFileReader() {
 
           dataBody.map((x) => {
             for (let i = 0; i < keys.length; i++) {
-              text += (x[keys[i]] == undefined) ? "" : x[keys[i]] + " ";
+              text += (x[keys[i]] === undefined) ? "" : x[keys[i]] + " ";
             }
             text.trim();
             text += "\n"
@@ -104,7 +103,7 @@ export default function CSVFileReader() {
     });
     const content = await rawResponse.json();
 
-    if (content.statusCode == 200) {
+    if (content.statusCode === 200) {
       try {
         let keys = Object.values(Object.values(fileData[0].data)).map(val => val.toLowerCase());
 
