@@ -139,6 +139,8 @@
       "Properties": {
         "TemplateURL": "https://s3.amazonaws.com/amplify-glidaaamplify-live-84208-deployment/amplify-cfn-templates/function/apilambda-cloudformation-template.json",
         "Parameters": {
+          "deploymentBucketName": "amplify-glidaaamplify-live-84208-deployment",
+          "s3Key": "amplify-builds/apilambda-394f496b44712b573534-build.zip",
           "storageUserVisitsName": {
             "Fn::GetAtt": [
               "storageUserVisits",
@@ -149,6 +151,24 @@
             "Fn::GetAtt": [
               "storageUserVisits",
               "Outputs.Arn"
+            ]
+          },
+          "env": "live"
+        }
+      }
+    },
+    "functionEmailJobsScheduler": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-glidaaamplify-live-84208-deployment/amplify-cfn-templates/function/EmailJobsScheduler-cloudformation-template.json",
+        "Parameters": {
+          "CloudWatchRule": "rate(1 minute)",
+          "deploymentBucketName": "amplify-glidaaamplify-live-84208-deployment",
+          "s3Key": "amplify-builds/EmailJobsScheduler-72365554472b4459486f-build.zip",
+          "apiMonitorAPIGraphQLAPIIdOutput": {
+            "Fn::GetAtt": [
+              "apiMonitorAPI",
+              "Outputs.GraphQLAPIIdOutput"
             ]
           },
           "env": "live"
@@ -192,7 +212,7 @@
           "DynamoDBBillingMode": "PAY_PER_REQUEST",
           "DynamoDBEnableServerSideEncryption": false,
           "S3DeploymentBucket": "amplify-glidaaamplify-live-84208-deployment",
-          "S3DeploymentRootKey": "amplify-appsync-files/0c750a6506ba19c48d63ad186d1ac1494cc91fdf",
+          "S3DeploymentRootKey": "amplify-appsync-files/b66d0d5557e844a58792b3c0c9820b00523bc9f2",
           "env": "live"
         }
       }

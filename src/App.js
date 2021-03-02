@@ -38,5 +38,6 @@ export default function App() {
     <BrowserRouter>
       <InternalApp />
     </BrowserRouter>
+
   );
 }
