@@ -1,10 +1,16 @@
-.newScrollyteller__img__background{
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    z-index: -1;
+.Scrollyteller{
+  position: relative;
+  height: 100%;
+  background-image: url(../../images/background2.png);
+  background-repeat: no-repeat;
+  background-position: center top;
+  background-attachment: fixed;
+  background-size: cover;
+}
+.Scrollyteller__section{
+  position: sticky;
+  /* transform: translateY(-100%); */
+  width: 100%;
 }
 .hiddenclass{
   pointer-events:none
@@ -80,8 +86,8 @@ img {
     flex-basis: 50%;
     position: sticky;
     top: 0;
-    width: 100%;
     height: 75vh;
+    width: 100%;
     align-self: flex-start;
   }
   .data {
@@ -142,7 +148,7 @@ img {
     grid-template-columns: 1fr 1fr;
   }
   .mainmargin{
-    margin-bottom: 200px;
+    margin-bottom: 300px;
   }
   @media screen and (max-width: 940px) {
     .main {
@@ -162,7 +168,7 @@ img {
     }
   }
 .step__div{
-    margin-bottom: 150px;
+    margin-bottom: 200px;
     display: flex;
     justify-content: center;
     flex-direction: column;

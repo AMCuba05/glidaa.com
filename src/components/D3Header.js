@@ -4,8 +4,8 @@ import ScrollAnimation from "./ScrollAnimation";
 
 const D3Header = React.memo(({ texts }) => {
   return (
-    <>
-      <div className="particles__container" style={{ position: "relative" }}>
+    <div style={{position: "absolute", top: "0", width: "98.8vw" }}>
+      <div className="particles__container" style={{ zIndex:10}}>
         <ParticlesAnimation />
         <ScrollAnimation />
       </div>
@@ -50,7 +50,7 @@ const D3Header = React.memo(({ texts }) => {
           <p style={{ fontWeight: "bolder", fontSize: "20px" }}>{texts[2]}</p>
         </div>
       </div>
-    </>
+    </div>
   );
 });
 

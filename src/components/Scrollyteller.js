@@ -46,16 +46,18 @@ const Scrollyteller = () => {
     });
   };
   const onStepEnter = (data) => {
-    const newpoint = indexDiv === data - 1 ? false : true;
+    const newpoint = indexDiv === data ? false : true;
     if (newpoint && indexDiv >= 0 && leftSideDiv.length > indexDiv)
       leftSideDiv[indexDiv].style.display = "none";
-    if (newpoint && data - 1 >= 0 && leftSideDiv.length > data - 1)
-      leftSideDiv[data - 1].style.display = "flex";
-    indexDiv = data - 1;
+    if (newpoint && data >= 0 && leftSideDiv.length > data)
+      leftSideDiv[data].style.display = "flex";
+    indexDiv = data;
+    console.log(data);
   };
 
   useEffect(() => {
     document.querySelectorAll("lottie-player").forEach((lottie, i) => {
+      console.log(lottie.id);
       lottie.addEventListener("load", function (e) {
         create({
           mode: "scroll",
@@ -76,6 +78,7 @@ const Scrollyteller = () => {
         }
       });
       lottie.addEventListener("frame", function (e) {
+        console.log(lotties[i][0].frames);
         const canvasdiv = lottie.shadowRoot.querySelectorAll(
           ".main > .animation"
         );
@@ -84,7 +87,7 @@ const Scrollyteller = () => {
           if (canvasdivNodes) {
             const canvas = canvasdivNodes[2];
             if (canvas) {
-              const w = canvas.width
+              const w = canvas.width;
               canvas.width = w;
               lottie.resize();
             }
@@ -97,245 +100,273 @@ const Scrollyteller = () => {
   }, []);
 
   return (
-    <div>
-      <picture>
-        <source srcSet={background2} media="(max-width: 650px)"></source>
-        <source srcSet={background2}></source>
-        <img
-          className="newScrollyteller__img__background"
-          src={background}
-          alt="background"
-        ></img>
-      </picture>
-      <div>
-        {items.length > 0 ? (
-          <>
+    <div className="Scrollyteller">
+      <section
+        className="main Scrollyteller__section"
+        style={{
+          zIndex: 3,
+        }}
+      >
+        <div className="graphic">
+          <div
+            className="left-side video"
+            key={0}
+            style={{
+              display: "none",
+            }}
+          >
             <D3Header texts={items[0].map((e) => e.description)} />
-            <div className="main mainmargin">
-              <div className="graphic">
-                <lottie-player
-                  id={`lottie0`}
-                  mode="seek"
-                  src={items[1][0].data}
-                  key={0}
-                  renderer="canvas"
-                ></lottie-player>
-              </div>
-              <div className="scroller">
-                <Waypoint
-                  fireOnRapidScroll={true}
-                  onEnter={
-                    leftSideDiv && isLoading
-                      ? () => {
-                          onMainStepEnter();
-                        }
-                      : null
-                  }
-                >
-                  <div className="step step__div" id={`step0`}>
-                    <div className="desc" id={`desc0`} key={`0`}>
-                      <Card>
-                        <Card.Body>
-                          <Card.Text>{items[1][0].description}</Card.Text>
-                        </Card.Body>
-                      </Card>
-                    </div>
-                  </div>
-                </Waypoint>
-              </div>
-            </div>
-          </>
-        ) : null}
-
-        <div className="main">
-          <div className="graphic">
-            {items.length > 0
-              ? cardScroll.map((left, i) => {
-                  switch (left[0].slideType) {
-                    case "video":
+          </div>
+          <div
+            className={isSafarioIos}
+            style={{
+              display: "block",
+              width: "100%",
+              height: "100%",
+              transformOrigin: "0px 0px 0px",
+            }}
+            id={`canvascontainer${0}`}
+            key={1}
+          >
+            <LottiePlayer
+              className="left-side"
+              id={`lottie0`}
+              mode="seek"
+              src={items[1][0].data}
+              key={0}
+              renderer="canvas"
+            />
+          </div>
+          {items.length > 0
+            ? cardScroll.map((left, i) => {
+                switch (left[0].slideType) {
+                  case "video":
+                    return (
+                      <div
+                        className="left-side video"
+                        key={i + 1}
+                        style={{
+                          display: "none",
+                        }}
+                      >
+                        <VideoBackground src={left[0].data} />
+                      </div>
+                    );
+                  case "2d":
+                    return (
+                      <div
+                        className={isSafarioIos}
+                        style={{
+                          display: "block",
+                          width: "100%",
+                          height: "100%",
+                          transformOrigin: "0px 0px 0px",
+                        }}
+                        id={`canvascontainer${i}`}
+                        key={i + 1}
+                      >
+                        <LottiePlayer
+                          className="left-side"
+                          id={`lottie${i + 1}`}
+                          mode="seek"
+                          src={left[0].data}
+                          key={i + 1}
+                          renderer="canvas"
+                        />
+                      </div>
+                    );
+                  case "3d":
+                    if (left[0].data === "dark") {
                       return (
                         <div
                           className="left-side video"
-                          key={i}
+                          key={i + 1}
                           style={{
                             display: "none",
                           }}
                         >
-                          <VideoBackground src={left[0].data} />
+                          <WaterAnimation />
                         </div>
                       );
-                    case "2d":
-                      return (
-                        <div
-                          className={isSafarioIos}
-                          style={{
-                            display: "block",
-                            width: "100%",
-                            height: "100%",
-                            transformOrigin: "0px 0px 0px",
-                          }}
-                          id={`canvascontainer${i}`}
-                          key={i}
-                        >
-                          <LottiePlayer
-                            className="left-side"
-                            id={`lottie${i + 1}`}
-                            mode="seek"
-                            src={left[0].data}
-                            key={i + 1}
-                            renderer="canvas"
-                          />
-                        </div>
-                      );
-                    case "3d":
-                      if (left[0].data === "dark") {
-                        return (
-                          <div
-                            className="left-side video"
-                            key={i}
-                            style={{
-                              display: "none",
-                            }}
-                          >
-                            <WaterAnimation />
-                          </div>
-                        );
-                      }else return null
-                    case "porfolio":
-                      return (
-                        <div
-                          className="left-side video"
-                          id={`portafolio${i}`}
-                          key={i}
-                        >
-                          <MyGallery
-                            isOpen={isOpen}
-                            lightboxWillClose={handleOnclose}
-                            ID={`portafolio${i}`}
-                            isLoad={isLoading}
-                          />
-                        </div>
-                      );
-
-                    default:
-                      return null;
-                  }
-                })
-              : null}
-          </div>
-
-          <div className="scroller" id="scroller">
-            {cardScroll.length > 0
-              ? cardScroll.map((narr, i) => {
-                  return (
-                    <div
-                      className={className("step step__div", {
-                        hiddenclass: i === 7,
-                      })}
-                      id={`step${i + 1}`}
-                      key={i + 1}
-                    >
-                      {narr ? (
-                        narr.map((card, j) => (
-                          <div
-                            className="desc"
-                            id={`desc${i + 1}-${j + 1}`}
-                            key={`${i}-${j}`}
-                            style={{ height: "100vh" }}
-                          >
-                            <Waypoint
-                              fireOnRapidScroll={true}
-                              onEnter={
-                                leftSideDiv && isLoading
-                                  ? () => {
-                                      onStepEnter(i + 1);
-                                    }
-                                  : null
-                              }
-                            >
-                              <Card>
-                                <Card.Body>
-                                  <Card.Text>{card.description}</Card.Text>
-                                </Card.Body>
-                              </Card>
-                            </Waypoint>
-                          </div>
-                        ))
-                      ) : (
-                        <div className="desc" id={`desc${i + 1}`} key={`${i}`}>
-                          <Card>
-                            <Card.Body>
-                              <Card.Text>Loading</Card.Text>
-                            </Card.Body>
-                          </Card>
-                        </div>
-                      )}
-                    </div>
-                  );
-                })
-              : narration.map((narr) => (
-                  <div
-                    className="step"
-                    id={`step${narr.key}`}
-                    style={{ marginBottom: "100px" }}
-                    key={narr.key}
-                  >
-                    <div className="desc" id={"desc" + narr.key}>
-                      <Waypoint
-                        fireOnRapidScroll={true}
-                        onEnter={
-                          leftSideDiv && isLoading
-                            ? () => {
-                                onStepEnter(narr.key);
-                              }
-                            : null
-                        }
+                    } else return null;
+                  case "porfolio":
+                    return (
+                      <div
+                        className="left-side video"
+                        id={`portafolio${i}`}
+                        key={i + 1}
                       >
+                        <MyGallery
+                          isOpen={isOpen}
+                          lightboxWillClose={handleOnclose}
+                          ID={`portafolio${i}`}
+                          isLoad={isLoading}
+                        />
+                      </div>
+                    );
+
+                  default:
+                    return null;
+                }
+              })
+            : null}
+        </div>
+
+        <div className="scroller" id="scroller">
+          <div
+            className="step step__div"
+            id={`step-1`}
+            style={{ opacity: 0, marginBottom: "400px" }}
+          >
+            <div className="desc" id={`desc0`} key={`0`}>
+              <Waypoint
+                fireOnRapidScroll={true}
+                onEnter={
+                  leftSideDiv && isLoading
+                    ? () => {
+                        onStepEnter(0);
+                      }
+                    : null
+                }
+              >
+                <Card>
+                  <Card.Body>
+                    <Card.Text>""</Card.Text>
+                  </Card.Body>
+                </Card>
+              </Waypoint>
+            </div>
+          </div>
+          <div className="step step__div" id={`step0`}>
+            <div className="desc" id={`desc0`} key={`0`}>
+              <Waypoint
+                fireOnRapidScroll={true}
+                onEnter={
+                  leftSideDiv && isLoading
+                    ? () => {
+                        onStepEnter(1);
+                      }
+                    : null
+                }
+              >
+                <Card>
+                  <Card.Body>
+                    <Card.Text>{items[1][0].description}</Card.Text>
+                  </Card.Body>
+                </Card>
+              </Waypoint>
+            </div>
+          </div>
+          {cardScroll.length > 0
+            ? cardScroll.map((narr, i) => {
+                return (
+                  <div
+                    className={className("step step__div", {
+                      hiddenclass: i === 7,
+                    })}
+                    id={`step${i + 1}`}
+                    key={i + 1}
+                  >
+                    {narr ? (
+                      narr.map((card, j) => (
+                        <div
+                          className="desc"
+                          id={`desc${i + 1}-${j + 1}`}
+                          key={`${i}-${j}`}
+                          style={{ height: "100vh" }}
+                        >
+                          <Waypoint
+                            fireOnRapidScroll={true}
+                            onEnter={
+                              leftSideDiv && isLoading
+                                ? () => {
+                                    onStepEnter(i + 2);
+                                  }
+                                : null
+                            }
+                          >
+                            <Card>
+                              <Card.Body>
+                                <Card.Text>{card.description}</Card.Text>
+                              </Card.Body>
+                            </Card>
+                          </Waypoint>
+                        </div>
+                      ))
+                    ) : (
+                      <div className="desc" id={`desc${i + 1}`} key={`${i}`}>
                         <Card>
                           <Card.Body>
-                            <Card.Text>{narr.description}</Card.Text>
+                            <Card.Text>Loading</Card.Text>
                           </Card.Body>
                         </Card>
-                      </Waypoint>
-                    </div>
+                      </div>
+                    )}
                   </div>
-                ))}
-          </div>
+                );
+              })
+            : narration.map((narr) => (
+                <div
+                  className="step"
+                  id={`step${narr.key}`}
+                  style={{ marginBottom: "100px" }}
+                  key={narr.key}
+                >
+                  <div className="desc" id={"desc" + narr.key}>
+                    <Waypoint
+                      fireOnRapidScroll={true}
+                      onEnter={
+                        leftSideDiv && isLoading
+                          ? () => {
+                              onStepEnter(narr.key);
+                            }
+                          : null
+                      }
+                    >
+                      <Card>
+                        <Card.Body>
+                          <Card.Text>{narr.description}</Card.Text>
+                        </Card.Body>
+                      </Card>
+                    </Waypoint>
+                  </div>
+                </div>
+              ))}
         </div>
-      </div>
-      <div>
-        <Chart
-          texts={items[2].map((e) => (
-            <Card>
+      </section>
+      <Chart
+        texts={items[2].map((e) => (
+          <Card>
+            <Card.Body>
+              <Card.Text>{e.description}</Card.Text>
+            </Card.Body>
+          </Card>
+        ))}
+      />
+      <WaterAnimation />
+      <div className="div__waterAnimation">
+        <div className="div__waterAnimation___flex">
+          <div style={{ boxShadow: "2px 2px 10px white" }}>
+            <Card style={{ top: "40" }}>
               <Card.Body>
-                <Card.Text>{e.description}</Card.Text>
+                <Card.Text>
+                  To make the next step please book a time in our calendar for a
+                  discovery session.
+                </Card.Text>
               </Card.Body>
             </Card>
-          ))}
-        />
-      </div>
-      <div style={{ position: "relative" }}>
-        <WaterAnimation />
-        <div className="div__waterAnimation">
-          <div className="div__waterAnimation___flex">
-            <div style={{ boxShadow: "2px 2px 10px white" }}>
-              <Card style={{ top: "40" }}>
-                <Card.Body>
-                  <Card.Text>
-                    To make the next step please book a time in our calendar for
-                    a discovery session.
-                  </Card.Text>
-                </Card.Body>
-              </Card>
-            </div>
-            <a href="https://calendly.com/sccastleman/60min" target="_blank" rel="noopener noreferrer">
-              <div className="bookTimeBtn">
-                <span style={{ color: "white", padding: "10px" }}>
-                  {items.length > 0 ? items[12][0].description : "loading..."}
-                </span>
-              </div>
-            </a>
           </div>
+          <a
+            href="https://calendly.com/sccastleman/60min"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <div className="bookTimeBtn">
+              <span style={{ color: "white", padding: "10px" }}>
+                {items.length > 0 ? items[12][0].description : "loading..."}
+              </span>
+            </div>
+          </a>
         </div>
       </div>
     </div>

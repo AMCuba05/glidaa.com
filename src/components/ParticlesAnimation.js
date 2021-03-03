@@ -114,8 +114,7 @@ const Map = (props) => {
               color: { value: new THREE.Color("#c3c8d6") },
             },
             vertexShader: document.getElementById("vertexshader")?.textContent,
-            fragmentShader: document.getElementById("fragmentshader")
-              .textContent,
+            fragmentShader: document.getElementById("fragmentshader")?.textContent,
           },
         ]}
       />

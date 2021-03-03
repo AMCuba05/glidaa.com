@@ -112,7 +112,6 @@ const WaterAnimation = React.memo(() => {
       style={{
         height: "100vh",
         position: "absolute",
-        top: "0",
         width: "98.8vw",
       }}
     >
