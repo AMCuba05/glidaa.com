@@ -213,12 +213,13 @@ const Scrollyteller = () => {
         </div>
 
         <div className="scroller" id="scroller">
+          <div className="step_header" style={{height: "250vh"}}>
           <div
             className="step step__div"
             id={`step-1`}
-            style={{ opacity: 0, marginBottom: "400px" }}
+            style={{marginBottom: "400px", position: "absolute", left:0, right:0}}
           >
-            <div className="desc" id={`desc0`} key={`0`}>
+            <div className="desc" id={`desc-1-0`} key={`-1-0`} style={{ height: "65vh" }}>
               <Waypoint
                 fireOnRapidScroll={true}
                 onEnter={
@@ -231,11 +232,48 @@ const Scrollyteller = () => {
               >
                 <Card>
                   <Card.Body>
-                    <Card.Text>""</Card.Text>
+                    <Card.Text>{items[0].map((e) => e.description)[0]}</Card.Text>
                   </Card.Body>
                 </Card>
               </Waypoint>
             </div>
+            <div className="desc" id={`desc-1-1`} key={`-1-1`} style={{ height: "65vh" }}>
+              <Waypoint
+                fireOnRapidScroll={true}
+                onEnter={
+                  leftSideDiv && isLoading
+                    ? () => {
+                        onStepEnter(0);
+                      }
+                    : null
+                }
+              >
+                <Card>
+                  <Card.Body>
+                    <Card.Text>{items[0].map((e) => e.description)[1]}</Card.Text>
+                  </Card.Body>
+                </Card>
+              </Waypoint>
+            </div>
+            <div className="desc" id={`desc-1-2`} key={`-1-2`} style={{ height: "65vh" }}>
+              <Waypoint
+                fireOnRapidScroll={true}
+                onEnter={
+                  leftSideDiv && isLoading
+                    ? () => {
+                        onStepEnter(0);
+                      }
+                    : null
+                }
+              >
+                <Card>
+                  <Card.Body>
+                    <Card.Text>{items[0].map((e) => e.description)[2]}</Card.Text>
+                  </Card.Body>
+                </Card>
+              </Waypoint>
+            </div>
+          </div>
           </div>
           <div className="step step__div" id={`step0`}>
             <div className="desc" id={`desc0`} key={`0`}>

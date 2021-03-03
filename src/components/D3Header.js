@@ -28,7 +28,7 @@ const D3Header = React.memo(({ texts }) => {
           <sup style={{ fontWeight: "bolder", fontSize: "20px" }}>&#8482;</sup>
           {"}"}
         </p>
-        <div
+        {/* <div
           className="card"
           style={{
             margin: "20px",
@@ -48,7 +48,7 @@ const D3Header = React.memo(({ texts }) => {
             {texts[1]}
           </p>
           <p style={{ fontWeight: "bolder", fontSize: "20px" }}>{texts[2]}</p>
-        </div>
+        </div> */}
       </div>
     </div>
   );

@@ -102,6 +102,14 @@ img {
     min-height: 100vh;
     height: max-content;
   }
+  .step_header .card{
+    background: rgba(255, 255, 255, 0.548);
+    width: 100%;
+  }
+  .step_header .desc{
+    width: 75%;
+    max-width: 450px;
+  }
   .card {
     box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.25);
     text-align: center;
@@ -172,6 +180,7 @@ img {
     display: flex;
     justify-content: center;
     flex-direction: column;
+    align-items: center;
 }
 .div__waterAnimation{
     position: relative;
