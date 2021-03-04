@@ -219,7 +219,7 @@ const Scrollyteller = () => {
             id={`step-1`}
             style={{marginBottom: "400px", position: "absolute", left:0, right:0}}
           >
-            <div className="desc" id={`desc-1-0`} key={`-1-0`} style={{ height: "65vh" }}>
+            <div className="desc" id={`desc-1-0`} key={`-1-0`}>
               <Waypoint
                 fireOnRapidScroll={true}
                 onEnter={
@@ -237,7 +237,7 @@ const Scrollyteller = () => {
                 </Card>
               </Waypoint>
             </div>
-            <div className="desc" id={`desc-1-1`} key={`-1-1`} style={{ height: "65vh" }}>
+            <div className="desc" id={`desc-1-1`} key={`-1-1`}>
               <Waypoint
                 fireOnRapidScroll={true}
                 onEnter={
@@ -255,7 +255,7 @@ const Scrollyteller = () => {
                 </Card>
               </Waypoint>
             </div>
-            <div className="desc" id={`desc-1-2`} key={`-1-2`} style={{ height: "65vh" }}>
+            <div className="desc" id={`desc-1-2`} key={`-1-2`}>
               <Waypoint
                 fireOnRapidScroll={true}
                 onEnter={
@@ -311,7 +311,6 @@ const Scrollyteller = () => {
                           className="desc"
                           id={`desc${i + 1}-${j + 1}`}
                           key={`${i}-${j}`}
-                          style={{ height: "100vh" }}
                         >
                           <Waypoint
                             fireOnRapidScroll={true}

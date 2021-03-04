@@ -105,10 +105,12 @@ img {
   .step_header .card{
     background: rgba(255, 255, 255, 0.548);
     width: 100%;
+    height: max-content;
   }
   .step_header .desc{
     width: 75%;
     max-width: 450px;
+    height: 70vh;
   }
   .card {
     box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.25);
@@ -116,10 +118,16 @@ img {
     padding: 10%;
     background: white;
     width: 100%;
+    min-height: 150px;
+  }
+  .card-body{
+    display: flex;
+    align-items: center;
   }
   .card-text {
     font-size: 16px !important;
     line-height: 1.3;
+    width: 100%;
   }
   .card__notPadding{
     padding: 0%;
@@ -136,6 +144,8 @@ img {
   .desc {
     display: flex;
     align-items: center;
+    width: 100%;
+    height: 100vh;
   }
   .btn {
     color: #575757;
@@ -173,6 +183,15 @@ img {
       z-index: 100;
       opacity: 0.9;
       padding-top: 50px;
+    }
+    .desc{
+      align-items: flex-start;
+    }
+    .step_header{
+      transform: translateY(-50px);
+    }
+    .step_header .desc{
+      width: 100%;
     }
   }
 .step__div{
