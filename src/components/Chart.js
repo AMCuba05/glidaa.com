@@ -179,6 +179,7 @@ class Chart extends React.Component {
                     id={`waypoint-${city}`}
                     className={classes.step}
                     key={city}
+                    style={{zIndex:5}}
                   >
                     {cityNames[city]}{" "}
                   </div>
