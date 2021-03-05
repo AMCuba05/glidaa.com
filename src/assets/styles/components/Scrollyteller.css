@@ -101,6 +101,9 @@ img {
     width: 100%;
     height: max-content;
   }
+  .step_header{
+    height: 270vh;
+  }
   .step_header .card{
     background: rgba(255, 255, 255, 0.548);
     width: 100%;
@@ -121,6 +124,9 @@ img {
     position: absolute;
     left: 0px;
     right: 0px;
+  }
+  .step_footer{
+    transition: opacity ease 0.5s;
   }
   .card {
     box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.25);
@@ -207,6 +213,7 @@ img {
     }
     .step_header{
       transform: translateY(-50vh);
+      height: 220vh;
     }
     .step_header .desc{
       width: 100%;

@@ -40,8 +40,7 @@ const Scrollyteller = () => {
     useInView(),
     useInView(),
     useInView(),
-
-  ]
+  ];
   const items = itemsJSON;
 
   const isSafarioIos = className(
@@ -134,7 +133,7 @@ const Scrollyteller = () => {
             className="left-side video"
             key={0}
             style={{
-              display: (viewers[0][1])?'flex':'none',
+              display: viewers[0][1] ? "flex" : "none",
             }}
           >
             <D3Header texts={items[0].map((e) => e.description)} />
@@ -142,7 +141,7 @@ const Scrollyteller = () => {
           <div
             className={isSafarioIos}
             style={{
-              display: (viewers[1][1]) ?'flex':'none',
+              display: viewers[1][1] ? "flex" : "none",
               width: "100%",
               height: "100%",
               transformOrigin: "0px 0px 0px",
@@ -168,7 +167,7 @@ const Scrollyteller = () => {
                         className="left-side video"
                         key={i + 1}
                         style={{
-                          display: (viewers[i+2][1]) ?'flex':'none',
+                          display: viewers[i + 2][1] ? "flex" : "none",
                         }}
                       >
                         <VideoBackground src={left[0].data} />
@@ -179,7 +178,7 @@ const Scrollyteller = () => {
                       <div
                         className={isSafarioIos}
                         style={{
-                          display: (viewers[i+2][1]) ?'flex':'none',
+                          display: viewers[i + 2][1] ? "flex" : "none",
                           width: "100%",
                           transformOrigin: "0px 0px 0px",
                         }}
@@ -203,7 +202,7 @@ const Scrollyteller = () => {
                           className="left-side video"
                           key={i + 1}
                           style={{
-                            display: (viewers[i+2][1]) ?'flex':'none',
+                            display: viewers[i + 2][1] ? "flex" : "none",
                           }}
                         >
                           <WaterAnimation />
@@ -216,7 +215,7 @@ const Scrollyteller = () => {
                         className="left-side video"
                         id={`portafolio${i}`}
                         key={i + 1}
-                        style={{display: (viewers[i+2][1]) ?'flex':'none',}}
+                        style={{ display: viewers[i + 2][1] ? "flex" : "none" }}
                       >
                         <MyGallery
                           isOpen={isOpen}
@@ -235,9 +234,10 @@ const Scrollyteller = () => {
           <div
             className="left-side"
             style={{
-              display: (viewers[11][1]) ?'flex':'none',
+              display: viewers[11][1] ? "flex" : "none",
               marginTop: "30px",
               flexDirection: "column",
+              alignItems: "center",
             }}
           >
             <Chart waipointId={cityID}></Chart>
@@ -245,32 +245,35 @@ const Scrollyteller = () => {
         </div>
 
         <div className="scroller" id="scroller">
-          <div className="step_header" style={{ height: "270vh" }}>
+          <div className="step_header">
             <div
               className={className("step step__div")}
               id={`step${0}`}
               key={0}
-              
             >
               <WaypointCard
-              
                 i={0}
                 text={items[0].map((e) => e.description)}
                 onStepEnter={onStepEnter}
                 leftSideDiv={leftSideDiv}
                 isLoading={isLoading}
-                Ref = {viewers[0][0]}
-                />
+                Ref={viewers[0][0]}
+              />
             </div>
           </div>
-          <div className={className("step step__div")} id={`step${1}`} key={1} ref = {viewers[1][0]}>
+          <div
+            className={className("step step__div")}
+            id={`step${1}`}
+            key={1}
+            ref={viewers[1][0]}
+          >
             <WaypointCard
               i={1}
               text={[items[1][0].description]}
               onStepEnter={onStepEnter}
               leftSideDiv={leftSideDiv}
               isLoading={isLoading}
-              Ref = {viewers[1][0]}
+              Ref={viewers[1][0]}
             />
           </div>
 
@@ -282,7 +285,6 @@ const Scrollyteller = () => {
                   })}
                   id={`step${i + 2}`}
                   key={i}
-                  
                 >
                   <WaypointCard
                     i={i + 2}
@@ -290,7 +292,7 @@ const Scrollyteller = () => {
                     onStepEnter={onStepEnter}
                     leftSideDiv={leftSideDiv}
                     isLoading={isLoading}
-                    Ref = {viewers[i+2][0]}
+                    Ref={viewers[i + 2][0]}
                   />
                 </div>
               ))
@@ -325,7 +327,6 @@ const Scrollyteller = () => {
             className={className("step step__div")}
             id={`step${11}`}
             key={11}
-            
           >
             <WaypointCard
               i={11}
@@ -334,7 +335,7 @@ const Scrollyteller = () => {
               onStepEnter={onStepCityEnter}
               leftSideDiv={leftSideDiv}
               isLoading={isLoading}
-              Ref = {viewers[11][0]}
+              Ref={viewers[11][0]}
             />
           </div>
         </div>
