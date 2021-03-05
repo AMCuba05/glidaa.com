@@ -1,109 +1,47 @@
-import React from "react";
-import injectSheet from "react-jss";
+import React, { useEffect, useState } from "react";
 import { Waypoint } from "react-waypoint";
 import nyc from "../assets/data/chart-data/nyc.js";
 import sf from "../assets/data/chart-data/sf.js";
 import am from "../assets/data/chart-data/am.js";
 import BarChart from "./BarChart.js";
 
-const styles = {
-  axisRed: {
-    stroke: "yellow",
-    strokeWidth: "5px",
-  },
-  graphic: {
-    flexBasis: "50%",
-    height: "300px",
-    position: "sticky",
-    width: "100%",
-    top: "100px",
-    fontSize: "60px",
-    alignSelf: "flex-start",
-  },
-  description: {
-    height: "600px",
-    textAlign: "center",
-    padding: "50px 50px",
-    fontSize: "20px",
-  },
-  container: {
-    display: "flex",
-    justifyContent: "space-around",
-    flexDirection: "column",
-  },
-  step: {
-    height: "max-content",
-    width: "100%",
-    marginBottom: "500px",
-    fontSize: "25px",
-    textAlign: "center",
-    padding: "40px",
-    zIndex: 1,
-  },
-  scroller: {
-    flexBasis: "40%",
-    padding: "500px 0px 0px 0px",
-  },
-  title: {
-    margin: "20px 0",
-    padding: "0",
-    fontSize: "25px",
-    textAlign: "center",
-  },
-  trigger: {
-    borderTop: "1px dashed black",
-    marginTop: "50vh",
-    position: "fixed",
-    width: "100%",
-  },
-  "@media (min-width: 768px)": {
-    container: {
-      flexDirection: "row",
-    },
-    step: {
-      "&:last-child": {
-        marginBottom: "200px",
-      },
-      padding: "10",
-    },
-    description: {
-      padding: "100px 250px",
-    },
-  },
-};
+import "../assets/styles/components/Chart.css";
 
-const cities = ["nyc", "sf", "am"];
-const cityNames = {
-  nyc: "New York City",
-  sf: "San Francisco",
-  am: "Amsterdam",
-  "": "",
-};
-const cityNames2 = {
-  nyc: "New York City",
-  sf: "San Francisco",
-  am: "Amsterdam",
-  "": "",
-};
-
-class Chart extends React.Component {
-  state = {
-    temps: {},
-    city: "",
-    screenWidth: 0,
-    screenHeight: 0,
-  };
-
-  componentDidMount() {
+const Chart = (props) => {
+  const { waipointId } = props;
+  // const { texts } = this.props;
+  const [temps, setTemps] = useState({});
+  const [city, setCity] = useState("");
+  const [screenWidth, setScreenWidth] = useState(0);
+  const [screenHeight, setScreenHeight] = useState(0);
+  const [waipoint, setWaipoint] = useState(waipointId);
+  useEffect(() => {
+    if (waipointId >= 0 && waipointId < cities.length) setCity(cities[waipointId]);
+  }, [waipointId]);
+  useEffect(() => {
     sf.forEach((day) => (day.date = new Date(day.date)));
     nyc.forEach((day) => (day.date = new Date(day.date)));
     am.forEach((day) => (day.date = new Date(day.date)));
-    this.setState({ temps: { sf, nyc, am } });
-    window.addEventListener("resize", this.onResize, false);
-    this.onResize();
-  }
+    setTemps({ sf, nyc, am });
+    window.addEventListener("resize", onResize, false);
+    onResize();
+  }, []);
 
-  onResize = () => {
+  const cities = ["", "nyc", "sf", "am"];
+  const cityNames = {
+    nyc: "New York City",
+    sf: "San Francisco",
+    am: "Amsterdam",
+    "": "",
+  };
+  const cityNames2 = {
+    nyc: "New York City",
+    sf: "San Francisco",
+    am: "Amsterdam",
+    "": "",
+  };
+
+  const onResize = () => {
     let screenWidth = window.innerWidth;
     let screenHeight = window.innerHeight;
 
@@ -112,86 +50,44 @@ class Chart extends React.Component {
     } else {
       screenWidth = screenWidth * 0.9;
     }
-
-    this.setState({ screenWidth, screenHeight });
+    setScreenWidth(screenWidth);
+    setScreenHeight(screenHeight);
   };
 
-  onStepEnter = (city, { currentPosition, previousPosition }) => {
-    this.setState({ city });
+  const onStepEnter = (city, { currentPosition, previousPosition }) => {
+    setCity({ city });
   };
 
-  onStepExit = (city, { currentPosition, previousPosition }) => {
+  const onStepExit = (city, { currentPosition, previousPosition }) => {
     if (city === "nyc" && currentPosition === "below") {
-      this.setState({ city: "nyc" });
+      setCity("nyc");
     }
 
     const el = document.querySelector(`#waypoint-${city}`);
   };
 
-  render() {
-    const { classes } = this.props;
-    const { texts } = this.props;
-    cityNames["nyc"] = texts[0];
-    cityNames["sf"] = texts[1];
-    cityNames["am"] = texts[2];
-    const { city, screenWidth, screenHeight } = this.state;
+  return (
+    <>
+      <BarChart
+        width={screenWidth}
+        height={screenHeight}
+        data={city ? temps[city] : {}}
+      />
+      <p className="Chart__title">
+        Mobile phone activity:{" "}
+        <span
+          style={{
+            color: "#1aa3ff",
+            padding: "3px",
+            borderRadius: "2px",
+          }}
+        >
+          {cityNames2[city]}
+        </span>
+      </p>
+      <div style={{ height: "100px" }}></div>
+    </>
+  );
+};
 
-    return (
-      <div style={{ marginTop: "30px" }}>
-        {/* <div className={classes.trigger}>trigger</div>
-        <div className={classes.description}>
-          Scrollytelling is a technique used to make changes to a graphic or other ui component as a reader scrolls down a page.
-          In this example, I use <a href="https://www.npmjs.com/package/react-waypoint">react-waypoint</a>, a React interface of the <a href="http://imakewebthings.com/waypoints/">waypoints library</a>, to alter a line graph
-          of weather data built with D3.js as you scroll. Try it out!
-        </div> */}
-        <div className={classes.container}>
-          <div className={classes.graphic}>
-            <BarChart
-              width={screenWidth}
-              height={screenHeight}
-              data={city ? this.state.temps[city] : {}}
-            />
-            <p className={classes.title}>
-              Mobile phone activity:{" "}
-              <span
-                style={{
-                  color: "#1aa3ff",
-                  padding: "3px",
-                  borderRadius: "2px",
-                }}
-              >
-                {cityNames2[city]}
-              </span>
-            </p>
-          </div>
-          <div className={classes.scroller}>
-            {cities.map((city) => {
-              return (
-                <Waypoint
-                  onEnter={(obj) => this.onStepEnter(city, obj)}
-                  onLeave={(obj) => this.onStepExit(city, obj)}
-                  scrollableAncestor={window}
-                  topOffset={"33%"}
-                  bottomOffset={"66%"}
-                  key={city}
-                >
-                  <div
-                    id={`waypoint-${city}`}
-                    className={classes.step}
-                    key={city}
-                    style={{zIndex:5}}
-                  >
-                    {cityNames[city]}{" "}
-                  </div>
-                </Waypoint>
-              );
-            })}
-          </div>
-        </div>
-        <div style={{ height: "100px" }}></div>
-      </div>
-    );
-  }
-}
-
-export default injectSheet(styles)(Chart);
+export default Chart;

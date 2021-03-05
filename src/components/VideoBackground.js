@@ -7,7 +7,7 @@ const VideoBackground = React.memo(({ src }) => {
   const pc = require(`../assets/images/${src}.gif`);
 
   return (
-    <div style={{ position: "absolute", top: "0", width: "98.8vw" }}>
+    <div className="video__div">
       <picture>
         <source srcSet={mobile} media="(max-width: 650px)"></source>
         <source srcSet={pc}></source>

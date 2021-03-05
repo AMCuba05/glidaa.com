@@ -87,6 +87,22 @@ const IMAGES = [
 ];
 
 const MyGallery = ({ isOpen, lightboxWillClose, isLoad, ID }) => {
+  const styleSmall = () =>{
+    return ({
+      marginLeft: '0px',
+      marginTop: '0px',
+      cursor: 'pointer',
+      width: '100%',
+      height: '100%',
+    });
+ } 
+  const tileViewportStyle = () =>{
+    return ({
+      width: '100%',
+      height: '100%',
+      overflow: 'hidden',
+    });
+ } 
   useEffect(() => {
     if (isLoad) {
       document.querySelectorAll(`#${ID}`).forEach((portfolio, i) => {
@@ -95,21 +111,9 @@ const MyGallery = ({ isOpen, lightboxWillClose, isLoad, ID }) => {
     }
   }, [isLoad, ID]);
   return (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
+    <div className="gallery">
       <div
-        style={{
-          display: "block",
-          minHeight: "1px",
-          width: "100%",
-          border: "1px solid #ddd",
-          overflow: "auto",
-        }}
+        className="gallery__divblock"
         id="gallery"
       >
         <Gallery
@@ -118,6 +122,8 @@ const MyGallery = ({ isOpen, lightboxWillClose, isLoad, ID }) => {
           images={IMAGES}
           isOpen={isOpen}
           lightboxWillClose={lightboxWillClose}
+          thumbnailStyle={styleSmall}
+          tileViewportStyle={tileViewportStyle}
         />
       </div>
     </div>

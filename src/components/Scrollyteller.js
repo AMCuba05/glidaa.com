@@ -11,6 +11,7 @@ import LottiePlayer from "./LottiePlayer";
 import WaterAnimation from "./WaterAnimation";
 import MyGallery from "./Gallery";
 import Chart from "./Chart";
+import WaypointCard from "./WaypointCard";
 
 import itemsJSON from "../assets/data/items.json";
 import background from "../assets/images/background.png";
@@ -23,6 +24,8 @@ const Scrollyteller = () => {
   const [isOpen, setIsGalleryOpen] = useState(false);
   const [isLoading, setLoading] = useState(false);
   const [leftSideDiv, setLeftSideDiv] = useState(null);
+  const [cityID, setCityID] = useState(0)
+  const [indexDiv, setIndexDiv] = useState(-1)
   const items = itemsJSON;
 
   const isSafarioIos = className(
@@ -37,33 +40,36 @@ const Scrollyteller = () => {
   const handleOnclose = (event) => {
     setIsGalleryOpen(false);
   };
-  let indexDiv = -1;
+  
   const onMainStepEnter = () => {
     const contenedores = document.querySelectorAll(".left-side");
-    indexDiv = -1;
+    setIndexDiv(-1);
     contenedores.forEach((lottie, i) => {
       lottie.style.display = "none";
     });
   };
+  const onStepCityEnter = (i,j) => {
+    onStepEnter(i)
+    setCityID(j+1)
+  }
   const onStepEnter = (data) => {
+    console.log(data)
     const newpoint = indexDiv === data ? false : true;
     if (newpoint && indexDiv >= 0 && leftSideDiv.length > indexDiv)
       leftSideDiv[indexDiv].style.display = "none";
     if (newpoint && data >= 0 && leftSideDiv.length > data)
       leftSideDiv[data].style.display = "flex";
-    indexDiv = data;
-    console.log(data);
+      setIndexDiv(data);
   };
 
   useEffect(() => {
     document.querySelectorAll("lottie-player").forEach((lottie, i) => {
-      console.log(lottie.id);
       lottie.addEventListener("load", function (e) {
         create({
           mode: "scroll",
           autoplay: true,
           player: `#lottie${lottie.id.split("lottie")[1]}`,
-          container: `#step${lottie.id.split("lottie")[1]}`,
+          container: `#step${Math.trunc(lottie.id.split("lottie")[1]) + 1}`,
           actions: [
             {
               visibility: [0, 0.8],
@@ -78,7 +84,7 @@ const Scrollyteller = () => {
         }
       });
       lottie.addEventListener("frame", function (e) {
-        console.log(lotties[i][0].frames);
+        // console.log(lotties[i][0].frames);
         const canvasdiv = lottie.shadowRoot.querySelectorAll(
           ".main > .animation"
         );
@@ -210,138 +216,58 @@ const Scrollyteller = () => {
                 }
               })
             : null}
+          <div
+            className="left-side"
+            style={{ display: "none", marginTop: "30px",flexDirection: "column" }}
+          >
+            <Chart waipointId={cityID}></Chart>
+          </div>
         </div>
 
         <div className="scroller" id="scroller">
-          <div className="step_header" style={{height: "250vh"}}>
-          <div
-            className="step step__div"
-            id={`step-1`}
-            style={{marginBottom: "400px", position: "absolute", left:0, right:0}}
-          >
-            <div className="desc" id={`desc-1-0`} key={`-1-0`}>
-              <Waypoint
-                fireOnRapidScroll={true}
-                onEnter={
-                  leftSideDiv && isLoading
-                    ? () => {
-                        onStepEnter(0);
-                      }
-                    : null
-                }
-              >
-                <Card>
-                  <Card.Body>
-                    <Card.Text>{items[0].map((e) => e.description)[0]}</Card.Text>
-                  </Card.Body>
-                </Card>
-              </Waypoint>
-            </div>
-            <div className="desc" id={`desc-1-1`} key={`-1-1`}>
-              <Waypoint
-                fireOnRapidScroll={true}
-                onEnter={
-                  leftSideDiv && isLoading
-                    ? () => {
-                        onStepEnter(0);
-                      }
-                    : null
-                }
-              >
-                <Card>
-                  <Card.Body>
-                    <Card.Text>{items[0].map((e) => e.description)[1]}</Card.Text>
-                  </Card.Body>
-                </Card>
-              </Waypoint>
-            </div>
-            <div className="desc" id={`desc-1-2`} key={`-1-2`}>
-              <Waypoint
-                fireOnRapidScroll={true}
-                onEnter={
-                  leftSideDiv && isLoading
-                    ? () => {
-                        onStepEnter(0);
-                      }
-                    : null
-                }
-              >
-                <Card>
-                  <Card.Body>
-                    <Card.Text>{items[0].map((e) => e.description)[2]}</Card.Text>
-                  </Card.Body>
-                </Card>
-              </Waypoint>
+          <div className="step_header" style={{ height: "250vh" }}>
+            <div
+              className={className("step step__div")}
+              id={`step${0}`}
+              key={0}
+            >
+              <WaypointCard
+                i={0}
+                text={items[0].map((e) => e.description)}
+                onStepEnter={onStepEnter}
+                leftSideDiv={leftSideDiv}
+                isLoading={isLoading}
+              />
             </div>
           </div>
+          <div className={className("step step__div")} id={`step${1}`} key={1}>
+            <WaypointCard
+              i={1}
+              text={[items[1][0].description]}
+              onStepEnter={onStepEnter}
+              leftSideDiv={leftSideDiv}
+              isLoading={isLoading}
+            />
           </div>
-          <div className="step step__div" id={`step0`}>
-            <div className="desc" id={`desc0`} key={`0`}>
-              <Waypoint
-                fireOnRapidScroll={true}
-                onEnter={
-                  leftSideDiv && isLoading
-                    ? () => {
-                        onStepEnter(1);
-                      }
-                    : null
-                }
-              >
-                <Card>
-                  <Card.Body>
-                    <Card.Text>{items[1][0].description}</Card.Text>
-                  </Card.Body>
-                </Card>
-              </Waypoint>
-            </div>
-          </div>
+
           {cardScroll.length > 0
-            ? cardScroll.map((narr, i) => {
-                return (
-                  <div
-                    className={className("step step__div", {
-                      hiddenclass: i === 7,
-                    })}
-                    id={`step${i + 1}`}
-                    key={i + 1}
-                  >
-                    {narr ? (
-                      narr.map((card, j) => (
-                        <div
-                          className="desc"
-                          id={`desc${i + 1}-${j + 1}`}
-                          key={`${i}-${j}`}
-                        >
-                          <Waypoint
-                            fireOnRapidScroll={true}
-                            onEnter={
-                              leftSideDiv && isLoading
-                                ? () => {
-                                    onStepEnter(i + 2);
-                                  }
-                                : null
-                            }
-                          >
-                            <Card>
-                              <Card.Body>
-                                <Card.Text>{card.description}</Card.Text>
-                              </Card.Body>
-                            </Card>
-                          </Waypoint>
-                        </div>
-                      ))
-                    ) : (
-                      <div className="desc" id={`desc${i + 1}`} key={`${i}`}>
-                        <Card>
-                          <Card.Body>
-                            <Card.Text>Loading</Card.Text>
-                          </Card.Body>
-                        </Card>
-                      </div>
-                    )}
-                  </div>
-                );
-              })
+            ? cardScroll.map((narr, i) => (
+                <div
+                  className={className("step step__div", {
+                    hiddenclass: i === 7,
+                  })}
+                  id={`step${i + 2}`}
+                  key={i}
+                >
+                  <WaypointCard
+                    i={i + 2}
+                    text={narr?.map((card) => card.description)}
+                    onStepEnter={onStepEnter}
+                    leftSideDiv={leftSideDiv}
+                    isLoading={isLoading}
+                  />
+                </div>
+              ))
             : narration.map((narr) => (
                 <div
                   className="step"
@@ -369,9 +295,23 @@ const Scrollyteller = () => {
                   </div>
                 </div>
               ))}
+          <div
+            className={className("step step__div")}
+            id={`step${11}`}
+            key={11}
+          >
+            <WaypointCard
+              i={11}
+              changeWaypoint={true}
+              text={items[2].map((city) => city.description)}
+              onStepEnter={onStepCityEnter}
+              leftSideDiv={leftSideDiv}
+              isLoading={isLoading}
+            />
+          </div>
         </div>
       </section>
-      <Chart
+      {/* <Chart
         texts={items[2].map((e) => (
           <Card>
             <Card.Body>
@@ -379,7 +319,8 @@ const Scrollyteller = () => {
             </Card.Body>
           </Card>
         ))}
-      />
+      /> */}
+
       <WaterAnimation />
       <div className="div__waterAnimation">
         <div className="div__waterAnimation___flex">

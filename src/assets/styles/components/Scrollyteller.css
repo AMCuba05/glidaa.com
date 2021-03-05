@@ -112,6 +112,12 @@ img {
     max-width: 450px;
     height: 70vh;
   }
+  .step_header .step{
+    margin-bottom: 400px;
+    position: absolute;
+    left: 0px;
+    right: 0px;
+  }
   .card {
     box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.25);
     text-align: center;

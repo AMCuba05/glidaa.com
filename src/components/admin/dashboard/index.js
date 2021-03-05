@@ -333,10 +333,10 @@ export default function Index() {
                             </Badge>
                             &nbsp;
                             <Badge variant="warning">Status {(JSON.parse(x.emails)?.filter((x) => x.isProcessed)
-                              .length == JSON.parse(x.emails)?.length)? 'Completed': x.status}</Badge>
+                              .length === JSON.parse(x.emails)?.length)? 'Completed': x.status}</Badge>
                              <hr></hr>
 
-                             <div className="color-black"><b>Template:</b> <span>{emailTemplates?.find(y=>x.templateId==y.id)?.name}</span>,&nbsp;&nbsp; <b>List:</b> <span>{lstQueries?.find(y=>x.queryId==y.id)?.name}</span></div>
+                             <div className="color-black"><b>Template:</b> <span>{emailTemplates?.find(y=>x.templateId===y.id)?.name}</span>,&nbsp;&nbsp; <b>List:</b> <span>{lstQueries?.find(y=>x.queryId===y.id)?.name}</span></div>
     
     
                           </Card.Header>
