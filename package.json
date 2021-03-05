@@ -26,6 +26,7 @@
     "react-grid-gallery": "^0.5.5",
     "react-gtm-module": "^2.0.11",
     "react-helmet": "^6.1.0",
+    "react-intersection-observer": "^8.31.0",
     "react-jss": "^8.6.1",
     "react-lottie": "^1.2.3",
     "react-papaparse": "^3.11.1",

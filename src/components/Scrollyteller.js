@@ -5,6 +5,7 @@ import { Card } from "react-bootstrap";
 import className from "classnames";
 import { iOS, isSafari } from "./iosSupport";
 import { create } from "@lottiefiles/lottie-interactivity";
+import { useInView } from "react-intersection-observer";
 
 import D3Header from "./D3Header";
 import LottiePlayer from "./LottiePlayer";
@@ -24,8 +25,23 @@ const Scrollyteller = () => {
   const [isOpen, setIsGalleryOpen] = useState(false);
   const [isLoading, setLoading] = useState(false);
   const [leftSideDiv, setLeftSideDiv] = useState(null);
-  const [cityID, setCityID] = useState(0)
-  const [indexDiv, setIndexDiv] = useState(-1)
+  const [cityID, setCityID] = useState(0);
+  const [indexDiv, setIndexDiv] = useState(-1);
+  const viewers = [
+    useInView(),
+    useInView(),
+    useInView(),
+    useInView(),
+    useInView(),
+    useInView(),
+    useInView(),
+    useInView(),
+    useInView(),
+    useInView(),
+    useInView(),
+    useInView(),
+
+  ]
   const items = itemsJSON;
 
   const isSafarioIos = className(
@@ -40,7 +56,7 @@ const Scrollyteller = () => {
   const handleOnclose = (event) => {
     setIsGalleryOpen(false);
   };
-  
+
   const onMainStepEnter = () => {
     const contenedores = document.querySelectorAll(".left-side");
     setIndexDiv(-1);
@@ -48,18 +64,18 @@ const Scrollyteller = () => {
       lottie.style.display = "none";
     });
   };
-  const onStepCityEnter = (i,j) => {
-    onStepEnter(i)
-    setCityID(j+1)
-  }
+  const onStepCityEnter = (i, j) => {
+    onStepEnter(i);
+    setCityID(j + 1);
+  };
   const onStepEnter = (data) => {
-    console.log(data)
-    const newpoint = indexDiv === data ? false : true;
-    if (newpoint && indexDiv >= 0 && leftSideDiv.length > indexDiv)
-      leftSideDiv[indexDiv].style.display = "none";
-    if (newpoint && data >= 0 && leftSideDiv.length > data)
-      leftSideDiv[data].style.display = "flex";
-      setIndexDiv(data);
+    // console.log(data);
+    // const newpoint = indexDiv === data ? false : true;
+    // if (newpoint && indexDiv >= 0 && leftSideDiv.length > indexDiv)
+    //   leftSideDiv[indexDiv].style.display = "none";
+    // if (newpoint && data >= 0 && leftSideDiv.length > data)
+    //   leftSideDiv[data].style.display = "flex";
+    // setIndexDiv(data);
   };
 
   useEffect(() => {
@@ -118,7 +134,7 @@ const Scrollyteller = () => {
             className="left-side video"
             key={0}
             style={{
-              display: "none",
+              display: (viewers[0][1])?'flex':'none',
             }}
           >
             <D3Header texts={items[0].map((e) => e.description)} />
@@ -126,7 +142,7 @@ const Scrollyteller = () => {
           <div
             className={isSafarioIos}
             style={{
-              display: "block",
+              display: (viewers[1][1]) ?'flex':'none',
               width: "100%",
               height: "100%",
               transformOrigin: "0px 0px 0px",
@@ -152,7 +168,7 @@ const Scrollyteller = () => {
                         className="left-side video"
                         key={i + 1}
                         style={{
-                          display: "none",
+                          display: (viewers[i+2][1]) ?'flex':'none',
                         }}
                       >
                         <VideoBackground src={left[0].data} />
@@ -163,9 +179,8 @@ const Scrollyteller = () => {
                       <div
                         className={isSafarioIos}
                         style={{
-                          display: "block",
+                          display: (viewers[i+2][1]) ?'flex':'none',
                           width: "100%",
-                          height: "100%",
                           transformOrigin: "0px 0px 0px",
                         }}
                         id={`canvascontainer${i}`}
@@ -188,7 +203,7 @@ const Scrollyteller = () => {
                           className="left-side video"
                           key={i + 1}
                           style={{
-                            display: "none",
+                            display: (viewers[i+2][1]) ?'flex':'none',
                           }}
                         >
                           <WaterAnimation />
@@ -201,6 +216,7 @@ const Scrollyteller = () => {
                         className="left-side video"
                         id={`portafolio${i}`}
                         key={i + 1}
+                        style={{display: (viewers[i+2][1]) ?'flex':'none',}}
                       >
                         <MyGallery
                           isOpen={isOpen}
@@ -218,35 +234,43 @@ const Scrollyteller = () => {
             : null}
           <div
             className="left-side"
-            style={{ display: "none", marginTop: "30px",flexDirection: "column" }}
+            style={{
+              display: (viewers[11][1]) ?'flex':'none',
+              marginTop: "30px",
+              flexDirection: "column",
+            }}
           >
             <Chart waipointId={cityID}></Chart>
           </div>
         </div>
 
         <div className="scroller" id="scroller">
-          <div className="step_header" style={{ height: "250vh" }}>
+          <div className="step_header" style={{ height: "270vh" }}>
             <div
               className={className("step step__div")}
               id={`step${0}`}
               key={0}
+              
             >
               <WaypointCard
+              
                 i={0}
                 text={items[0].map((e) => e.description)}
                 onStepEnter={onStepEnter}
                 leftSideDiv={leftSideDiv}
                 isLoading={isLoading}
-              />
+                Ref = {viewers[0][0]}
+                />
             </div>
           </div>
-          <div className={className("step step__div")} id={`step${1}`} key={1}>
+          <div className={className("step step__div")} id={`step${1}`} key={1} ref = {viewers[1][0]}>
             <WaypointCard
               i={1}
               text={[items[1][0].description]}
               onStepEnter={onStepEnter}
               leftSideDiv={leftSideDiv}
               isLoading={isLoading}
+              Ref = {viewers[1][0]}
             />
           </div>
 
@@ -258,6 +282,7 @@ const Scrollyteller = () => {
                   })}
                   id={`step${i + 2}`}
                   key={i}
+                  
                 >
                   <WaypointCard
                     i={i + 2}
@@ -265,6 +290,7 @@ const Scrollyteller = () => {
                     onStepEnter={onStepEnter}
                     leftSideDiv={leftSideDiv}
                     isLoading={isLoading}
+                    Ref = {viewers[i+2][0]}
                   />
                 </div>
               ))
@@ -299,6 +325,7 @@ const Scrollyteller = () => {
             className={className("step step__div")}
             id={`step${11}`}
             key={11}
+            
           >
             <WaypointCard
               i={11}
@@ -307,6 +334,7 @@ const Scrollyteller = () => {
               onStepEnter={onStepCityEnter}
               leftSideDiv={leftSideDiv}
               isLoading={isLoading}
+              Ref = {viewers[11][0]}
             />
           </div>
         </div>
