@@ -364,7 +364,7 @@ const Scrollyteller = () => {
             </Card>
           </div>
           <a
-            href="https://calendly.com/sccastleman/"
+            href="mailto:sc@explainerpage.com"
             target="_blank"
             rel="noopener noreferrer"
           >
