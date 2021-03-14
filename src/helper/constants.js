@@ -93,7 +93,9 @@ export const narrativeStyle = css`
     box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.25);
     text-align: center;
     padding: 10%;
-    background: white;
+    background: #3584f7;
+    color: white;
+    font-weight: bold;
     width: 100%;
   }
   .blurb {

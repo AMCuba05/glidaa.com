@@ -182,7 +182,7 @@ export default function ParticlesAnimation() {
           }}
         >
           <Canvas
-            style={{ background: "white" }}
+            style={{ background: "#1f2125" }}
             gl
             camera={{ position: [0, 0, 1000], far: 10000 }}
           >

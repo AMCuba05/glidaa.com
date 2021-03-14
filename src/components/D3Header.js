@@ -23,8 +23,8 @@ const D3Header = React.memo(({ texts }) => {
           zIndex: "100",
         }}
       >
-        <p style={{ fontWeight: "bolder", fontSize: "40px" }}>
-          <span style={{ color: "#c3c8d6" }}>{"{"}Explainer</span> Page
+        <p style={{ color: "#3584f7", fontWeight: "bolder", fontSize: "40px" }}>
+          <span style={{ color: "#fff" }}>{"{"}Explainer</span> Page
           <sup style={{ fontWeight: "bolder", fontSize: "20px" }}>&#8482;</sup>
           {"}"}
         </p>
