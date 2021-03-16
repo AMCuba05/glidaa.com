@@ -30,6 +30,7 @@ export const InternalApp = () => {
       <Route path="/admin" component={Admin} />
       <Route path="/email" component={Email} />
       <Route path="/list" component={Clients} />
+      <Route path="/*" component={Main} />
     </Switch>
   );
 };
