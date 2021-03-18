@@ -9,7 +9,7 @@
 }
   @media screen and (max-width: 900px) {
 .Scrollyteller{
-   background-image: url(../../images/background.png);
+   background-image: url(../../images/background2.png);
 }}
 .Scrollyteller__section{
   position: sticky;
