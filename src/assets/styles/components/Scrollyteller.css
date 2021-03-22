@@ -7,7 +7,7 @@
   background-attachment: fixed;
   background-size: cover;
 }
-  @media screen and (max-width: 900px) {
+  @media (hover: none) {
 .Scrollyteller{
    background-image: url(../../images/background2.png);
    height: 100%;
@@ -16,7 +16,7 @@
    background-repeat: no-repeat;
    background-position: center center;
    
-   background-size: cover;
+   background-size: inherit;
 
     display: block;
     top: 0;
