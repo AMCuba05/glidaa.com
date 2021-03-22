@@ -16,7 +16,7 @@
    background-repeat: no-repeat;
    background-position: center center;
    
-   background-size: inherit;
+   background-size: initial;
 
     display: block;
     top: 0;
