@@ -11,7 +11,7 @@
   -o-background-size: cover;
 
 }
-  @media (hover: none) {
+  @media not (hover: none) {
 .Scrollyteller{
    background-image: url(../../images/background2.png);
    height: 100vh;
