@@ -1,0 +1,275 @@
+.Scrollyteller {
+  position: relative;
+  height: 100%;
+  background-image: url(../../images/background.png);
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-attachment: fixed;
+  background-size: cover;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+}
+/* @media not (hover: none) {
+  .Scrollyteller {
+    background-image: url(../../images/background2.png);
+    height: 100vh;
+    min-width: 100%;
+    min-height: 100%;
+    background-repeat: no-repeat;
+    background-position: center center;
+
+    background-size: initial;
+
+    display: block;
+    top: 0;
+    left: 0;
+  }
+} */
+.Scrollyteller__section {
+  position: sticky;
+  /* transform: translateY(-100%); */
+  width: 100%;
+}
+.hiddenclass {
+  pointer-events: none;
+}
+
+img {
+  max-width: 100%;
+}
+
+/* .scrollyTeller-lottie-height {
+    
+  } */
+.left-side,
+.left-side__lottie {
+  height: 100vh;
+  animation: fadeIn ease 3s !important;
+  -webkit-animation: fadeIn ease 3s !important;
+  -moz-animation: fadeIn ease 3s !important;
+  -o-animation: fadeIn ease 3s !important;
+  -ms-animation: fadeIn ease 3s !important;
+}
+.left-side {
+  display: block;
+}
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@-moz-keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@-webkit-keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@-o-keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@-ms-keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+.video {
+  transition: opacity ease 0.1s;
+}
+
+.graphic {
+  flex-basis: 50%;
+  position: sticky;
+  top: 0;
+  height: 75vh;
+  width: 100%;
+  align-self: flex-start;
+}
+.data {
+  font-size: 5rem;
+  text-align: center;
+}
+
+.step {
+  text-align: center;
+  padding: 10%;
+  width: 100%;
+  height: max-content;
+}
+.step_header {
+  height: 270vh;
+}
+.step_header .card {
+  width: 100%;
+  height: max-content;
+}
+.step_header .desc {
+  width: 75%;
+  max-width: 450px;
+  padding-bottom: 35vh;
+  padding-top: 0;
+  /* height: 70vh; */
+}
+.step_header .desc:first-child {
+  padding-top: 35vh;
+}
+.step_header .step {
+  margin-bottom: 400px;
+  position: absolute;
+  left: 0px;
+  right: 0px;
+}
+.step_footer {
+  transition: opacity ease 0.5s;
+}
+.card {
+  box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.25);
+  text-align: center;
+  padding: 10%;
+  background: #3584f7;
+  color: white;
+  font-weight: bold;
+  width: 100%;
+  min-height: 150px;
+}
+.card-body {
+  display: flex;
+  align-items: center;
+}
+.card-text {
+  font-size: 16px !important;
+  line-height: 1.3;
+  width: 100%;
+}
+.card__notPadding {
+  padding: 0%;
+}
+.blurb {
+  margin-left: 10%;
+  margin-right: 10%;
+  margin-top: 3%;
+  text-align: center;
+  font-size: 24px;
+  min-height: 50%;
+}
+.desc {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding-bottom: 50vh;
+  padding-top: 50vh;
+  /* height: 100vh; */
+}
+.desc:first-child {
+  padding-top: 0;
+}
+.desc:last-child {
+  padding-bottom: 0;
+}
+.btn {
+  color: #575757;
+}
+.card-text-s {
+  padding: 10%;
+  font-size: 24px !important;
+}
+
+lottie-player {
+  transition: all ease 100ms;
+  height: 100vh;
+}
+
+.main {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+.mainmargin {
+  margin-bottom: 300px;
+}
+@media screen and (max-width: 940px) {
+  .main {
+    grid-template-columns: 1fr 300px;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .main {
+    grid-template-columns: 1fr;
+  }
+  .step {
+    position: relative;
+    z-index: 100;
+    opacity: 0.9;
+    padding-top: 50px;
+  }
+  .desc {
+    align-items: flex-start;
+  }
+  .step_header {
+    transform: translateY(-50vh);
+    height: 220vh;
+  }
+  .step_header .desc {
+    width: 100%;
+  }
+}
+.step__div {
+  margin-bottom: 80vh;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+.div__waterAnimation {
+  position: relative;
+  top: 40;
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+}
+.div__waterAnimation__subdiv__flex {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.bookTimeBtn {
+  background: rgb(96, 96, 96);
+  padding: 15px 20px;
+  border-radius: 30px;
+  border: 2px solid white;
+  width: 150px;
+  cursor: pointer;
+  position: absolute;
+  top: calc(100vh - 100px);
+  margin: auto;
+  left: 0;
+  right: 0;
+}
