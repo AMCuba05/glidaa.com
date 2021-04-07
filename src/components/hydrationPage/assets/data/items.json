@@ -1,0 +1,325 @@
+[
+    [
+        {
+            "slide": "1",
+            "card": "1",
+            "slideType": "3d",
+            "description": "At home hydration testing strips.",
+            "descriptionType": "top",
+            "data": "dots",
+            "frames": "",
+            "graphChange": "",
+            "static": ""
+        },
+        {
+            "slide": "1",
+            "card": "2",
+            "slideType": "3d",
+            "description": "It can be very difficult to be sure, this medical grade strip is government approved for accurate results.",
+            "descriptionType": "middle",
+            "data": "dots",
+            "frames": "",
+            "graphChange": "",
+            "static": ""
+        },
+        {
+            "slide": "1",
+            "card": "3",
+            "slideType": "3d",
+            "description": "Scrollytelling is the composition of storytelling and scrolling. It is a new format to dynamically tell multimedia stories.",
+            "descriptionType": "bottom",
+            "data": "dots",
+            "frames": "",
+            "graphChange": "",
+            "static": ""
+        }
+    ],
+    [
+        {
+            "slide": "2",
+            "card": "1",
+            "slideType": "2d",
+            "description": "Scrolling is probably the easiest user interaction possible on digital devices. Scrolling down or up to go forward or back in a story at any time keeps the reader actively in “touch” with the story while consuming it.",
+            "descriptionType": "",
+            "data": "https://assets4.lottiefiles.com/packages/lf20_345yf0ck.json",
+            "frames": "69",
+            "graphChange": "",
+            "static": ""
+        }
+    ],
+    [
+        {
+            "slide": "3",
+            "card": "1",
+            "slideType": "graph",
+            "description": "We end up with a proposal, a quote and a timeline.",
+            "descriptionType": "card",
+            "data": "/chartdata/nyc.js",
+            "frames": "",
+            "graphChange": "",
+            "static": ""
+        },
+        {
+            "slide": "3",
+            "card": "2",
+            "slideType": "graph",
+            "description": "A user friendly back-end can also be created for in-house user tracking.",
+            "descriptionType": "card",
+            "data": "/chartdata/sf.js",
+            "frames": "",
+            "graphChange": "",
+            "static": ""
+        },
+        {
+            "slide": "3",
+            "card": "3",
+            "slideType": "graph",
+            "description": "Explainer Page offers the technology in a simple, automated method. \r",
+            "descriptionType": "card",
+            "data": "/chartdata/am.js",
+            "frames": "",
+            "graphChange": "",
+            "static": "TRUE"
+        }
+    ],
+    [
+        {
+            "slide": "4",
+            "card": "1",
+            "slideType": "video",
+            "description": "In contrary to watching a video, a user can read and apprehend the story at his own speed.",
+            "descriptionType": "card",
+            "data": "man",
+            "frames": "",
+            "graphChange": "",
+            "static": ""
+        }
+    ],
+    [
+        {
+            "slide": "5",
+            "card": "1",
+            "slideType": "2d",
+            "description": "Also called Narrative Visualisation, it consists of creating a logical sequence of related (data-driven) visualisations, or visual elements, needed to convey a message to an audience in an engaging and effective way.",
+            "descriptionType": "card",
+            "data": "https://assets4.lottiefiles.com/packages/lf20_wvfzchpt.json",
+            "frames": "451",
+            "graphChange": "",
+            "static": ""
+        },
+        {
+            "slide": "5",
+            "card": "2",
+            "slideType": "2d",
+            "description": "While scrolling, visual material can be presented, videos and animations can be started, and the story can be browsed in a slideshow fashion. And the final effect is strong!",
+            "descriptionType": "card",
+            "data": "",
+            "frames": "",
+            "graphChange": "",
+            "static": ""
+        },
+        {
+            "slide": "5",
+            "card": "3",
+            "slideType": "2d",
+            "description": "It is a powerful visual storytelling technique extensively used on the Web and based on a simple concept: new content appears or changes through transitions as users scroll down or up the web page.",
+            "descriptionType": "card",
+            "data": "",
+            "frames": "",
+            "graphChange": "",
+            "static": ""
+        },
+        {
+            "slide": "5",
+            "card": "4",
+            "slideType": "2d",
+            "description": "Although slideshows are similarly effective in terms of user engagement, the strengths of Scrollytelling can be identified with some of its properties.",
+            "descriptionType": "card",
+            "data": "",
+            "frames": "",
+            "graphChange": "",
+            "static": ""
+        }
+    ],
+    [
+        {
+            "slide": "6",
+            "card": "1",
+            "slideType": "2d",
+            "description": "First, scrolling has become a natural gesture while navigating web sites which does not require much user effort. We do it all the time without even realising it.",
+            "descriptionType": "card",
+            "data": "https://assets1.lottiefiles.com/packages/lf20_0b2i1axl.json",
+            "frames": "450",
+            "graphChange": "",
+            "static": ""
+        }
+    ],
+    [
+        {
+            "slide": "7",
+            "card": "1",
+            "slideType": "2d",
+            "description": "Second, it can easily engage readers because of the sense of control, exploration and discoverability inherent to scrolling. You can just scroll down or up to go forward or back in the story at any time, and differently from watching a video, the reader keeps being actively “in touch” with the story while consuming it.",
+            "descriptionType": "card",
+            "data": "https://assets8.lottiefiles.com/packages/lf20_gofd2h3r.json",
+            "frames": "510",
+            "graphChange": "",
+            "static": ""
+        }
+    ],
+    [
+        {
+            "slide": "8",
+            "card": "1",
+            "slideType": "video",
+            "description": "There are different variants of scrollytelling depending on the effect that is caused by scrolling a web page.",
+            "descriptionType": "card",
+            "data": "sira",
+            "frames": "",
+            "graphChange": "",
+            "static": ""
+        },
+        {
+            "slide": "8",
+            "card": "2",
+            "slideType": "video",
+            "description": "Scroll As Steps: Similar to storytelling via slideshow, this technique integrated with a navigation menu to indicate where we are in the story facilitates the story navigation. At each step, the visual material is updated according to the story narrative.",
+            "descriptionType": "card",
+            "data": "",
+            "frames": "",
+            "graphChange": "",
+            "static": ""
+        }
+    ],
+    [
+        {
+            "slide": "9",
+            "card": "1",
+            "slideType": "video",
+            "description": "Continuous Scrolling: It is also possible to present a story in a more fluid way, continuously transforming the data visualisations while scrolling is performed. As a consequence, the reader decides the pace to unfold the story which results in enhanced user engagement.  \r",
+            "descriptionType": "card",
+            "data": "medical",
+            "frames": "",
+            "graphChange": "",
+            "static": ""
+        },
+        {
+            "slide": "9",
+            "card": "2",
+            "slideType": "video",
+            "description": "Scroll As A Trigger: When the author wants to steer the reader attention in an effective way, scrolling can be coupled to triggering an action. It can activate an animation, or it can play a video, or it can highlight some data in the visualisation. Anyway, the goal is to break the reader flow and say 'Hey, look at this now!'",
+            "descriptionType": "card",
+            "data": "",
+            "frames": "",
+            "graphChange": "",
+            "static": ""
+        }
+    ],
+    [
+        {
+            "slide": "10",
+            "card": "1",
+            "slideType": "video",
+            "description": "All of these are relatively easy and affordable to implement..",
+            "descriptionType": "card",
+            "data": "logos",
+            "frames": "",
+            "graphChange": "",
+            "static": ""
+        },
+        {
+            "slide": "10",
+            "card": "2",
+            "slideType": "video",
+            "description": "We have delivered hundreds of animations and explainer pages. This is for clients including Abbot Diagnostics, Pfizer, Eli Lily, News Ltd and Government.",
+            "descriptionType": "card",
+            "data": "",
+            "frames": "",
+            "graphChange": "",
+            "static": ""
+        }
+    ],
+    [
+        {
+            "slide": "11",
+            "card": "1",
+            "slideType": "porfolio",
+            "description": "Our work includes many large and small organizations\r",
+            "descriptionType": "card",
+            "data": "",
+            "frames": "",
+            "graphChange": "",
+            "static": ""
+        }
+    ],
+    [
+        {
+            "slide": "12",
+            "card": "1",
+            "slideType": "2d",
+            "description": "We kick off all projects with an initial discovery workshop. \r",
+            "descriptionType": "card",
+            "data": "https://assets4.lottiefiles.com/packages/lf20_3mgftfp3.json",
+            "frames": "748",
+            "graphChange": "",
+            "static": ""
+        },
+        {
+            "slide": "12",
+            "card": "2",
+            "slideType": "2d",
+            "description": "The purpose of the page is to engage the user.",
+            "descriptionType": "card",
+            "data": "",
+            "frames": "",
+            "graphChange": "",
+            "static": ""
+        },
+        {
+            "slide": "12",
+            "card": "3",
+            "slideType": "2d",
+            "description": "We need to find out how people come to the page and what will give them what they want.",
+            "descriptionType": "card",
+            "data": "",
+            "frames": "",
+            "graphChange": "",
+            "static": ""
+        },
+        {
+            "slide": "12",
+            "card": "4",
+            "slideType": "2d",
+            "description": "We deliver a budget and timeline which can be modified based on adding and removing panels.",
+            "descriptionType": "card",
+            "data": "",
+            "frames": "",
+            "graphChange": "",
+            "static": ""
+        },
+        {
+            "slide": "12",
+            "card": "5",
+            "slideType": "2d",
+            "description": "Whether you choose to use existing media or create new media is up to you. ",
+            "descriptionType": "card",
+            "data": "",
+            "frames": "",
+            "graphChange": "",
+            "static": ""
+        }
+    ],
+    [
+        {
+            "slide": "13",
+            "card": "2",
+            "slideType": "3d",
+            "description": "Contact Us",
+            "descriptionType": "button",
+            "data": "fish",
+            "frames": "",
+            "graphChange": "",
+            "static": ""
+        }
+    ]
+]

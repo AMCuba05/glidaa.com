@@ -1,0 +1,20 @@
+.video-card {
+  width: 50vw;
+  position: absolute;
+  bottom: 50px;
+  right: 10px;
+}
+.video__div{
+  position: absolute;
+  top: 0;
+  width: 98.8vw;
+}
+
+@media screen and (max-width:550px) {
+    .video-card {
+        opacity: 0.8;
+        width: 90vw;
+
+    }
+
+}
