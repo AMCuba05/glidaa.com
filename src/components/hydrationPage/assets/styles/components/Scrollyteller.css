@@ -13,17 +13,17 @@
  @media (hover: none) {
   .Scrollyteller {
     background-image: url(../../images/background2.png);
-    background-position: center;
+    height: 100vh;
+    min-width: 100%;
+    min-height: 100%;
     background-repeat: no-repeat;
-    background-size: cover;
-    position: fixed;
-    top: 0px;
-    bottom: 0px;
-    left: 0px;
-    right: 0px;
-    z-index: -1;
-    -webkit-transform: translateZ(0);
-    pointer-events: none;
+    background-position: center center;
+
+    background-size: initial;
+
+    display: block;
+    top: 0;
+    left: 0;
   }
 } 
 .Scrollyteller__section {
