@@ -10,22 +10,22 @@
   -moz-background-size: cover;
   -o-background-size: cover;
 }
-/* @media not (hover: none) {
+ @media (hover: none) {
   .Scrollyteller {
     background-image: url(../../images/background2.png);
-    height: 100vh;
-    min-width: 100%;
-    min-height: 100%;
+    background-position: center;
     background-repeat: no-repeat;
-    background-position: center center;
-
-    background-size: initial;
-
-    display: block;
-    top: 0;
-    left: 0;
+    background-size: cover;
+    position: fixed;
+    top: 0px;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    z-index: -1;
+    -webkit-transform: translateZ(0);
+    pointer-events: none;
   }
-} */
+} 
 .Scrollyteller__section {
   position: sticky;
   /* transform: translateY(-100%); */
