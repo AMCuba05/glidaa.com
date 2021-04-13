@@ -7,6 +7,7 @@ import { updateUserActivity, createUserActivity } from '../../graphql/mutations'
 import { onUpdateUserActivity } from '../../graphql/subscriptions'
 import Alert from 'react-bootstrap/Alert'
 import awsExports from '../../aws-exports';
+
 // COMPONENTS...
 import Content from './content';
 
@@ -26,7 +27,9 @@ export default function Index() {
   const [isAdminControlling, setScrollControl] = useState(false);
 
   const updateMousePosition = async (ev) => {
+    
     //console.log("Admin control", isAdminControlling);
+
     if (!isAdminControlling) {
       if (!email) return;
      // console.log("Hola")

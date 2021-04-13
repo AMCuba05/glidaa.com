@@ -127,7 +127,7 @@ export default function CSVFileReader() {
           itemToReturn = item;
         }
       });
-  debugger;
+  //debugger;
       return Object.keys(itemToReturn);
     }else{
     return [];
