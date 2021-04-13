@@ -10,6 +10,7 @@ import Clients from './components/clients';
 import Control from './components/admin/control';
 import Mailer from './components/admin/mailer';
 import Scrollyteller from './components/hydrationPage/Scrollyteller';
+import Dashboard from './components/Dashboard'
 
 import useTracking from './components/useTracking';
 
@@ -29,6 +30,7 @@ export const InternalApp = () => {
       <Route path="/user/:email" component={Main} />
       <Route path="/admin/mailer" component={Mailer} />
       <Route path="/admin/control/:email" component={Control} />
+      <Route path="/admin/dashboard" component={Dashboard} />
       <Route path="/admin" component={Admin} />
       <Route path="/email" component={Email} />
       <Route path="/list" component={Clients} />
@@ -46,4 +48,4 @@ const App = ()=> {
     </>
   );
 }
-export default withAuthenticator(App); 
+export default /*withAuthenticator(App); */ App; 
