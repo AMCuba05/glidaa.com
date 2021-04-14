@@ -1,6 +1,6 @@
 import React from 'react';
 import { Switch, Route, BrowserRouter } from 'react-router-dom';
-import { withAuthenticator, AmplifySignOut } from '@aws-amplify/ui-react';
+import { withAuthenticator } from '@aws-amplify/ui-react';
 import tawkTo from 'tawkto-react';
 
 import Main from './components/mainPage';
@@ -12,6 +12,7 @@ import Mailer from './components/admin/mailer';
 import Scrollyteller from './components/hydrationPage/Scrollyteller';
 import Dashboard from './components/Dashboard'
 import Editor from './components/Editor'
+import Logout from './components/Logout'
 
 import useTracking from './components/useTracking';
 
@@ -36,6 +37,7 @@ export const InternalApp = () => {
       <Route path="/admin" component={Admin} />
       <Route path="/email" component={Email} />
       <Route path="/list" component={Clients} />
+      <Route path="/logout" component={Logout} />
       <Route exact path="/page/wetestonline.com/hydration" component={Scrollyteller} />
       {/* <Route path="/*" component={Main} /> */}
     </Switch>
@@ -50,4 +52,4 @@ const App = ()=> {
     </>
   );
 }
-export default /*withAuthenticator(App); */ App; 
+export default withAuthenticator(App); 
