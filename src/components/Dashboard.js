@@ -1,20 +1,49 @@
 import React, { useEffect, useState } from 'react';
 import '../assets/styles/components/Dashboard.css';
+import S3 from 'react-aws-s3'
+
+const { S3Client, CreateBucketCommand } = require("@aws-sdk/client-s3");
+
+// Set the AWS region
+const REGION = "us-east-1"; //e.g. "us-east-1"
+
+// Set the bucket parameters
+const bucketParams = { Bucket: "BUCKET_NAME" };
+
+// Create S3 service object
+const s3 = new S3Client({ region: REGION });
+
+//Attempt to create the bucket
+const run = async () => {
+  const auxS3 = new S3({
+    bucketName: "Prueba",
+    region: REGION,
+    accessKeyId: '1234',
+    secretAccessKey: '23568'
+  });
+  try {
+    const data = await s3.send(new CreateBucketCommand(bucketParams));
+    console.log("Success", data.$metadata.httpHeaders.location);
+  } catch (err) {
+    console.log("Error", err);
+  }
+};
+
 const Dashboard = () => {
   const [pages, setpages] = useState([]);
   const [pageslist, setPageslist] = useState([]);
   const [filter, setFilter] = useState('');
   useEffect(() => {
-    setpages([
-      { name: 'salmon salad 0', pageId: '0' },
-      { name: 'my personal page 1', pageId: '1' },
-      { name: 'history 2', pageId: '2' },
-      { name: 'salmon salad 3', pageId: '3' },
-      { name: 'salmon salad 4', pageId: '4' },
-      { name: 'salmon salad 5', pageId: '5' },
-      { name: 'salmon salad 6', pageId: '6' },
-    ]);
+    fetch(process.env.PUBLIC_URL + '/pages.json')
+      .then((response) => response.json())
+      .then((data) => {
+        setpages(data);
+      })
+      .catch(function (err) {
+        console.log('Error: ', err);
+      });
   }, []);
+
   const Filterpages = () => {
     setPageslist(pages.filter((page) => page.name.toLowerCase().includes(filter.toLowerCase())));
   };
@@ -46,18 +75,19 @@ const Dashboard = () => {
       }
     }
   };
-  const editOrCreatePage = (pos) => {
+  const editOrCreatePage = /*async*/ (pos) => {
     if (pos >= 0 && pos < pages.length) {
       const page = pages[pos];
       console.log(page);
+      //await run();
     } else {
       alert('error');
     }
   };
   return (
     <div className="Dashboard">
-      <h1>Pages</h1>
-      <div>
+      <h1>PAGES</h1>
+      <div className="Dashboard-search">
         <input type="text" placeholder="Pages" name="filterInput" value={filter} onChange={filterhandled}></input>
         <button onClick={searchhandler}>Select</button>
       </div>

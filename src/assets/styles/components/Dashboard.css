@@ -1,7 +1,70 @@
 .Dashboard {
-    padding: 20px;
+  padding: 20px;
+  background: #ad5389; /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #3c1053, #ad5389); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #5aa9ff, #7b7fff); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  height: 100vh;
 }
-.Dashboard-page {
+.Dashboard-page, .Dashboard-search {
   display: grid;
   grid-template-columns: auto 10%;
+}
+.Dashboard-search{
+  margin-bottom: 10px;
+}
+h1 {
+  font-size: 30px;
+  color: #fff;
+  font-weight: 300;
+  text-align: center;
+  margin-bottom: 15px;
+}
+button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-height: 35.5px;
+  background-color: rgba(255, 255, 255, 0.16);
+  text-align: center;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  margin: 5px 0;
+  color: white;
+  cursor: pointer;
+  width: 100%;
+}
+button:hover {
+  background-color: rgba(255, 255, 255, 0.349);
+}
+.Dashboard-page:hover{
+  background-color: rgba(255, 255, 255, 0.212);
+}
+
+html,
+body {
+  height: 100%;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
+::-webkit-scrollbar-thumb {
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
+
+h1 {
+  text-align: center;
+}
+input {
+  width: 100%;
 }
