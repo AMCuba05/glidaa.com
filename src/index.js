@@ -5,11 +5,11 @@ import './index.css';
 import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import ResizeObserver from 'resize-observer-polyfill';
+import {configureAmplify} from './Funtions/services'
 window.ResizeObserver = ResizeObserver;
 
-
 const App = require('./App').default;
-
+configureAmplify();
 ReactDOM.render(
       <App />
   ,document.getElementById('root')

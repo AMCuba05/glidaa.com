@@ -13,6 +13,7 @@ import Scrollyteller from './components/hydrationPage/Scrollyteller';
 import Dashboard from './components/Dashboard'
 import Editor from './components/Editor'
 import Logout from './components/Logout'
+import Upload from './components/Upload'
 
 import useTracking from './components/useTracking';
 
@@ -37,6 +38,7 @@ export const InternalApp = () => {
       <Route path="/admin" component={Admin} />
       <Route path="/email" component={Email} />
       <Route path="/list" component={Clients} />
+      <Route path="/upload" component={Upload} />
       <Route path="/logout" component={Logout} />
       <Route exact path="/page/wetestonline.com/hydration" component={Scrollyteller} />
       {/* <Route path="/*" component={Main} /> */}
@@ -52,4 +54,4 @@ const App = ()=> {
     </>
   );
 }
-export default withAuthenticator(App); 
+export default /*withAuthenticator(*/App/*)*/; 
