@@ -1,7 +1,8 @@
 {
-  "features": {
-    "graphqltransformer": {
-      "addmissingownerfields": true
+    "features": {
+        "graphqltransformer": {
+            "addmissingownerfields": true,
+            "enableiterativegsiupdates": true
+        }
     }
-  }
 }

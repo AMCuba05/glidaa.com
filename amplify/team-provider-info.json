@@ -1,4 +1,38 @@
 {
+  "devenv": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-glidaaamplify-devenv-211606-authRole",
+      "UnauthRoleArn": "arn:aws:iam::476202956165:role/amplify-glidaaamplify-devenv-211606-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::476202956165:role/amplify-glidaaamplify-devenv-211606-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-glidaaamplify-devenv-211606-deployment",
+      "UnauthRoleName": "amplify-glidaaamplify-devenv-211606-unauthRole",
+      "StackName": "amplify-glidaaamplify-devenv-211606",
+      "StackId": "arn:aws:cloudformation:us-east-1:476202956165:stack/amplify-glidaaamplify-devenv-211606/f4fa6260-9ef8-11eb-a9aa-0a637f9cba95",
+      "AmplifyAppId": "dsqawqiqetm4f"
+    },
+    "categories": {
+      "auth": {
+        "glidaaamplify741ec233": {}
+      },
+      "function": {
+        "apilambda": {
+          "deploymentBucketName": "amplify-glidaaamplify-devenv-211606-deployment",
+          "s3Key": "amplify-builds/apilambda-4c4c474d74636b6d6366-build.zip"
+        },
+        "EmailJobsScheduler": {
+          "deploymentBucketName": "amplify-glidaaamplify-devenv-211606-deployment",
+          "s3Key": "amplify-builds/EmailJobsScheduler-72365554472b4459486f-build.zip"
+        }
+      },
+      "hosting": {
+        "amplifyhosting": {
+          "appId": "dsqawqiqetm4f",
+          "type": "cicd"
+        }
+      }
+    }
+  },
   "live": {
     "awscloudformation": {
       "AuthRoleName": "amplify-glidaaamplify-live-84208-authRole",
@@ -15,7 +49,7 @@
       "function": {
         "apilambda": {
           "deploymentBucketName": "amplify-glidaaamplify-live-84208-deployment",
-          "s3Key": "amplify-builds/apilambda-394f496b44712b573534-build.zip"
+          "s3Key": "amplify-builds/apilambda-4c4c474d74636b6d6366-build.zip"
         },
         "EmailJobsScheduler": {
           "deploymentBucketName": "amplify-glidaaamplify-live-84208-deployment",

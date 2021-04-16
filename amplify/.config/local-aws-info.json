@@ -1,12 +1,8 @@
 {
-  "dev": {
-    "configLevel": "project",
-    "useProfile": true,
-    "profileName": "default"
+  "devenv": {
+    "configLevel": "amplifyAdmin"
   },
   "live": {
-    "configLevel": "project",
-    "useProfile": true,
-    "profileName": "amplify-Yd3TU"
+    "configLevel": "amplifyAdmin"
   }
 }
