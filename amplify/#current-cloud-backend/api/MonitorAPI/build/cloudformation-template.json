@@ -102,7 +102,21 @@
                         }
                     ]
                 },
-                "AuthenticationType": "API_KEY"
+                "AuthenticationType": "AMAZON_COGNITO_USER_POOLS",
+                "UserPoolConfig": {
+                    "UserPoolId": {
+                        "Ref": "AuthCognitoUserPoolId"
+                    },
+                    "AwsRegion": {
+                        "Ref": "AWS::Region"
+                    },
+                    "DefaultAction": "ALLOW"
+                },
+                "AdditionalAuthenticationProviders": [
+                    {
+                        "AuthenticationType": "API_KEY"
+                    }
+                ]
             }
         },
         "GraphQLAPIKey": {
@@ -114,18 +128,31 @@
                         "ApiId"
                     ]
                 },
-                "Description": "MonitorAPIKey",
+                "Description": "acces API key",
                 "Expires": {
                     "Fn::If": [
                         "APIKeyExpirationEpochIsPositive",
                         {
                             "Ref": "APIKeyExpirationEpoch"
                         },
-                        1650144625
+                        1650189525
                     ]
                 }
             },
             "Condition": "ShouldCreateAPIKey"
+        },
+        "NoneDataSource": {
+            "Type": "AWS::AppSync::DataSource",
+            "Properties": {
+                "ApiId": {
+                    "Fn::GetAtt": [
+                        "GraphQLAPI",
+                        "ApiId"
+                    ]
+                },
+                "Name": "NONE",
+                "Type": "NONE"
+            }
         },
         "GraphQLSchema": {
             "Type": "AWS::AppSync::GraphQLSchema",
@@ -222,7 +249,8 @@
                 }
             },
             "DependsOn": [
-                "GraphQLSchema"
+                "GraphQLSchema",
+                "NoneDataSource"
             ]
         },
         "EmailTemplate": {
@@ -296,7 +324,8 @@
                 }
             },
             "DependsOn": [
-                "GraphQLSchema"
+                "GraphQLSchema",
+                "NoneDataSource"
             ]
         },
         "ClientQuery": {
@@ -370,7 +399,8 @@
                 }
             },
             "DependsOn": [
-                "GraphQLSchema"
+                "GraphQLSchema",
+                "NoneDataSource"
             ]
         },
         "EmailJob": {
@@ -444,7 +474,234 @@
                 }
             },
             "DependsOn": [
-                "GraphQLSchema"
+                "GraphQLSchema",
+                "NoneDataSource"
+            ]
+        },
+        "vodAsset": {
+            "Type": "AWS::CloudFormation::Stack",
+            "Properties": {
+                "Parameters": {
+                    "AppSyncApiId": {
+                        "Fn::GetAtt": [
+                            "GraphQLAPI",
+                            "ApiId"
+                        ]
+                    },
+                    "DynamoDBModelTableReadIOPS": {
+                        "Ref": "DynamoDBModelTableReadIOPS"
+                    },
+                    "DynamoDBModelTableWriteIOPS": {
+                        "Ref": "DynamoDBModelTableWriteIOPS"
+                    },
+                    "DynamoDBBillingMode": {
+                        "Ref": "DynamoDBBillingMode"
+                    },
+                    "DynamoDBEnablePointInTimeRecovery": {
+                        "Ref": "DynamoDBEnablePointInTimeRecovery"
+                    },
+                    "DynamoDBEnableServerSideEncryption": {
+                        "Ref": "DynamoDBEnableServerSideEncryption"
+                    },
+                    "AppSyncApiName": {
+                        "Ref": "AppSyncApiName"
+                    },
+                    "APIKeyExpirationEpoch": {
+                        "Ref": "APIKeyExpirationEpoch"
+                    },
+                    "CreateAPIKey": {
+                        "Ref": "CreateAPIKey"
+                    },
+                    "AuthCognitoUserPoolId": {
+                        "Ref": "AuthCognitoUserPoolId"
+                    },
+                    "env": {
+                        "Ref": "env"
+                    },
+                    "S3DeploymentBucket": {
+                        "Ref": "S3DeploymentBucket"
+                    },
+                    "S3DeploymentRootKey": {
+                        "Ref": "S3DeploymentRootKey"
+                    },
+                    "GetAttGraphQLAPIApiId": {
+                        "Fn::GetAtt": [
+                            "GraphQLAPI",
+                            "ApiId"
+                        ]
+                    }
+                },
+                "TemplateURL": {
+                    "Fn::Join": [
+                        "/",
+                        [
+                            "https://s3.amazonaws.com",
+                            {
+                                "Ref": "S3DeploymentBucket"
+                            },
+                            {
+                                "Ref": "S3DeploymentRootKey"
+                            },
+                            "stacks",
+                            "vodAsset.json"
+                        ]
+                    ]
+                }
+            },
+            "DependsOn": [
+                "GraphQLSchema",
+                "NoneDataSource"
+            ]
+        },
+        "videoObject": {
+            "Type": "AWS::CloudFormation::Stack",
+            "Properties": {
+                "Parameters": {
+                    "AppSyncApiId": {
+                        "Fn::GetAtt": [
+                            "GraphQLAPI",
+                            "ApiId"
+                        ]
+                    },
+                    "DynamoDBModelTableReadIOPS": {
+                        "Ref": "DynamoDBModelTableReadIOPS"
+                    },
+                    "DynamoDBModelTableWriteIOPS": {
+                        "Ref": "DynamoDBModelTableWriteIOPS"
+                    },
+                    "DynamoDBBillingMode": {
+                        "Ref": "DynamoDBBillingMode"
+                    },
+                    "DynamoDBEnablePointInTimeRecovery": {
+                        "Ref": "DynamoDBEnablePointInTimeRecovery"
+                    },
+                    "DynamoDBEnableServerSideEncryption": {
+                        "Ref": "DynamoDBEnableServerSideEncryption"
+                    },
+                    "AppSyncApiName": {
+                        "Ref": "AppSyncApiName"
+                    },
+                    "APIKeyExpirationEpoch": {
+                        "Ref": "APIKeyExpirationEpoch"
+                    },
+                    "CreateAPIKey": {
+                        "Ref": "CreateAPIKey"
+                    },
+                    "AuthCognitoUserPoolId": {
+                        "Ref": "AuthCognitoUserPoolId"
+                    },
+                    "env": {
+                        "Ref": "env"
+                    },
+                    "S3DeploymentBucket": {
+                        "Ref": "S3DeploymentBucket"
+                    },
+                    "S3DeploymentRootKey": {
+                        "Ref": "S3DeploymentRootKey"
+                    },
+                    "GetAttGraphQLAPIApiId": {
+                        "Fn::GetAtt": [
+                            "GraphQLAPI",
+                            "ApiId"
+                        ]
+                    }
+                },
+                "TemplateURL": {
+                    "Fn::Join": [
+                        "/",
+                        [
+                            "https://s3.amazonaws.com",
+                            {
+                                "Ref": "S3DeploymentBucket"
+                            },
+                            {
+                                "Ref": "S3DeploymentRootKey"
+                            },
+                            "stacks",
+                            "videoObject.json"
+                        ]
+                    ]
+                }
+            },
+            "DependsOn": [
+                "GraphQLSchema",
+                "NoneDataSource"
+            ]
+        },
+        "ConnectionStack": {
+            "Type": "AWS::CloudFormation::Stack",
+            "Properties": {
+                "Parameters": {
+                    "AppSyncApiId": {
+                        "Fn::GetAtt": [
+                            "GraphQLAPI",
+                            "ApiId"
+                        ]
+                    },
+                    "DynamoDBModelTableReadIOPS": {
+                        "Ref": "DynamoDBModelTableReadIOPS"
+                    },
+                    "DynamoDBModelTableWriteIOPS": {
+                        "Ref": "DynamoDBModelTableWriteIOPS"
+                    },
+                    "DynamoDBBillingMode": {
+                        "Ref": "DynamoDBBillingMode"
+                    },
+                    "DynamoDBEnablePointInTimeRecovery": {
+                        "Ref": "DynamoDBEnablePointInTimeRecovery"
+                    },
+                    "DynamoDBEnableServerSideEncryption": {
+                        "Ref": "DynamoDBEnableServerSideEncryption"
+                    },
+                    "AppSyncApiName": {
+                        "Ref": "AppSyncApiName"
+                    },
+                    "APIKeyExpirationEpoch": {
+                        "Ref": "APIKeyExpirationEpoch"
+                    },
+                    "CreateAPIKey": {
+                        "Ref": "CreateAPIKey"
+                    },
+                    "AuthCognitoUserPoolId": {
+                        "Ref": "AuthCognitoUserPoolId"
+                    },
+                    "env": {
+                        "Ref": "env"
+                    },
+                    "S3DeploymentBucket": {
+                        "Ref": "S3DeploymentBucket"
+                    },
+                    "S3DeploymentRootKey": {
+                        "Ref": "S3DeploymentRootKey"
+                    },
+                    "GetAttGraphQLAPIApiId": {
+                        "Fn::GetAtt": [
+                            "GraphQLAPI",
+                            "ApiId"
+                        ]
+                    }
+                },
+                "TemplateURL": {
+                    "Fn::Join": [
+                        "/",
+                        [
+                            "https://s3.amazonaws.com",
+                            {
+                                "Ref": "S3DeploymentBucket"
+                            },
+                            {
+                                "Ref": "S3DeploymentRootKey"
+                            },
+                            "stacks",
+                            "ConnectionStack.json"
+                        ]
+                    ]
+                }
+            },
+            "DependsOn": [
+                "GraphQLSchema",
+                "NoneDataSource",
+                "videoObject"
             ]
         },
         "CustomResourcesjson": {
@@ -493,7 +750,10 @@
                 "UserActivity",
                 "EmailTemplate",
                 "ClientQuery",
-                "EmailJob"
+                "EmailJob",
+                "vodAsset",
+                "videoObject",
+                "ConnectionStack"
             ]
         }
     },

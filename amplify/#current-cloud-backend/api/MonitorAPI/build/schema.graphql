@@ -37,6 +37,21 @@ type EmailJob {
   updatedAt: AWSDateTime!
 }
 
+type vodAsset {
+  id: ID!
+  title: String!
+  description: String!
+  video: videoObject
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+}
+
+type videoObject {
+  id: ID!
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+}
+
 enum ModelSortDirection {
   ASC
   DESC
@@ -151,6 +166,10 @@ type Query {
   listClientQuerys(filter: ModelClientQueryFilterInput, limit: Int, nextToken: String): ModelClientQueryConnection
   getEmailJob(id: ID!): EmailJob
   listEmailJobs(filter: ModelEmailJobFilterInput, limit: Int, nextToken: String): ModelEmailJobConnection
+  getVodAsset(id: ID!): vodAsset
+  listVodAssets(filter: ModelvodAssetFilterInput, limit: Int, nextToken: String): ModelvodAssetConnection
+  getVideoObject(id: ID!): videoObject
+  listVideoObjects(filter: ModelvideoObjectFilterInput, limit: Int, nextToken: String): ModelvideoObjectConnection
 }
 
 input CreateUserActivityInput {
@@ -182,6 +201,12 @@ type Mutation {
   createEmailJob(input: CreateEmailJobInput!, condition: ModelEmailJobConditionInput): EmailJob
   updateEmailJob(input: UpdateEmailJobInput!, condition: ModelEmailJobConditionInput): EmailJob
   deleteEmailJob(input: DeleteEmailJobInput!, condition: ModelEmailJobConditionInput): EmailJob
+  createVodAsset(input: CreateVodAssetInput!, condition: ModelvodAssetConditionInput): vodAsset
+  updateVodAsset(input: UpdateVodAssetInput!, condition: ModelvodAssetConditionInput): vodAsset
+  deleteVodAsset(input: DeleteVodAssetInput!, condition: ModelvodAssetConditionInput): vodAsset
+  createVideoObject(input: CreateVideoObjectInput!, condition: ModelvideoObjectConditionInput): videoObject
+  updateVideoObject(input: UpdateVideoObjectInput!, condition: ModelvideoObjectConditionInput): videoObject
+  deleteVideoObject(input: DeleteVideoObjectInput!, condition: ModelvideoObjectConditionInput): videoObject
 }
 
 input ModelUserActivityConditionInput {
@@ -205,6 +230,12 @@ type Subscription {
   onCreateEmailJob: EmailJob @aws_subscribe(mutations: ["createEmailJob"])
   onUpdateEmailJob: EmailJob @aws_subscribe(mutations: ["updateEmailJob"])
   onDeleteEmailJob: EmailJob @aws_subscribe(mutations: ["deleteEmailJob"])
+  onCreateVodAsset: vodAsset @aws_subscribe(mutations: ["createVodAsset"])
+  onUpdateVodAsset: vodAsset @aws_subscribe(mutations: ["updateVodAsset"])
+  onDeleteVodAsset: vodAsset @aws_subscribe(mutations: ["deleteVodAsset"])
+  onCreateVideoObject: videoObject @aws_subscribe(mutations: ["createVideoObject"])
+  onUpdateVideoObject: videoObject @aws_subscribe(mutations: ["updateVideoObject"])
+  onDeleteVideoObject: videoObject @aws_subscribe(mutations: ["deleteVideoObject"])
 }
 
 type ModelEmailTemplateConnection {
@@ -347,4 +378,74 @@ input ModelEmailJobConditionInput {
   and: [ModelEmailJobConditionInput]
   or: [ModelEmailJobConditionInput]
   not: ModelEmailJobConditionInput
+}
+
+type ModelvodAssetConnection {
+  items: [vodAsset]
+  nextToken: String
+}
+
+input ModelvodAssetFilterInput {
+  id: ModelIDInput
+  title: ModelStringInput
+  description: ModelStringInput
+  and: [ModelvodAssetFilterInput]
+  or: [ModelvodAssetFilterInput]
+  not: ModelvodAssetFilterInput
+}
+
+input CreateVodAssetInput {
+  id: ID
+  title: String!
+  description: String!
+  vodAssetVideoId: ID
+}
+
+input UpdateVodAssetInput {
+  id: ID!
+  title: String
+  description: String
+  vodAssetVideoId: ID
+}
+
+input DeleteVodAssetInput {
+  id: ID
+}
+
+input ModelvodAssetConditionInput {
+  title: ModelStringInput
+  description: ModelStringInput
+  and: [ModelvodAssetConditionInput]
+  or: [ModelvodAssetConditionInput]
+  not: ModelvodAssetConditionInput
+}
+
+type ModelvideoObjectConnection {
+  items: [videoObject]
+  nextToken: String
+}
+
+input ModelvideoObjectFilterInput {
+  id: ModelIDInput
+  and: [ModelvideoObjectFilterInput]
+  or: [ModelvideoObjectFilterInput]
+  not: ModelvideoObjectFilterInput
+}
+
+input CreateVideoObjectInput {
+  id: ID
+}
+
+input UpdateVideoObjectInput {
+  id: ID!
+}
+
+input DeleteVideoObjectInput {
+  id: ID
+}
+
+input ModelvideoObjectConditionInput {
+  and: [ModelvideoObjectConditionInput]
+  or: [ModelvideoObjectConditionInput]
+  not: ModelvideoObjectConditionInput
 }

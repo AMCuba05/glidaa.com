@@ -3,6 +3,12 @@
     "AppSyncApiName": "MonitorAPI",
     "DynamoDBBillingMode": "PAY_PER_REQUEST",
     "DynamoDBEnableServerSideEncryption": false,
+    "AuthCognitoUserPoolId": {
+        "Fn::GetAtt": [
+            "authglidaaamplify741ec233",
+            "Outputs.UserPoolId"
+        ]
+    },
     "S3DeploymentBucket": "amplify-glidaaamplify-devenv-211606-deployment",
-    "S3DeploymentRootKey": "amplify-appsync-files/b66d0d5557e844a58792b3c0c9820b00523bc9f2"
+    "S3DeploymentRootKey": "amplify-appsync-files/914bcbd127b174daed5bd63cf85db111d6cd649a"
 }

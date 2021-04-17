@@ -26,7 +26,7 @@
         "PartitionKeyType": "S",
         "Name": "UserVisits-devenv"
       },
-      "lastPushTimeStamp": "2021-04-16T23:10:42.919Z",
+      "lastPushTimeStamp": "2021-04-17T10:11:50.181Z",
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-glidaaamplify-devenv-211606-deployment/amplify-cfn-templates/storage/UserVisits-cloudformation-template.json",
         "logicalId": "storageUserVisits"
@@ -50,7 +50,7 @@
         "BucketName": "glidaadotcom211606-devenv",
         "Region": "us-east-1"
       },
-      "lastPushTimeStamp": "2021-04-16T23:10:42.924Z",
+      "lastPushTimeStamp": "2021-04-17T10:11:50.186Z",
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-glidaaamplify-devenv-211606-deployment/amplify-cfn-templates/storage/s3-cloudformation-template.json",
         "logicalId": "storageappstorage"
@@ -82,7 +82,7 @@
         "Name": "apilambda-devenv",
         "LambdaExecutionRole": "glidaaamplifyLambdaRole39306f04-devenv"
       },
-      "lastPushTimeStamp": "2021-04-16T23:10:42.928Z",
+      "lastPushTimeStamp": "2021-04-17T10:11:50.189Z",
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-glidaaamplify-devenv-211606-deployment/amplify-cfn-templates/function/apilambda-cloudformation-template.json",
         "logicalId": "functionapilambda"
@@ -90,7 +90,10 @@
       "s3Bucket": {
         "deploymentBucketName": "amplify-glidaaamplify-devenv-211606-deployment",
         "s3Key": "amplify-builds/apilambda-4c4c474d74636b6d6366-build.zip"
-      }
+      },
+      "lastBuildTimeStamp": "2021-04-16T23:38:02.343Z",
+      "lastPackageTimeStamp": "2021-04-16T23:38:08.108Z",
+      "distZipFilename": "apilambda-4c4c474d74636b6d6366-build.zip"
     },
     "EmailJobsScheduler": {
       "build": true,
@@ -112,7 +115,7 @@
         "Name": "EmailJobsScheduler-devenv",
         "LambdaExecutionRole": "glidaaamplifyLambdaRoleb33be135-devenv"
       },
-      "lastPushTimeStamp": "2021-04-16T23:10:42.932Z",
+      "lastPushTimeStamp": "2021-04-17T10:11:50.193Z",
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-glidaaamplify-devenv-211606-deployment/amplify-cfn-templates/function/EmailJobsScheduler-cloudformation-template.json",
         "logicalId": "functionEmailJobsScheduler"
@@ -142,7 +145,7 @@
         "RootUrl": "https://sehfwd1zvl.execute-api.us-east-1.amazonaws.com/devenv",
         "ApiId": "sehfwd1zvl"
       },
-      "lastPushTimeStamp": "2021-04-16T23:10:42.936Z",
+      "lastPushTimeStamp": "2021-04-17T10:11:50.196Z",
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-glidaaamplify-devenv-211606-deployment/amplify-cfn-templates/api/api2899b73b-cloudformation-template.json",
         "logicalId": "apiapi2899b73b"
@@ -154,23 +157,31 @@
       "output": {
         "authConfig": {
           "defaultAuthentication": {
-            "authenticationType": "API_KEY",
-            "apiKeyConfig": {
-              "apiKeyExpirationDays": 365,
-              "description": "MonitorAPIKey"
+            "authenticationType": "AMAZON_COGNITO_USER_POOLS",
+            "userPoolConfig": {
+              "userPoolId": "authglidaaamplify741ec233"
             }
           },
-          "additionalAuthenticationProviders": []
+          "additionalAuthenticationProviders": [
+            {
+              "authenticationType": "API_KEY",
+              "apiKeyConfig": {
+                "apiKeyExpirationDays": 365,
+                "description": "acces API key"
+              }
+            }
+          ]
         },
         "GraphQLAPIIdOutput": "cnrtg7v73jh5zlyrcmzyjk7hmu",
         "GraphQLAPIEndpointOutput": "https://b2zvjblsdrep3drvpnidki2iym.appsync-api.us-east-1.amazonaws.com/graphql",
         "GraphQLAPIKeyOutput": "da2-yax4qu5isnf63bnuv67zmip7s4"
       },
-      "lastPushTimeStamp": "2021-04-16T23:10:42.940Z",
+      "lastPushTimeStamp": "2021-04-17T10:11:50.200Z",
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-glidaaamplify-devenv-211606-deployment/amplify-cfn-templates/api/cloudformation-template.json",
         "logicalId": "apiMonitorAPI"
-      }
+      },
+      "lastPushDirHash": "ahWUICYmeIRThC3KhKrAA/j5e8c="
     }
   },
   "hosting": {
@@ -194,11 +205,55 @@
         "IdentityPoolName": "glidaaamplify741ec233_identitypool_741ec233__devenv",
         "UserPoolName": "glidaaamplify741ec233_userpool_741ec233"
       },
-      "lastPushTimeStamp": "2021-04-16T23:10:42.946Z",
+      "lastPushTimeStamp": "2021-04-17T10:11:50.204Z",
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-glidaaamplify-devenv-211606-deployment/amplify-cfn-templates/auth/glidaaamplify741ec233-cloudformation-template.yml",
         "logicalId": "authglidaaamplify741ec233"
       }
+    },
+    "userPoolGroups": {
+      "service": "Cognito-UserPool-Groups",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [
+        {
+          "category": "auth",
+          "resourceName": "glidaaamplify741ec233",
+          "attributes": [
+            "UserPoolId",
+            "AppClientIDWeb",
+            "AppClientID",
+            "IdentityPoolId"
+          ]
+        }
+      ],
+      "lastPushTimeStamp": "2021-04-17T10:11:50.208Z",
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-glidaaamplify-devenv-211606-deployment/amplify-cfn-templates/auth/template.json",
+        "logicalId": "authuserPoolGroups"
+      },
+      "output": {
+        "UsersGroupRole": "arn:aws:iam::476202956165:role/us-east-1_R1bfvav3v-UsersGroupRole",
+        "AdminGroupRole": "arn:aws:iam::476202956165:role/us-east-1_R1bfvav3v-AdminGroupRole"
+      },
+      "lastPushDirHash": "X2IHepGNkg3CvTkwfMlvsYl+4oY="
+    }
+  },
+  "video": {
+    "myvodstreams": {
+      "service": "video",
+      "serviceType": "video-on-demand",
+      "providerPlugin": "awscloudformation",
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-glidaaamplify-devenv-211606-deployment/amplify-cfn-templates/video/myvodstreams-vod-workflow-template.yaml",
+        "logicalId": "videomyvodstreams"
+      },
+      "lastPushTimeStamp": "2021-04-17T10:11:50.211Z",
+      "output": {
+        "oVodOutputUrl": "d170po542i1mdg.cloudfront.net",
+        "oVODOutputS3": "myvodstreams-devenv-output-izqr81w6",
+        "oVODInputS3": "myvodstreams-devenv-input-izqr81w6"
+      },
+      "lastPushDirHash": "R9RXOza+rEiq3nh09s6hBq5hxyY="
     }
   }
 }

@@ -30,6 +30,11 @@
           "appId": "dsqawqiqetm4f",
           "type": "cicd"
         }
+      },
+      "video": {
+        "myvodstreams": {
+          "s3UUID": "izqr81w6"
+        }
       }
     }
   },
