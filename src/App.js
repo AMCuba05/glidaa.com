@@ -1,19 +1,14 @@
 import React from 'react';
 import { Switch, Route, BrowserRouter } from 'react-router-dom';
-import { withAuthenticator } from '@aws-amplify/ui-react';
 import tawkTo from 'tawkto-react';
 
 import Main from './components/mainPage';
-import Admin from './components/admin';
 import Email from './components/email';
 import Clients from './components/clients';
-import Control from './components/admin/control';
-import Mailer from './components/admin/mailer';
 import Scrollyteller from './components/hydrationPage/Scrollyteller';
-import Dashboard from './components/Dashboard'
-import Editor from './components/Editor'
-import Logout from './components/Logout'
-import Upload from './components/Upload'
+import Logout from './components/Logout';
+import Upload from './components/Upload';
+import AdminRoutes from './components/admin/AdminRoutes'
 
 import useTracking from './components/useTracking';
 
@@ -31,11 +26,7 @@ export const InternalApp = () => {
     <Switch>
       <Route exact path="/" component={Main} />
       <Route path="/user/:email" component={Main} />
-      <Route path="/admin/mailer" component={Mailer} />
-      <Route path="/admin/control/:email" component={Control} />
-      <Route path="/admin/dashboard" component={Dashboard} />
-      <Route path="/admin/editor/:pageId" component={Editor} />
-      <Route path="/admin" component={Admin} />
+      <AdminRoutes/>
       <Route path="/email" component={Email} />
       <Route path="/list" component={Clients} />
       <Route path="/upload" component={Upload} />
@@ -45,7 +36,7 @@ export const InternalApp = () => {
     </Switch>
   );
 };
-const App = ()=> {
+const App = () => {
   return (
     <>
       <BrowserRouter>
@@ -53,5 +44,5 @@ const App = ()=> {
       </BrowserRouter>
     </>
   );
-}
-export default /*withAuthenticator(*/App/*)*/; 
+};
+export default /*withAuthenticator(*/ App /*)*/;
