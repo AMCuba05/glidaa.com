@@ -56,7 +56,7 @@ const Explainerpage = (props) => {
                   case 'text':
                     return (
                       <div
-                        className="left-side text video"
+                        className="left-side Text video"
                         key={i}
                         style={{
                           display: componentNumberstate[i] ? 'flex' : 'none',

@@ -3,78 +3,71 @@ import Explainerpage from './hydrationPage/components/Explainerpage';
 import '../assets/styles/components/Editor.css';
 const Editor = () => {
   const [itemJson, setItemJson] = useState([]);
-  const [item, setItem] = useState({})
-  const [description, setDescription] = useState({})
+  const [item, setItem] = useState([])
   const [attribName, setattribName] = useState("")
-  useEffect(() => {
-        setItem(itemJson?.length > 0?itemJson[itemJson.length-1]:[])
-        console.log("Prueba",itemJson)
-  }, [itemJson,setItem])
-  useEffect(() => {
-      console.log(item)
-  }, [item])
+  const [attribValue, setattribValue] = useState("")
+
   useEffect(() => {
     if(itemJson?.length>0){
       const auxItemJson = itemJson;
-      let auxItem =auxItemJson[auxItemJson.length-1][0];
       console.log("Atrib:",attribName)
-      if(attribName && description[attribName] !==auxItem[attribName]){
-        console.log("descripción",description)
-        auxItem = {
-          ...auxItem,
-          ...description};
-          auxItemJson[auxItemJson.length-1][0] = auxItem
-
-        setItemJson([...auxItemJson])
+      if(attribName && attribValue !==item[attribName]){
+        console.log("descripción",attribValue)
+        let auxItem = item;
+        auxItem[0][attribName] = attribValue
+        setItem([
+          ...auxItem]);
+          auxItemJson[auxItemJson.length-1] = [...auxItem]
+          console.log("Aux",auxItemJson);
       }
     }
-  }, [description,itemJson,attribName])
+  }, [attribValue,itemJson,attribName])
   const handleDescriptionbchange = (event)=>{
-    setDescription({
-      ...description,
-      [event.target.name]: event.target.value
-    });
     setattribName(event.target.name)
+    setattribValue(event.target.value)
+
   }
   const handleVideoAdd = (i) => {
     setattribName("")
-    setDescription({})
+    setattribValue("")
     const Video = [
       {
         slide: i,
         card: '1',
         slideType: 'video',
-        description: ""/*'Samurai Salmon Sashimi Salad'*/,
+        description: "",
         descriptionType: '',
-        data: ''/*'https://explainerpage-assets.s3.amazonaws.com/salmonvideos/00topfull.mp4'*/,
+        data: '',
         frames: '',
         graphChange: '',
         static: '',
       },
     ];
     setItemJson([...itemJson, Video]);
+    setItem(Video)
   };
   const handleAnimationAdd = (i) => {
+    setattribValue("")
     setattribName("")
-    setDescription({})
     const Animation = [
       {
         slide: i,
         card: '1',
         slideType: '2d',
-        description:"",//'The Samurai are one of the most recognised warrior classes in history. Few names conjure such distinct images in the mind. The armour, the sword and bow, the stoic honour and sense of duty, they paint the picture of the pop culture icons and the perfect warriors. But what did these perfect warriors eat? And what can we take away from their diets and apply to our own?',
+        description:"",
         descriptionType: 'card',
-        data: '',//'https://assets7.lottiefiles.com/private_files/lf30_k6oprjex.json',
-        frames: '31',//'451',
+        data: '',
+        frames: '',
         graphChange: '',
         static: '',
       },
     ];
     setItemJson([...itemJson, Animation]);
+    setItem(Animation)
   };
   const handleTextAdd = (i) => {
     setattribName("")
-    setDescription({})
+    setattribValue("")
     const Text = [
       {
         slide: i,
@@ -89,7 +82,11 @@ const Editor = () => {
       },
     ];
     setItemJson([...itemJson, Text]);
+    setItem(Text)
   };
+  const handledItemClick = (slide) =>{
+    setItem(item)
+  }
   return (
     <div className="Editor">
       <div className="">
@@ -103,7 +100,7 @@ const Editor = () => {
           <div>
             {itemJson?.length > 0 ? (
               itemJson.map((left, i) => {
-                return <div key={i}>{left[0].slideType}</div>;
+                return <div key={i} onClick={()=>(handledItemClick(left[0].slide))}>{left[0].slideType}</div>;
               })
             ) : (
               <div>Vacio</div>
@@ -111,18 +108,18 @@ const Editor = () => {
           </div>
         </div>
         <div className="graphic Editor-Graphic">
-          Opciones
+          Options
           <div>
             {item && item[0]?
             <div>
               <div>{item[0].slideType}</div>
-              <input placeholder="description" onChange={handleDescriptionbchange} name='description' value={description.description?description.description:""}></input>
+              <textarea placeholder="description" onChange={handleDescriptionbchange} name='description' value={item[0].description?item[0].description:""}></textarea>
               {item[0].slideType==='video' || item[0].slideType==='2d'?
-              <input placeholder="url" onChange={handleDescriptionbchange} name='data' value={description.data?description.data:""}></input>:null
+              <input placeholder="url" onChange={handleDescriptionbchange} name='data' value={item[0].data?item[0].data:""}></input>:null
             }
               {
                 item[0].slideType==='2d'?
-              <input placeholder="frames" onChange={handleDescriptionbchange} name='frames' value={description.frames?description.frames:""}></input>:null
+              <input placeholder="frames" onChange={handleDescriptionbchange} name='frames' value={item[0].frames?item[0].frames:""}></input>:null
               }
               </div>
              : 
