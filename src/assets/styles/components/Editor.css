@@ -6,3 +6,11 @@
     font-size: 16px;
     background-color: #3584f7;
 }
+.Edit-Itemlist{
+    width: 100%;
+    margin: 5px 0;
+    cursor: pointer;
+}
+.Edit-Itemlist:hover{
+    background-color: #0000000c;
+}

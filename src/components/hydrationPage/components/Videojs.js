@@ -1,7 +1,7 @@
 import 'video.js/dist/video-js.css';
 import '../assets/styles/components/Video.css'
 
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import VideoJs from 'video.js'
 
 const videoJsOptions = {
@@ -17,9 +17,18 @@ const videoJsOptions = {
 
 const VideoPlayer = ({ src, display }) => {
   const videoContainer = useRef()
+  const [change, setChange] = useState(true)
+  useEffect(() => {
+    console.log(true)
+    setChange(true)
+  }, [src])
 
   //  Setup the player
   useEffect(() => {
+    if(change){
+      console.log("Change", !change)
+      setChange(!change)
+    }
     //  Setting content like this because player.dispose() remove also the html contentif
     console.log(videoContainer)
     if(videoContainer?.current){
@@ -38,7 +47,7 @@ const VideoPlayer = ({ src, display }) => {
     //  When destruct dispose the player
     return () => player.dispose()
 }
-  }, [display])
+  }, [display,src,change])
 
   return (
     <div
@@ -48,7 +57,7 @@ const VideoPlayer = ({ src, display }) => {
     }}
   >
     <div className="video__div">
-      {display?<div style={{ width: '100%', height: '100%', display:'flex', alignItems:'center'}} ref={videoContainer}/>:null}
+      {display && src && !change?<div style={{ width: '100%', height: '100%', display:'flex', alignItems:'center'}} ref={videoContainer}/>:null}
       </div>
       </div>
   )

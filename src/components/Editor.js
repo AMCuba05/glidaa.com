@@ -3,39 +3,44 @@ import Explainerpage from './hydrationPage/components/Explainerpage';
 import '../assets/styles/components/Editor.css';
 const Editor = () => {
   const [itemJson, setItemJson] = useState([]);
-  const [item, setItem] = useState([])
-  const [attribName, setattribName] = useState("")
-  const [attribValue, setattribValue] = useState("")
+  const [item, setItem] = useState([]);
+  const [attribName, setattribName] = useState('');
+  const [attribValue, setattribValue] = useState('');
 
   useEffect(() => {
-    if(itemJson?.length>0){
+    if (itemJson?.length > 0) {
       const auxItemJson = itemJson;
-      console.log("Atrib:",attribName)
-      if(attribName && attribValue !==item[attribName]){
-        console.log("descripción",attribValue)
+      //console.log('Atrib:', attribName);
+      
+      if (attribName && attribValue !== item[attribName]) {
+      const SelectedItem = auxItemJson.findIndex((auxItem) => {
+        return auxItem[0].slide === item[0].slide;
+      });
+      if (SelectedItem >= 0 && SelectedItem < auxItemJson.length) {
+        
+        //console.log('descripción', attribValue);
         let auxItem = item;
-        auxItem[0][attribName] = attribValue
-        setItem([
-          ...auxItem]);
-          auxItemJson[auxItemJson.length-1] = [...auxItem]
-          console.log("Aux",auxItemJson);
+        auxItem[0][attribName] = attribValue;
+        setItem([...auxItem]);
+        auxItemJson[SelectedItem] = [...auxItem];
+        //console.log('Aux', auxItemJson);
+      }
       }
     }
-  }, [attribValue,itemJson,attribName])
-  const handleDescriptionbchange = (event)=>{
-    setattribName(event.target.name)
-    setattribValue(event.target.value)
-
-  }
+  }, [attribValue, itemJson, attribName]);
+  const handleDescriptionbchange = (event) => {
+    setattribName(event.target.name);
+    setattribValue(event.target.value);
+  };
   const handleVideoAdd = (i) => {
-    setattribName("")
-    setattribValue("")
+    setattribName('');
+    setattribValue('');
     const Video = [
       {
         slide: i,
         card: '1',
         slideType: 'video',
-        description: "",
+        description: '',
         descriptionType: '',
         data: '',
         frames: '',
@@ -44,17 +49,17 @@ const Editor = () => {
       },
     ];
     setItemJson([...itemJson, Video]);
-    setItem(Video)
+    setItem(Video);
   };
   const handleAnimationAdd = (i) => {
-    setattribValue("")
-    setattribName("")
+    setattribValue('');
+    setattribName('');
     const Animation = [
       {
         slide: i,
         card: '1',
         slideType: '2d',
-        description:"",
+        description: '',
         descriptionType: 'card',
         data: '',
         frames: '',
@@ -63,17 +68,17 @@ const Editor = () => {
       },
     ];
     setItemJson([...itemJson, Animation]);
-    setItem(Animation)
+    setItem(Animation);
   };
   const handleTextAdd = (i) => {
-    setattribName("")
-    setattribValue("")
+    setattribName('');
+    setattribValue('');
     const Text = [
       {
         slide: i,
         card: '2',
         slideType: 'text',
-        description: "",//'Prep Time: 30 min Cook Time: 30 min',
+        description: '', //'Prep Time: 30 min Cook Time: 30 min',
         descriptionType: 'card',
         data: '',
         frames: '',
@@ -82,51 +87,72 @@ const Editor = () => {
       },
     ];
     setItemJson([...itemJson, Text]);
-    setItem(Text)
+    setItem(Text);
   };
-  const handledItemClick = (slide) =>{
-    setItem(item)
-  }
+  const handledItemClick = (slide) => {
+    const SelectedItem = itemJson.findIndex((auxItem) => {
+      return auxItem[0].slide === slide;
+    });
+    if (SelectedItem >= 0 && SelectedItem < itemJson.length) {
+      const selectItem = itemJson[SelectedItem] 
+      setItem([...selectItem]);
+      //console.log([...selectItem])
+    }
+  };
   return (
     <div className="Editor">
       <div className="">
         <Explainerpage itemJsonFile={itemJson} />
       </div>
       <div className="graphic Editor-Graphic">
-          Editor
-          <button onClick={()=>(handleVideoAdd(itemJson.length))}>Add Video</button>
-          <button onClick={()=>(handleAnimationAdd(itemJson.length))}>Add Animation</button>
-          <button onClick={()=>(handleTextAdd(itemJson.length))}>Add Text</button>
-          <div>
-            {itemJson?.length > 0 ? (
-              itemJson.map((left, i) => {
-                return <div key={i} onClick={()=>(handledItemClick(left[0].slide))}>{left[0].slideType}</div>;
-              })
-            ) : (
-              <div>Vacio</div>
-            )}
-          </div>
+        Editor
+        <button onClick={() => handleVideoAdd(itemJson.length)}>Add Video</button>
+        <button onClick={() => handleAnimationAdd(itemJson.length)}>Add Animation</button>
+        <button onClick={() => handleTextAdd(itemJson.length)}>Add Text</button>
+        <div>
+          {itemJson?.length > 0 ? (
+            itemJson.map((left, i) => {
+              return (
+                <div className={"Edit-Itemlist"} key={i} onClick={() => handledItemClick(left[0].slide)}>
+                  {left[0].slideType}
+                </div>
+              );
+            })
+          ) : (
+            <div>Vacio</div>
+          )}
         </div>
-        <div className="graphic Editor-Graphic">
-          Options
-          <div>
-            {item && item[0]?
+      </div>
+      <div className="graphic Editor-Graphic">
+        Options
+        <div>
+          {item && item[0] ? (
             <div>
               <div>{item[0].slideType}</div>
-              <textarea placeholder="description" onChange={handleDescriptionbchange} name='description' value={item[0].description?item[0].description:""}></textarea>
-              {item[0].slideType==='video' || item[0].slideType==='2d'?
-              <input placeholder="url" onChange={handleDescriptionbchange} name='data' value={item[0].data?item[0].data:""}></input>:null
-            }
-              {
-                item[0].slideType==='2d'?
-              <input placeholder="frames" onChange={handleDescriptionbchange} name='frames' value={item[0].frames?item[0].frames:""}></input>:null
-              }
-              </div>
-             : 
-              <div>Vacio</div>
-            }
-          </div>
+              <textarea
+                placeholder="description"
+                onChange={handleDescriptionbchange}
+                name="description"
+                value={item[0].description ? item[0].description : ''}
+                style={{width:'100%'}}
+              ></textarea>
+              {item[0].slideType === 'video' || item[0].slideType === '2d' ? (
+                <input placeholder="url" onChange={handleDescriptionbchange} name="data" value={item[0].data ? item[0].data : ''}></input>
+              ) : null}
+              {item[0].slideType === '2d' ? (
+                <input
+                  placeholder="frames"
+                  onChange={handleDescriptionbchange}
+                  name="frames"
+                  value={item[0].frames ? item[0].frames : ''}
+                ></input>
+              ) : null}
+            </div>
+          ) : (
+            <div>Vacio</div>
+          )}
         </div>
+      </div>
     </div>
   );
 };
