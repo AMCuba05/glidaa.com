@@ -1,0 +1,8 @@
+.Editor{
+    display: grid;
+    grid-template-columns: 40% 30% 30%;
+}
+.Editor-Graphic{
+    font-size: 16px;
+    background-color: #3584f7;
+}

@@ -1,5 +1,5 @@
-import React from "react";
-import "@lottiefiles/lottie-player";
+import React from 'react';
+import '@lottiefiles/lottie-player';
 
 const LottiePlayer = React.memo((props) => {
   return (
@@ -7,7 +7,8 @@ const LottiePlayer = React.memo((props) => {
       <lottie-player
         {...props}
         rendererSettings={{
-          clearCanvas: false,
+          clearCanvas: true,
+          resizeMode: 'center',
         }}
       ></lottie-player>
     </>

@@ -5,7 +5,7 @@ import tawkTo from 'tawkto-react';
 import Main from './components/mainPage';
 import Email from './components/email';
 import Clients from './components/clients';
-import Scrollyteller from './components/hydrationPage/Scrollyteller';
+import Scrollyteller from './components/hydrationPage/components/Explainerpage';
 import Logout from './components/Logout';
 import Upload from './components/Upload';
 import AdminRoutes from './components/admin/AdminRoutes'

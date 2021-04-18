@@ -11,13 +11,13 @@ import { withAuthenticator } from '@aws-amplify/ui-react';
 const AdminRoutes = () => {
     return (
       <>
-        <Route path="/admin/mailer" component={Mailer} />
-        <Route path="/admin/control/:email" component={Control} />
-        <Route path="/admin/dashboard" component={Dashboard} />
-        <Route path="/admin/editor/:pageId" component={Editor} />
-        <Route path="/admin" component={Admin} />
+        <Route exact path="/admin/mailer" component={Mailer} />
+        <Route exact path="/admin/control/:email" component={Control} />
+        <Route exact path="/admin/dashboard" component={Dashboard} />
+        <Route exact path="/admin/editor"/*/:pageId"*/ component={Editor} />
+        <Route exact path="/admin" component={Admin} />
       </>
     );
   };
 
-  export default withAuthenticator(AdminRoutes);
+  export default /*withAuthenticator(*/AdminRoutes/*)*/;

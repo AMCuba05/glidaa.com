@@ -1,7 +1,8 @@
 .Scrollyteller {
   position: relative;
   height: 100%;
-  background-image: url(../../images/background.png);
+  background-color: black;
+  background-image: unset;
   background-repeat: no-repeat;
   background-position: center center;
   background-attachment: fixed;
@@ -10,25 +11,8 @@
   -moz-background-size: cover;
   -o-background-size: cover;
 }
- @media (hover: none) {
-  .Scrollyteller {
-    background-image: url(../../images/background2.png);
-    height: 100vh;
-    min-width: 100%;
-    min-height: 100%;
-    background-repeat: no-repeat;
-    background-position: center center;
-
-    background-size: initial;
-
-    display: block;
-    top: 0;
-    left: 0;
-  }
-} 
 .Scrollyteller__section {
   position: sticky;
-  /* transform: translateY(-100%); */
   width: 100%;
 }
 .hiddenclass {
@@ -38,10 +22,6 @@
 img {
   max-width: 100%;
 }
-
-/* .scrollyTeller-lottie-height {
-    
-  } */
 .left-side,
 .left-side__lottie {
   height: 100vh;
@@ -99,14 +79,14 @@ img {
   }
 }
 .video {
-  transition: opacity ease 0.1s;
+  transition: opacity ease 0.01s;
 }
 
 .graphic {
   flex-basis: 50%;
   position: sticky;
   top: 0;
-  height: 75vh;
+  height: 100vh;
   width: 100%;
   align-self: flex-start;
 }
@@ -117,14 +97,13 @@ img {
 
 .step {
   text-align: center;
-  padding: 10%;
   width: 100%;
   height: max-content;
 }
 .step_header {
   height: 270vh;
 }
-.step_header .card {
+.step_header {
   width: 100%;
   height: max-content;
 }
@@ -133,7 +112,6 @@ img {
   max-width: 450px;
   padding-bottom: 35vh;
   padding-top: 0;
-  /* height: 70vh; */
 }
 .step_header .desc:first-child {
   padding-top: 35vh;
@@ -147,28 +125,7 @@ img {
 .step_footer {
   transition: opacity ease 0.5s;
 }
-.card {
-  box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.25);
-  text-align: center;
-  padding: 10%;
-  background: #3584f7;
-  color: white;
-  font-weight: bold;
-  width: 100%;
-  min-height: 150px;
-}
-.card-body {
-  display: flex;
-  align-items: center;
-}
-.card-text {
-  font-size: 16px !important;
-  line-height: 1.3;
-  width: 100%;
-}
-.card__notPadding {
-  padding: 0%;
-}
+
 .blurb {
   margin-left: 10%;
   margin-right: 10%;
@@ -220,6 +177,7 @@ lottie-player {
 
 @media screen and (max-width: 600px) {
   .main {
+    display: block;
     grid-template-columns: 1fr;
   }
   .step {
@@ -237,6 +195,10 @@ lottie-player {
   }
   .step_header .desc {
     width: 100%;
+  }
+  .graphic {
+    position: fixed;
+    /* transform: translateY(-50vh); */
   }
 }
 .step__div {
@@ -272,4 +234,8 @@ lottie-player {
   margin: auto;
   left: 0;
   right: 0;
+}
+.scroller {
+  z-index: 2;
+  padding: 40vh 0;
 }

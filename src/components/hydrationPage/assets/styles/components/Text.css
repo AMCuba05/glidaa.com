@@ -1,0 +1,10 @@
+.Text-flex{
+    display: flex;
+    align-items: center;
+    text-align: center;
+}
+
+.Text{
+    padding: 0 10%;
+    width: 80%;
+}
