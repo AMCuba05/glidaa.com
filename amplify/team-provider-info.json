@@ -13,7 +13,8 @@
     },
     "categories": {
       "auth": {
-        "glidaaamplify741ec233": {}
+        "glidaaamplify741ec233": {},
+        "userPoolGroups": {}
       },
       "function": {
         "apilambda": {

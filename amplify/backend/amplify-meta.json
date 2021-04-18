@@ -26,7 +26,7 @@
         "PartitionKeyType": "S",
         "Name": "UserVisits-devenv"
       },
-      "lastPushTimeStamp": "2021-04-17T10:11:50.181Z",
+      "lastPushTimeStamp": "2021-04-18T19:00:19.946Z",
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-glidaaamplify-devenv-211606-deployment/amplify-cfn-templates/storage/UserVisits-cloudformation-template.json",
         "logicalId": "storageUserVisits"
@@ -50,7 +50,7 @@
         "BucketName": "glidaadotcom211606-devenv",
         "Region": "us-east-1"
       },
-      "lastPushTimeStamp": "2021-04-17T10:11:50.186Z",
+      "lastPushTimeStamp": "2021-04-18T19:00:19.953Z",
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-glidaaamplify-devenv-211606-deployment/amplify-cfn-templates/storage/s3-cloudformation-template.json",
         "logicalId": "storageappstorage"
@@ -82,7 +82,7 @@
         "Name": "apilambda-devenv",
         "LambdaExecutionRole": "glidaaamplifyLambdaRole39306f04-devenv"
       },
-      "lastPushTimeStamp": "2021-04-17T10:11:50.189Z",
+      "lastPushTimeStamp": "2021-04-18T19:00:19.960Z",
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-glidaaamplify-devenv-211606-deployment/amplify-cfn-templates/function/apilambda-cloudformation-template.json",
         "logicalId": "functionapilambda"
@@ -115,7 +115,7 @@
         "Name": "EmailJobsScheduler-devenv",
         "LambdaExecutionRole": "glidaaamplifyLambdaRoleb33be135-devenv"
       },
-      "lastPushTimeStamp": "2021-04-17T10:11:50.193Z",
+      "lastPushTimeStamp": "2021-04-18T19:00:19.964Z",
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-glidaaamplify-devenv-211606-deployment/amplify-cfn-templates/function/EmailJobsScheduler-cloudformation-template.json",
         "logicalId": "functionEmailJobsScheduler"
@@ -145,7 +145,7 @@
         "RootUrl": "https://sehfwd1zvl.execute-api.us-east-1.amazonaws.com/devenv",
         "ApiId": "sehfwd1zvl"
       },
-      "lastPushTimeStamp": "2021-04-17T10:11:50.196Z",
+      "lastPushTimeStamp": "2021-04-18T19:00:19.968Z",
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-glidaaamplify-devenv-211606-deployment/amplify-cfn-templates/api/api2899b73b-cloudformation-template.json",
         "logicalId": "apiapi2899b73b"
@@ -176,7 +176,7 @@
         "GraphQLAPIEndpointOutput": "https://b2zvjblsdrep3drvpnidki2iym.appsync-api.us-east-1.amazonaws.com/graphql",
         "GraphQLAPIKeyOutput": "da2-yax4qu5isnf63bnuv67zmip7s4"
       },
-      "lastPushTimeStamp": "2021-04-17T10:11:50.200Z",
+      "lastPushTimeStamp": "2021-04-18T19:00:19.972Z",
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-glidaaamplify-devenv-211606-deployment/amplify-cfn-templates/api/cloudformation-template.json",
         "logicalId": "apiMonitorAPI"
@@ -205,7 +205,7 @@
         "IdentityPoolName": "glidaaamplify741ec233_identitypool_741ec233__devenv",
         "UserPoolName": "glidaaamplify741ec233_userpool_741ec233"
       },
-      "lastPushTimeStamp": "2021-04-17T10:11:50.204Z",
+      "lastPushTimeStamp": "2021-04-18T19:00:19.976Z",
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-glidaaamplify-devenv-211606-deployment/amplify-cfn-templates/auth/glidaaamplify741ec233-cloudformation-template.yml",
         "logicalId": "authglidaaamplify741ec233"
@@ -226,7 +226,7 @@
           ]
         }
       ],
-      "lastPushTimeStamp": "2021-04-17T10:11:50.208Z",
+      "lastPushTimeStamp": "2021-04-18T19:00:19.979Z",
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-glidaaamplify-devenv-211606-deployment/amplify-cfn-templates/auth/template.json",
         "logicalId": "authuserPoolGroups"
@@ -247,7 +247,7 @@
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-glidaaamplify-devenv-211606-deployment/amplify-cfn-templates/video/myvodstreams-vod-workflow-template.yaml",
         "logicalId": "videomyvodstreams"
       },
-      "lastPushTimeStamp": "2021-04-17T10:11:50.211Z",
+      "lastPushTimeStamp": "2021-04-18T19:00:19.983Z",
       "output": {
         "oVodOutputUrl": "d170po542i1mdg.cloudfront.net",
         "oVODOutputS3": "myvodstreams-devenv-output-izqr81w6",
