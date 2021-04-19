@@ -1,5 +1,5 @@
 {
-  "devenvi": {
+  "live": {
     "awscloudformation": {
       "AuthRoleName": "amplify-glidaaamplify-devenvi-24527-authRole",
       "UnauthRoleArn": "arn:aws:iam::476202956165:role/amplify-glidaaamplify-devenvi-24527-unauthRole",
@@ -72,7 +72,7 @@
       }
     }
   },
-  "live": {
+  "devenvi": {
     "awscloudformation": {
       "AuthRoleName": "amplify-glidaaamplify-live-84208-authRole",
       "UnauthRoleArn": "arn:aws:iam::476202956165:role/amplify-glidaaamplify-live-84208-unauthRole",
