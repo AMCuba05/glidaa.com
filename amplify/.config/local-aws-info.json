@@ -1,5 +1,17 @@
 {
   "devenvi": {
-    "configLevel": "amplifyAdmin"
+    "configLevel": "project",
+    "useProfile": true,
+    "profileName": "amplify-Yd3TU"
+  },
+  "dev": {
+    "configLevel": "project",
+    "useProfile": true,
+    "profileName": "default"
+  },
+  "live": {
+    "configLevel": "project",
+    "useProfile": true,
+    "profileName": "amplify-Yd3TU"
   }
 }
