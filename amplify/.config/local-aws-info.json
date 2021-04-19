@@ -1,8 +1,5 @@
 {
-  "devenv": {
-    "configLevel": "amplifyAdmin"
-  },
-  "live": {
+  "devenvi": {
     "configLevel": "amplifyAdmin"
   }
 }
